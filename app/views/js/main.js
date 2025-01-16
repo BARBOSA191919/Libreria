@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 document.addEventListener("DOMContentLoaded", () => {
   // Get all "navbar-burger" elements
   const $navbarBurgers = Array.prototype.slice.call(
@@ -17,24 +16,9 @@ document.addEventListener("DOMContentLoaded", () => {
       el.classList.toggle("is-active");
       $target.classList.toggle("is-active");
     });
-=======
-//Funcion para el siderbar
-function toggleSidebar() {
-  const sidebar = document.getElementById("sidebar");
-  const contentArea = document.getElementById("contentArea");
-  sidebar.classList.toggle("expanded");
-  contentArea.classList.toggle("shifted");
-}
-
-function showContent(sectionId) {
-  // Ocultar todas las secciones
-  document.querySelectorAll(".content-section").forEach((section) => {
-    section.classList.remove("active");
->>>>>>> 0581fbafd9367251b0cb8c65dc9b7cf79480dc82
   });
 });
 
-<<<<<<< HEAD
 //Funcion para el siderbar
 function toggleSidebar() {
   const sidebar = document.getElementById("sidebar");
@@ -49,16 +33,12 @@ function showContent(sectionId) {
     section.classList.remove("active");
   });
 
-=======
->>>>>>> 0581fbafd9367251b0cb8c65dc9b7cf79480dc82
   // Mostrar la sección seleccionada
   document.getElementById(sectionId).classList.add("active");
 }
 
 // Mostrar la página de inicio por defecto
 showContent("inicio");
-<<<<<<< HEAD
-=======
 
 /* --------------------------------------------------------------------------------------------------*/
 // Funcion para cargar contenido
@@ -97,4 +77,3 @@ function cargarContenido(archivo, elementoId) {
 
 //uso
 cargarContenido("clientes.html", "cliente-content");
->>>>>>> 0581fbafd9367251b0cb8c65dc9b7cf79480dc82
