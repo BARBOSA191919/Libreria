@@ -1,8 +1,9 @@
 <?php
 
 	const APP_URL="http://localhost/Libreria/";
-	const APP_NAME="Libreria POO MySQL";
+	const APP_NAME="allbooks ";
 	const APP_SESSION_NAME="Libreria";
+	
 
 
 	/*----------  Zona horaria  ----------*/
