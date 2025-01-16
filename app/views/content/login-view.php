@@ -13,7 +13,7 @@
     <div class="container min-vh-100 d-flex align-items-center justify-content-center py-5">
         <div class="col-11 col-sm-8 col-md-6 col-lg-4">
             <div class="text-center mb-4">
-            <img src="/Libreria/app/views/img/allbooks.jpg" alt="Logo">
+            <img src="/Libreria/app/views/img/allBooksC.jpeg" alt="Logo">
             </div>
             
             <div class="login-card">
