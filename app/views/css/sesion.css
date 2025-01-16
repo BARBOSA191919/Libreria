@@ -1,5 +1,5 @@
 body {
-    background: url(/frontend/public/assets/logo/fondolibro.jpg) no-repeat center center fixed;
+    background-image: url("../img/fondolibro.jpg");
     background-size: cover; /* La imagen de fondo cubre toda la pantalla */
     font-family: 'Arial', sans-serif;
     color: #333;

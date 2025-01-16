@@ -1,3 +1,9 @@
 RewriteEngine On
 Options All -Indexes
-RewriteRule ^([a-zA-Z0-9/ñÑ-]+)$ index.php?views=$1
+
+# Permitir acceso a archivos estáticos
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule \.(jpg|jpeg|png|gif|css|js|woff|woff2|ttf|svg|ico|eot)$ - [L]
+
+# Reescribir URLs amigables
+RewriteRule ^([a-zA-Z0-9/ñÑ-]+)$ index.php?views=$1 [L]
