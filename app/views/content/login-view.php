@@ -1,5 +1,5 @@
 <div class="main-container">
-
+<link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/login.css">
     <form class="box login" action="" method="POST" autocomplete="off" >
 		<h5 class="title is-5 has-text-centered is-uppercase">LOGIN</h5>
 
@@ -29,3 +29,8 @@
 		$insLogin->iniciarSesionControlador();
 	}
 ?>
+
+
+
+
+
