@@ -11,7 +11,6 @@
 			# Almacenando datos#
 		    $nombre=$this->limpiarCadena($_POST['usuario_nombre']);
 		    $apellido=$this->limpiarCadena($_POST['usuario_apellido']);
-
 		    $usuario=$this->limpiarCadena($_POST['usuario_usuario']);
 		    $email=$this->limpiarCadena($_POST['usuario_email']);
 		    $clave1=$this->limpiarCadena($_POST['usuario_clave_1']);

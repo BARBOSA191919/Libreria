@@ -110,6 +110,9 @@
                     <a class="navbar-item" href="<?php echo APP_URL; ?>userNew/">
                         Nuevo
                     </a>
+                    <a class="navbar-item" href="<?php echo APP_URL; ?>cliente/">
+                        Nuevo cliente
+                    </a>
                     <a class="navbar-item" href="<?php echo APP_URL; ?>userList/">
                         Lista
                     </a>

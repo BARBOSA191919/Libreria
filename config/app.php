@@ -7,7 +7,7 @@
 
 
 	/*----------  Zona horaria  ----------*/
-	date_default_timezone_set("America/El_Salvador");
+	date_default_timezone_set("America/Bogota");
 
 	/*
 		Configuración de zona horaria de tu país, para más información visita
