@@ -7,7 +7,7 @@
 		/*---------- Modelo obtener vista ----------*/
 		protected function obtenerVistasModelo($vista){
 
-			$listaBlanca=["dashboard","userNew","userList","cliente","userUpdate","userSearch","userPhoto","logOut"];
+			$listaBlanca=["dashboard","userNew","userList","cliente","categoria","userUpdate","userSearch","userPhoto","logOut"];
 
 			if(in_array($vista, $listaBlanca)){
 				if(is_file("./app/views/content/".$vista."-view.php")){
