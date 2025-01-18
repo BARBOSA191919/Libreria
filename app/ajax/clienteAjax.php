@@ -1,5 +1,4 @@
 <?php
-
 require_once "../../config/app.php";
 require_once "../views/inc/session_start.php";
 require_once "../../autoload.php";
@@ -23,7 +22,8 @@ if(isset($_POST['modulo_cliente'])) {
     }
 
     if($_POST['modulo_cliente'] == "listar") {
-        echo $insCliente->listarClientesControlador();
+        // Cambio aquí: usando el nombre correcto del método
+        echo $insCliente->listarClienteControlador(1, 15, "", "");
     }
 
 } else {
