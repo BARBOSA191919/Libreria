@@ -2,24 +2,24 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Gestión de Clientes</title>
+    <title>Gestión de Proveedores</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 <body>
     <div class="container is-fluid mb-6">
-        <h1 class="title">Clientes</h1>
-        <h2 class="subtitle">Gestión de Clientes</h2>
+        <h1 class="title">Proveedores</h1>
+        <h2 class="subtitle">Gestión de Proveedores</h2>
     </div>
 
     <div class="container pb-6 pt-6">
         <button class="button is-primary mb-4" onclick="abrirModalRegistro()">
-            Registrar Nuevo Cliente
+            Registrar Nuevo Proveedor
         </button>
 
-        <!-- Listado de Clientes -->
-        <div id="lista-clientes" class="mt-4">
-            <!-- Aquí se cargará la lista de clientes -->
+        <!-- Listado de Proveedores -->
+        <div id="lista-proveedores" class="mt-4">
+            <!-- Aquí se cargará la lista de proveedores -->
         </div>
 
         <!-- Modal de Registro -->
@@ -27,50 +27,57 @@
             <div class="modal-background"></div>
             <div class="modal-card">
                 <header class="modal-card-head">
-                    <p class="modal-card-title">Registrar Cliente</p>
+                    <p class="modal-card-title">Registrar Proveedor</p>
                     <button class="delete" aria-label="close" onclick="cerrarModalRegistro()"></button>
                 </header>
                 <section class="modal-card-body">
                     <form id="form-registro" method="POST">
-                        <input type="hidden" name="modulo_cliente" value="registrar">
+                        <input type="hidden" name="modulo_proveedor" value="registrar">
 
                         <div class="field">
-                            <label class="label">Nombre</label>
+                            <label class="label">Código</label>
                             <div class="control">
-                                <input class="input" type="text" name="cliente_nombre" required>
+                                <input class="input" type="text" name="proveedor_codigo" required>
                             </div>
                         </div>
 
                         <div class="field">
-                            <label class="label">Tipo de Documento</label>
+                            <label class="label">Nombre de la Empresa</label>
                             <div class="control">
-                                <div class="select">
-                                    <select name="cliente_tipo_documento" required>
-                                    <option value="">Seleccione la opcion</option>
-                                        <option value="Cedula Ciudadania">Cedula Ciudadania</option>
-                                        <option value="Tarjeta de identidad">Tarjeta de identidad</option>
-                                        <option value="Cedula extranjera">Cedula extranjera</option>
-                                    </select>
-                                </div>
+                                <input class="input" type="text" name="proveedor_nombreEmpresa" required>
                             </div>
                         </div>
 
                         <div class="field">
-                            <label class="label">Número de Documento</label>
+                            <label class="label">Contacto</label>
                             <div class="control">
-                                <input class="input" type="text" name="cliente_numero_documento" required>
+                                <input class="input" type="text" name="proveedor_contacto">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Dirección</label>
+                            <div class="control">
+                                <textarea class="textarea" name="proveedor_direccion"></textarea>
                             </div>
                         </div>
 
                         <div class="field">
                             <label class="label">Teléfono</label>
                             <div class="control">
-                                <input class="input" type="text" name="cliente_telefono" required>
+                                <input class="input" type="text" name="proveedor_telefono">
                             </div>
                         </div>
 
                         <div class="field">
-                            <button type="submit" class="button is-success">Registrar Cliente</button>
+                            <label class="label">Email</label>
+                            <div class="control">
+                                <input class="input" type="email" name="proveedor_email">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <button type="submit" class="button is-success">Registrar Proveedor</button>
                         </div>
                     </form>
                 </section>
@@ -82,51 +89,58 @@
             <div class="modal-background"></div>
             <div class="modal-card">
                 <header class="modal-card-head">
-                    <p class="modal-card-title">Actualizar Cliente</p>
+                    <p class="modal-card-title">Actualizar Proveedor</p>
                     <button class="delete" aria-label="close" onclick="cerrarModalEditar()"></button>
                 </header>
                 <section class="modal-card-body">
                     <form id="form-edicion" method="POST">
-                        <input type="hidden" name="modulo_cliente" value="actualizar">
-                        <input type="hidden" id="cliente_id" name="cliente_id">
+                        <input type="hidden" name="modulo_proveedor" value="actualizar">
+                        <input type="hidden" id="proveedor_id" name="proveedor_id">
 
                         <div class="field">
-                            <label class="label">Nombre</label>
+                            <label class="label">Código</label>
                             <div class="control">
-                                <input id="edit_cliente_nombre" class="input" type="text" name="cliente_nombre" required>
+                                <input id="edit_proveedor_codigo" class="input" type="text" name="proveedor_codigo" required>
                             </div>
                         </div>
 
                         <div class="field">
-                            <label class="label">Tipo de Documento</label>
+                            <label class="label">Nombre de la Empresa</label>
                             <div class="control">
-                                <div class="select">
-                                    <select id="edit_cliente_tipo_documento" name="cliente_tipo_documento" required>
-                                    <option value="">Seleccione la opcion</option>
-                                        <option value="Cedula Ciudadania">Cedula Ciudadania</option>
-                                        <option value="Tarjeta de identidad">Tarjeta de identidad</option>
-                                        <option value="Cedula extranjera">Cedula extranjera</option>
-                                    </select>
-                                </div>
+                                <input id="edit_proveedor_nombreEmpresa" class="input" type="text" name="proveedor_nombreEmpresa" required>
                             </div>
                         </div>
 
                         <div class="field">
-                            <label class="label">Número de Documento</label>
+                            <label class="label">Contacto</label>
                             <div class="control">
-                                <input id="edit_cliente_numero_documento" class="input" type="text" name="cliente_numero_documento" required>
+                                <input id="edit_proveedor_contacto" class="input" type="text" name="proveedor_contacto">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <label class="label">Dirección</label>
+                            <div class="control">
+                                <textarea id="edit_proveedor_direccion" class="textarea" name="proveedor_direccion"></textarea>
                             </div>
                         </div>
 
                         <div class="field">
                             <label class="label">Teléfono</label>
                             <div class="control">
-                                <input id="edit_cliente_telefono" class="input" type="text" name="cliente_telefono" required>
+                                <input id="edit_proveedor_telefono" class="input" type="text" name="proveedor_telefono">
                             </div>
                         </div>
 
                         <div class="field">
-                            <button type="submit" class="button is-success">Actualizar Cliente</button>
+                            <label class="label">Email</label>
+                            <div class="control">
+                                <input id="edit_proveedor_email" class="input" type="email" name="proveedor_email">
+                            </div>
+                        </div>
+
+                        <div class="field">
+                            <button type="submit" class="button is-success">Actualizar Proveedor</button>
                         </div>
                     </form>
                 </section>
@@ -145,12 +159,14 @@
             document.getElementById('form-registro').reset();
         }
 
-        function abrirModalEditar(cliente) {
-            document.getElementById('cliente_id').value = cliente.id_cliente;
-            document.getElementById('edit_cliente_nombre').value = cliente.nombre;
-            document.getElementById('edit_cliente_tipo_documento').value = cliente.tipo_documento;
-            document.getElementById('edit_cliente_numero_documento').value = cliente.numero_documento;
-            document.getElementById('edit_cliente_telefono').value = cliente.telefono;
+        function abrirModalEditar(proveedor) {
+            document.getElementById('proveedor_id').value = proveedor.id_proveedor;
+            document.getElementById('edit_proveedor_codigo').value = proveedor.codigo;
+            document.getElementById('edit_proveedor_nombreEmpresa').value = proveedor.nombreEmpresa;
+            document.getElementById('edit_proveedor_contacto').value = proveedor.contacto;
+            document.getElementById('edit_proveedor_direccion').value = proveedor.direccion;
+            document.getElementById('edit_proveedor_telefono').value = proveedor.telefono;
+            document.getElementById('edit_proveedor_email').value = proveedor.email;
             document.getElementById('modal-editar').classList.add('is-active');
         }
 
@@ -159,16 +175,16 @@
             document.getElementById('form-edicion').reset();
         }
 
-        // Función para cargar la lista de clientes
-        function cargarClientes() {
+        // Función para cargar la lista de proveedores
+        function cargarProveedores() {
             $.ajax({
-                url: '<?= APP_URL ?>app/ajax/clienteAjax.php',
+                url: '<?= APP_URL ?>app/ajax/proveedorAjax.php',
                 type: 'POST',
                 data: {
-                    modulo_cliente: 'listar'
+                    modulo_proveedor: 'listar'
                 },
                 success: function(response) {
-                    $('#lista-clientes').html(response);
+                    $('#lista-proveedores').html(response);
                 }
             });
         }
@@ -177,7 +193,7 @@
         $('#form-registro').on('submit', function(e) {
             e.preventDefault();
             $.ajax({
-                url: '<?= APP_URL ?>app/ajax/clienteAjax.php',
+                url: '<?= APP_URL ?>app/ajax/proveedorAjax.php',
                 type: 'POST',
                 data: $(this).serialize(),
                 success: function(response) {
@@ -185,7 +201,7 @@
                     alert(resp.texto);
                     if(resp.tipo === 'limpiar') {
                         cerrarModalRegistro();
-                        cargarClientes();
+                        cargarProveedores();
                     }
                 }
             });
@@ -195,7 +211,7 @@
         $('#form-edicion').on('submit', function(e) {
             e.preventDefault();
             $.ajax({
-                url: '<?= APP_URL ?>app/ajax/clienteAjax.php',
+                url: '<?= APP_URL ?>app/ajax/proveedorAjax.php',
                 type: 'POST',
                 data: $(this).serialize(),
                 success: function(response) {
@@ -203,36 +219,36 @@
                     alert(resp.texto);
                     if(resp.tipo === 'recargar') {
                         cerrarModalEditar();
-                        cargarClientes();
+                        cargarProveedores();
                     }
                 }
             });
         });
 
-        // Función para eliminar cliente
-        function eliminarCliente(id) {
-            if(confirm('¿Está seguro de eliminar este cliente?')) {
+        // Función para eliminar proveedor
+        function eliminarProveedor(id) {
+            if(confirm('¿Está seguro de eliminar este proveedor?')) {
                 $.ajax({
-                    url: '<?= APP_URL ?>app/ajax/clienteAjax.php',
+                    url: '<?= APP_URL ?>app/ajax/proveedorAjax.php',
                     type: 'POST',
                     data: {
-                        modulo_cliente: 'eliminar',
-                        cliente_id: id
+                        modulo_proveedor: 'eliminar',
+                        proveedor_id: id
                     },
                     success: function(response) {
                         const resp = JSON.parse(response);
                         alert(resp.texto);
                         if(resp.tipo === 'recargar') {
-                            cargarClientes();
+                            cargarProveedores();
                         }
                     }
                 });
             }
         }
 
-        // Cargar clientes al iniciar la página
+        // Cargar proveedores al iniciar la página
         $(document).ready(function() {
-            cargarClientes();
+            cargarProveedores();
         });
     </script>
 </body>
