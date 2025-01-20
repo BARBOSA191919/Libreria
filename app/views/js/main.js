@@ -39,3 +39,5 @@ function showContent(sectionId) {
 
 // Mostrar la página de inicio por defecto
 showContent("inicio");
+
+// Seccion de categoria ---------------------------------------------------

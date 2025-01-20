@@ -108,10 +108,14 @@ class clienteController extends mainModel {
         $url = APP_URL.$url."/";
         $busqueda = $this->limpiarCadena($busqueda);
         $tabla = "";
-
+    
         $pagina = (isset($pagina) && $pagina>0) ? (int) $pagina : 1;
         $inicio = ($pagina>0) ? (($pagina * $registros)-$registros) : 0;
-
+        
+        // Inicializamos las variables de paginación
+        $pag_inicio = 0;
+        $pag_final = 0;
+    
         if(isset($busqueda) && $busqueda!=""){
             $consulta_datos = "SELECT * FROM cliente WHERE (nombre LIKE '%$busqueda%' OR numero_documento LIKE '%$busqueda%') ORDER BY nombre ASC LIMIT $inicio,$registros";
             $consulta_total = "SELECT COUNT(id_cliente) FROM cliente WHERE (nombre LIKE '%$busqueda%' OR numero_documento LIKE '%$busqueda%')";
@@ -119,15 +123,15 @@ class clienteController extends mainModel {
             $consulta_datos = "SELECT * FROM cliente ORDER BY nombre ASC LIMIT $inicio,$registros";
             $consulta_total = "SELECT COUNT(id_cliente) FROM cliente";
         }
-
+    
         $datos = $this->ejecutarConsulta($consulta_datos);
         $datos = $datos->fetchAll();
-
+    
         $total = $this->ejecutarConsulta($consulta_total);
         $total = (int) $total->fetchColumn();
-
+    
         $numeroPaginas = ceil($total/$registros);
-
+    
         $tabla.='
         <div class="table-container">
         <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
@@ -144,7 +148,7 @@ class clienteController extends mainModel {
             </thead>
             <tbody>
         ';
-
+    
         if($total>=1 && $pagina<=$numeroPaginas){
             $contador=$inicio+1;
             $pag_inicio=$inicio+1;
@@ -158,15 +162,16 @@ class clienteController extends mainModel {
                         <td>'.$rows['telefono'].'</td>
                         <td>'.date("d-m-Y  h:i:s A",strtotime($rows['fecha_registro'])).'</td>
                         <td>
-                            <a href="'.APP_URL.'clienteUpdate/'.$rows['id_cliente'].'/" class="button is-success is-rounded is-small">Actualizar</a>
+                            <button class="button is-success is-rounded is-small" onclick="abrirModalEditar({
+                                id_cliente: \''.$rows['id_cliente'].'\',
+                                nombre: \''.addslashes($rows['nombre']).'\',
+                                tipo_documento: \''.$rows['tipo_documento'].'\',
+                                numero_documento: \''.$rows['numero_documento'].'\',
+                                telefono: \''.$rows['telefono'].'\'
+                            })">Actualizar</button>
                         </td>
                         <td>
-                            <form class="FormularioAjax" action="'.APP_URL.'app/ajax/clienteAjax.php" method="POST" autocomplete="off">
-                                <input type="hidden" name="modulo_cliente" value="eliminar">
-                                <input type="hidden" name="cliente_id" value="'.$rows['id_cliente'].'">
-                                <button type="submit" class="button is-danger is-rounded is-small">Eliminar</button>
-                            </form>
-                        </ ```php
+                            <button onclick="eliminarCliente('.$rows['id_cliente'].')" class="button is-danger is-rounded is-small">Eliminar</button>
                         </td>
                     </tr>
                 ';
@@ -194,18 +199,54 @@ class clienteController extends mainModel {
                 ';
             }
         }
-
+    
         $tabla.='</tbody></table></div>';
-
+    
         ### Paginacion ###
         if($total>0 && $pagina<=$numeroPaginas){
             $tabla.='<p class="has-text-right">Mostrando clientes <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
             $tabla.=$this->paginadorTablas($pagina,$numeroPaginas,$url,7);
         }
-
+    
         return $tabla;
     }
-
+    public function eliminarClienteControlador(){
+        $id = $this->limpiarCadena($_POST['cliente_id']);
+    
+        # Verificando cliente #
+        $datos = $this->ejecutarConsulta("SELECT * FROM cliente WHERE id_cliente='$id'");
+        if($datos->rowCount()<=0){
+            $alerta=[
+                "tipo"=>"simple",
+                "titulo"=>"Ocurrió un error inesperado",
+                "texto"=>"No hemos encontrado el cliente en el sistema",
+                "icono"=>"error"
+            ];
+            return json_encode($alerta);
+            exit();
+        }
+    
+        # Eliminando cliente #
+        $eliminar = $this->ejecutarConsulta("DELETE FROM cliente WHERE id_cliente='$id'");
+        
+        if($eliminar->rowCount()==1){
+            $alerta=[
+                "tipo"=>"recargar",
+                "titulo"=>"Cliente eliminado",
+                "texto"=>"El cliente ha sido eliminado exitosamente",
+                "icono"=>"success"
+            ];
+        }else{
+            $alerta=[
+                "tipo"=>"simple",
+                "titulo"=>"Ocurrió un error inesperado",
+                "texto"=>"No se pudo eliminar el cliente, por favor intente nuevamente",
+                "icono"=>"error"
+            ];
+        }
+    
+        return json_encode($alerta);
+    }
     /*----------  Controlador actualizar cliente  ----------*/
     public function actualizarClienteControlador(){
         $id = $this->limpiarCadena($_POST['cliente_id']);
