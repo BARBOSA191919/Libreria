@@ -14,7 +14,7 @@
     </div>
 
     <!-- Modal de Registro -->
-    <div id="modal-registro_inventario" class="modal fade" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
+     <div id="modal-registro_inventario" class="modal fade" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -96,7 +96,7 @@
     </div>
 
     <!-- Modal de Actualización -->
-    <div id="modal-editar_inventario" class="modal fade" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+     <div id="modal-editar_inventario" class="modal fade" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
         <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
@@ -178,9 +178,6 @@
         </div>
     </div>
 </div>
-
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 <script>
 // Funciones para los modales
