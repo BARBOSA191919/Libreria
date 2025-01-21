@@ -170,7 +170,7 @@ class proveedorController extends mainModel {
                         <td>'.$rows['telefono'].'</td>
                         <td>'.$rows['email'].'</td>
                         <td>
-                            <button class="button is-success is-rounded is-small" onclick="abrirModalEditar({
+                            <button class="button is-success is-rounded is-small" onclick="abrirModalEditarproveedor({
                                 id_proveedor: \''.$rows['id_proveedor'].'\',
                                 codigo: \''.$rows['codigo'].'\',
                                 nombreEmpresa: \''.addslashes($rows['nombreEmpresa']).'\',

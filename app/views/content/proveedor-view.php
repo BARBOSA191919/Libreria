@@ -6,7 +6,7 @@
     </div>
 
     <div class="container pb-6 pt-6">
-        <button class="button is-primary mb-4" onclick="abrirModalRegistro()">
+        <button class="button is-primary mb-4" onclick="abrirModalRegistroproveedor()">
             Registrar Nuevo Proveedor
         </button>
 
@@ -16,15 +16,15 @@
         </div>
 
         <!-- Modal de Registro -->
-        <div id="modal-registro" class="modal">
+        <div id="modal-registro-proveedor" class="modal">
             <div class="modal-background"></div>
             <div class="modal-card">
                 <header class="modal-card-head">
                     <p class="modal-card-title">Registrar Proveedor</p>
-                    <button class="delete" aria-label="close" onclick="cerrarModalRegistro()"></button>
+                    <button class="delete" aria-label="close" onclick="cerrarModalRegistroproveedor()"></button>
                 </header>
                 <section class="modal-card-body">
-                    <form id="form-registro" method="POST">
+                    <form id="form-registro-proveedor" method="POST">
                         <input type="hidden" name="modulo_proveedor" value="registrar">
 
                         <div class="field">
@@ -78,15 +78,15 @@
         </div>
 
         <!-- Modal de Actualización -->
-        <div id="modal-editar" class="modal">
+        <div id="modal-editar-proveedor" class="modal">
             <div class="modal-background"></div>
             <div class="modal-card">
                 <header class="modal-card-head">
                     <p class="modal-card-title">Actualizar Proveedor</p>
-                    <button class="delete" aria-label="close" onclick="cerrarModalEditar()"></button>
+                    <button class="delete" aria-label="close" onclick="cerrarModalEditarproveedor()"></button>
                 </header>
                 <section class="modal-card-body">
-                    <form id="form-edicion" method="POST">
+                    <form id="form-edicion-proveedor" method="POST">
                         <input type="hidden" name="modulo_proveedor" value="actualizar">
                         <input type="hidden" id="proveedor_id" name="proveedor_id">
 
@@ -145,16 +145,16 @@
 
     <script>
         // Funciones para los modales
-        function abrirModalRegistro() {
-            document.getElementById('modal-registro').classList.add('is-active');
+        function abrirModalRegistroproveedor() {
+            document.getElementById('modal-registro-proveedor').classList.add('is-active');
         }
 
-        function cerrarModalRegistro() {
-            document.getElementById('modal-registro').classList.remove('is-active');
-            document.getElementById('form-registro').reset();
+        function cerrarModalRegistroproveedor() {
+            document.getElementById('modal-registro-proveedor').classList.remove('is-active');
+            document.getElementById('form-registro-proveedor').reset();
         }
 
-        function abrirModalEditar(proveedor) {
+        function abrirModalEditarproveedor(proveedor) {
             document.getElementById('proveedor_id').value = proveedor.id_proveedor;
             document.getElementById('edit_proveedor_codigo').value = proveedor.codigo;
             document.getElementById('edit_proveedor_nombreEmpresa').value = proveedor.nombreEmpresa;
@@ -165,7 +165,7 @@
             document.getElementById('modal-editar').classList.add('is-active');
         }
 
-        function cerrarModalEditar() {
+        function cerrarModalEditarproveedor() {
             document.getElementById('modal-editar').classList.remove('is-active');
             document.getElementById('form-edicion').reset();
         }
@@ -185,7 +185,7 @@
         }
 
         // Manejador para el formulario de registro
-        $('#form-registro').on('submit', function(e) {
+        $('#form-registro-proveedor').on('submit', function(e) {
             e.preventDefault();
             $.ajax({
                 url: '<?= APP_URL ?>app/ajax/proveedorAjax.php',
@@ -195,7 +195,7 @@
                     const resp = JSON.parse(response);
                     alert(resp.texto);
                     if(resp.tipo === 'limpiar') {
-                        cerrarModalRegistro();
+                        cerrarModalRegistroproveedor();
                         cargarProveedores();
                     }
                 }
@@ -203,7 +203,7 @@
         });
 
         // Manejador para el formulario de edición
-        $('#form-edicion').on('submit', function(e) {
+        $('#form-edicion-proveedor').on('submit', function(e) {
             e.preventDefault();
             $.ajax({
                 url: '<?= APP_URL ?>app/ajax/proveedorAjax.php',
@@ -213,7 +213,7 @@
                     const resp = JSON.parse(response);
                     alert(resp.texto);
                     if(resp.tipo === 'recargar') {
-                        cerrarModalEditar();
+                        cerrarModalEditarproveedor();
                         cargarProveedores();
                     }
                 }

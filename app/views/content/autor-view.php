@@ -4,7 +4,7 @@
 </div>
 
 <div class="container pb-6 pt-6">
-    <button class="button is-primary mb-4" onclick="abrirModalRegistro()">
+    <button class="button is-primary mb-4" onclick="abrirModalRegistroautor()">
         Registrar Nuevo Autor
     </button>
 
@@ -14,15 +14,15 @@
     </div>
 
     <!-- Modal de Registro -->
-    <div id="modal-registro" class="modal">
+    <div id="modal-registro-autor" class="modal">
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title">Registrar Autor</p>
-                <button class="delete" aria-label="close" onclick="cerrarModalRegistro()"></button>
+                <button class="delete" aria-label="close" onclick="cerrarModalRegistroautor()"></button>
             </header>
             <section class="modal-card-body">
-                <form id="form-registro" method="POST">
+                <form id="form-registro-autor" method="POST">
                     <input type="hidden" name="modulo_autor" value="registrar">
 
                     <div class="field">
@@ -62,15 +62,15 @@
     </div>
 
     <!-- Modal de Actualización -->
-    <div id="modal-editar" class="modal">
+    <div id="modal-editar-autor" class="modal">
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title">Actualizar Autor</p>
-                <button class="delete" aria-label="close" onclick="cerrarModalEditar()"></button>
+                <button class="delete" aria-label="close" onclick="cerrarModalEditarautor()"></button>
             </header>
             <section class="modal-card-body">
-                <form id="form-edicion" method="POST">
+                <form id="form-edicion-autor" method="POST">
                     <input type="hidden" name="modulo_autor" value="actualizar">
                     <input type="hidden" id="autor_id" name="autor_id">
 
@@ -116,16 +116,16 @@
 
 <script>
     // Funciones para los modales
-    function abrirModalRegistro() {
-        document.getElementById('modal-registro').classList.add('is-active');
+    function abrirModalRegistroautor() {
+        document.getElementById('modal-registro-autor').classList.add('is-active');
     }
 
-    function cerrarModalRegistro() {
-        document.getElementById('modal-registro').classList.remove('is-active');
-        document.getElementById('form-registro').reset();
+    function cerrarModalRegistroautor() {
+        document.getElementById('modal-registro-autor').classList.remove('is-active');
+        document.getElementById('form-registro-autor').reset();
     }
 
-    function abrirModalEditar(autor) {
+    function abrirModalEditarautor(autor) {
         document.getElementById('autor_id').value = autor.idAutor;
         document.getElementById('edit_autor_codigo').value = autor.codigo;
         document.getElementById('edit_autor_nombre').value = autor.nombre;
@@ -134,7 +134,7 @@
         document.getElementById('modal-editar').classList.add('is-active');
     }
 
-    function cerrarModalEditar() {
+    function cerrarModalEditarautor() {
         document.getElementById('modal-editar').classList.remove('is-active');
         document.getElementById('form-edicion').reset();
     }
@@ -154,7 +154,7 @@
     }
 
     // Manejador para el formulario de registro
-    $('#form-registro').on('submit', function(e) {
+    $('#form-registro-autor').on('submit', function(e) {
         e.preventDefault();
         $.ajax({
             url: '<?= APP_URL ?>app/ajax/autorAjax.php',
@@ -164,7 +164,7 @@
                 const resp = JSON.parse(response);
                 alert(resp.texto);
                 if(resp.tipo === 'limpiar') {
-                    cerrarModalRegistro();
+                    cerrarModalRegistroautor();
                     cargarAutores();
                 }
             }
@@ -172,7 +172,7 @@
     });
 
     // Manejador para el formulario de edición
-    $('#form-edicion').on('submit', function(e) {
+    $('#form-edicion-autor').on('submit', function(e) {
         e.preventDefault();
         $.ajax({
             url: '<?= APP_URL ?>app/ajax/autorAjax.php',
@@ -182,7 +182,7 @@
                 const resp = JSON.parse(response);
                 alert(resp.texto);
                 if(resp.tipo === 'recargar') {
-                    cerrarModalEditar();
+                    cerrarModalEditarautor();
                     cargarAutores();
                 }
             }

@@ -154,7 +154,7 @@ class autorController extends mainModel {
                         <td>'.$rows['paisorigen'].'</td>
                         <td>'.$rows['biografia'].'</td>
                         <td>
-                            <button class="button is-success is-rounded is-small" onclick="abrirModalEditar({
+                            <button class="button is-success is-rounded is-small" onclick="abrirModalEditarautor({
                                 idAutor: \''.$rows['idAutor'].'\',
                                 codigo: \''.$rows['codigo'].'\',
                                 nombre: \''.addslashes($rows['nombre']).'\',

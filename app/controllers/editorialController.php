@@ -154,7 +154,7 @@ class editorialController extends mainModel {
                         <td>'.$rows['pais'].'</td>
                         <td>'.$rows['informacioncontacto'].'</td>
                         <td>
-                            <button class="button is-success is-rounded is-small" onclick="abrirModalEditar({
+                            <button class="button is-success is-rounded is-small" onclick="abrirModalEditar-editorial({
                                 idEditorial: \''.$rows['idEditorial'].'\',
                                 codigo: \''.$rows['codigo'].'\',
                                 nombre: \''.addslashes($rows['nombre']).'\',

@@ -4,7 +4,7 @@
 </div>
 
 <div class="container pb-6 pt-6">
-    <button class="button is-primary mb-4" onclick="abrirModalRegistro()">
+    <button class="button is-primary mb-4" onclick="abrirModalRegistroeditorial()">
         Registrar Nueva Editorial
     </button>
 
@@ -14,15 +14,15 @@
     </div>
 
     <!-- Modal de Registro -->
-    <div id="modal-registro" class="modal">
+    <div id="modal-registro-editorial" class="modal">
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title">Registrar Editorial</p>
-                <button class="delete" aria-label="close" onclick="cerrarModalRegistro()"></button>
+                <button class="delete" aria-label="close" onclick="cerrarModalRegistroeditorial()"></button>
             </header>
             <section class="modal-card-body">
-                <form id="form-registro" method="POST">
+                <form id="form-registro-editorial" method="POST">
                     <input type="hidden" name="modulo_editorial" value="registrar">
 
                     <div class="field">
@@ -62,15 +62,15 @@
     </div>
 
     <!-- Modal de Actualización -->
-    <div id="modal-editar" class="modal">
+    <div id="modal-editar-editorial" class="modal">
         <div class="modal-background"></div>
         <div class="modal-card">
             <header class="modal-card-head">
                 <p class="modal-card-title">Actualizar Editorial</p>
-                <button class="delete" aria-label="close" onclick="cerrarModalEditar()"></button>
+                <button class="delete" aria-label="close" onclick="cerrarModalEditareditorial()"></button>
             </header>
             <section class="modal-card-body">
-                <form id="form-edicion" method="POST">
+                <form id="form-edicion-editorial" method="POST">
                     <input type="hidden" name="modulo_editorial" value="actualizar">
                     <input type="hidden" id="editorial_id" name="editorial_id">
 
@@ -115,13 +115,13 @@
 
 <script>
     // Funciones para los modales
-    function abrirModalRegistro() {
-        document.getElementById('modal-registro').classList.add('is-active');
+    function abrirModalRegistroeditorial() {
+        document.getElementById('modal-registro-editorial').classList.add('is-active');
     }
 
-    function cerrarModalRegistro() {
-        document.getElementById('modal-registro').classList.remove('is-active');
-        document.getElementById('form-registro').reset();
+    function cerrarModalRegistroeditorial() {
+        document.getElementById('modal-registro-editorial').classList.remove('is-active');
+        document.getElementById('form-registro-editorial').reset();
     }
 
     function abrirModalEditar(editorial) {
@@ -133,7 +133,7 @@
         document.getElementById('modal-editar').classList.add('is-active');
     }
 
-    function cerrarModalEditar() {
+    function cerrarModalEditareditorial() {
         document.getElementById('modal-editar').classList.remove('is-active');
         document.getElementById('form-edicion').reset();
     }
@@ -153,7 +153,7 @@
     }
 
     // Manejador para el formulario de registro
-    $('#form-registro').on('submit', function(e) {
+    $('#form-registro-editorial').on('submit', function(e) {
         e.preventDefault();
         $.ajax({
             url: '<?= APP_URL ?>app/ajax/editorialAjax.php',
@@ -163,7 +163,7 @@
                 const resp = JSON.parse(response);
                 alert(resp.texto);
                 if(resp.tipo === 'limpiar') {
-                    cerrarModalRegistro();
+                    cerrarModalRegistroeditorial();
                     cargarEditoriales();
                 }
             }
@@ -171,7 +171,7 @@
     });
 
     // Manejador para el formulario de edición
-    $('#form-edicion').on('submit', function(e) {
+    $('#form-edicion-editorial').on('submit', function(e) {
         e.preventDefault();
         $.ajax({
             url: '<?= APP_URL ?>app/ajax/editorialAjax.php',
@@ -181,7 +181,7 @@
                 const resp = JSON.parse(response);
                 alert(resp.texto);
                 if(resp.tipo === 'recargar') {
-                    cerrarModalEditar();
+                    cerrarModalEditareditorial();
                     cargarEditoriales();
                 }
             }

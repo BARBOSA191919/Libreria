@@ -162,7 +162,7 @@ class clienteController extends mainModel {
                         <td>'.$rows['telefono'].'</td>
                         <td>'.date("d-m-Y  h:i:s A",strtotime($rows['fecha_registro'])).'</td>
                         <td>
-                            <button class="button is-success is-rounded is-small" onclick="abrirModalEditar({
+                            <button class="button is-success is-rounded is-small" onclick="abrirModalEditarcliente({
                                 id_cliente: \''.$rows['id_cliente'].'\',
                                 nombre: \''.addslashes($rows['nombre']).'\',
                                 tipo_documento: \''.$rows['tipo_documento'].'\',

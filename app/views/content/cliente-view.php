@@ -5,7 +5,7 @@
     </div>
 
     <div class="container pb-6 pt-6">
-        <button class="button is-primary mb-4" onclick="abrirModalRegistro()">
+        <button class="button is-primary mb-4" onclick="abrirModalRegistrocliente()">
             Registrar Nuevo Cliente
         </button>
 
@@ -15,15 +15,15 @@
         </div>
 
         <!-- Modal de Registro -->
-        <div id="modal-registro" class="modal">
+        <div id="modal-registro-cliente" class="modal">
             <div class="modal-background"></div>
             <div class="modal-card">
                 <header class="modal-card-head">
                     <p class="modal-card-title">Registrar Cliente</p>
-                    <button class="delete" aria-label="close" onclick="cerrarModalRegistro()"></button>
+                    <button class="delete" aria-label="close" onclick="cerrarModalRegistrocliente()"></button>
                 </header>
                 <section class="modal-card-body">
-                    <form id="form-registro" method="POST">
+                    <form id="form-registro-cliente" method="POST">
                         <input type="hidden" name="modulo_cliente" value="registrar">
 
                         <div class="field">
@@ -70,15 +70,15 @@
         </div>
 
         <!-- Modal de Actualización -->
-        <div id="modal-editar" class="modal">
+        <div id="modal-editar-cliente" class="modal">
             <div class="modal-background"></div>
             <div class="modal-card">
                 <header class="modal-card-head">
                     <p class="modal-card-title">Actualizar Cliente</p>
-                    <button class="delete" aria-label="close" onclick="cerrarModalEditar()"></button>
+                    <button class="delete" aria-label="close" onclick="cerrarModalEditarcliente()"></button>
                 </header>
                 <section class="modal-card-body">
-                    <form id="form-edicion" method="POST">
+                    <form id="form-edicion-cliente" method="POST">
                         <input type="hidden" name="modulo_cliente" value="actualizar">
                         <input type="hidden" id="cliente_id" name="cliente_id">
 
@@ -130,16 +130,16 @@
 
     <script>
         // Funciones para los modales
-        function abrirModalRegistro() {
-            document.getElementById('modal-registro').classList.add('is-active');
+        function abrirModalRegistrocliente() {
+            document.getElementById('modal-registro-cliente').classList.add('is-active');
         }
 
-        function cerrarModalRegistro() {
-            document.getElementById('modal-registro').classList.remove('is-active');
-            document.getElementById('form-registro').reset();
+        function cerrarModalRegistrocliente() {
+            document.getElementById('modal-registro-cliente').classList.remove('is-active');
+            document.getElementById('form-registro-cliente').reset();
         }
 
-        function abrirModalEditar(cliente) {
+        function abrirModalEditarcliente(cliente) {
             document.getElementById('cliente_id').value = cliente.id_cliente;
             document.getElementById('edit_cliente_nombre').value = cliente.nombre;
             document.getElementById('edit_cliente_tipo_documento').value = cliente.tipo_documento;
@@ -148,9 +148,9 @@
             document.getElementById('modal-editar').classList.add('is-active');
         }
 
-        function cerrarModalEditar() {
-            document.getElementById('modal-editar').classList.remove('is-active');
-            document.getElementById('form-edicion').reset();
+        function cerrarModalEditarcliente() {
+            document.getElementById('modal-editar-cliente').classList.remove('is-active');
+            document.getElementById('form-edicion-cliente').reset();
         }
 
         // Función para cargar la lista de clientes
@@ -168,7 +168,7 @@
         }
 
         // Manejador para el formulario de registro
-        $('#form-registro').on('submit', function(e) {
+        $('#form-registro-cliente').on('submit', function(e) {
             e.preventDefault();
             $.ajax({
                 url: '<?= APP_URL ?>app/ajax/clienteAjax.php',
@@ -178,7 +178,7 @@
                     const resp = JSON.parse(response);
                     alert(resp.texto);
                     if(resp.tipo === 'limpiar') {
-                        cerrarModalRegistro();
+                        cerrarModalRegistrocliente();
                         cargarClientes();
                     }
                 }
@@ -186,7 +186,7 @@
         });
 
         // Manejador para el formulario de edición
-        $('#form-edicion').on('submit', function(e) {
+        $('#form-edicion-cliente').on('submit', function(e) {
             e.preventDefault();
             $.ajax({
                 url: '<?= APP_URL ?>app/ajax/clienteAjax.php',
@@ -196,7 +196,7 @@
                     const resp = JSON.parse(response);
                     alert(resp.texto);
                     if(resp.tipo === 'recargar') {
-                        cerrarModalEditar();
+                        cerrarModalEditarcliente();
                         cargarClientes();
                     }
                 }

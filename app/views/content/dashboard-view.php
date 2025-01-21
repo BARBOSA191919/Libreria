@@ -68,6 +68,22 @@
       <span class="menu-text">Proveedores</span>
     </div>
 
+    <div class="menu-item" onclick="showContent('autor')">
+      <span class="emoji">
+        <i class="bi bi-truck"></i>
+      </span>
+      <span class="menu-text">Autor</span>
+    </div>
+
+    
+    <div class="menu-item" onclick="showContent('editorial')">
+      <span class="emoji">
+        <i class="bi bi-truck"></i>
+      </span>
+      <span class="menu-text">Editorial</span>
+    </div>
+
+
     <div class="menu-item" onclick="showContent('configuracion')">
       <span class="emoji">
         <i class="bi bi-gear-fill"></i>
@@ -110,16 +126,7 @@
                     <a class="navbar-item" href="<?php echo APP_URL; ?>userNew/">
                         Nuevo
                     </a>
-                    <a class="navbar-item" href="<?php echo APP_URL; ?>proveedor/">
-                        Nuevo proveedor
-                    </a>
-                    <a class="navbar-item" href="<?php echo APP_URL; ?>autor/">
-                        Nuevo autor
-                    </a>
-
-                    <a class="navbar-item" href="<?php echo APP_URL; ?>editorial/">
-                        Nueva editorial
-                    </a>
+          
              
                     <a class="navbar-item" href="<?php echo APP_URL; ?>userList/">
                         Lista
@@ -182,6 +189,17 @@
     <div id="cliente" class="content-section">
         <?php include "./app/views/content/cliente-view.php"; ?>
     </div>
+
+    
+    <div id="autor" class="content-section">
+        <?php include "./app/views/content/autor-view.php"; ?>
+    </div>
+
+        
+    <div id="editorial" class="content-section">
+        <?php include "./app/views/content/editorial-view.php"; ?>
+    </div>
+
 
 
     <div id="inventario-view" class="content-section">
