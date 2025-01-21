@@ -131,7 +131,7 @@ function cargarCategorias() {
     data: {
       modulo_categoria: "listar",
       pagina: 1,
-      registros: 10,
+      registros: 15,
       url: "categoria",
     },
     success: function (response) {

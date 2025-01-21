@@ -1,297 +1,310 @@
-    <div class="container mt-4 mb-4">
-        <h1 class="display-4">Inventario de Libros</h1>
-        <h2 class="h3 text-muted">Gestión de Inventario</h2>
+<div class="container-fluid mb-4">
+    <h1 class="display-4">Inventario</h1>
+    <h2 class="h4 text-muted">Gestión de Inventario</h2>
+</div>
+
+<div class="container py-4">
+    <button class="btn btn-primary mb-4" onclick="abrirModalRegistroInventario()">
+        Registrar Nuevo Libro
+    </button>
+
+    <!-- Listado de Inventario -->
+    <div id="lista-inventario" class="mt-4">
+        <!-- Aquí se cargará la lista de libros -->
     </div>
 
-    <div class="container py-4">
-        <button class="btn btn-primary mb-4" onclick="abrirModalRegistro1()">
-            Registrar Nuevo Libro
-        </button>
-
-        <!-- Listado de Libros -->
-        <div id="lista-libros" class="mt-4">
-            <!-- Aquí se cargará la lista de libros -->
-        </div>
-
-        <!-- Modal de Registro -->
-        <div class="modal fade" id="modal-registro1" tabindex="-1">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Registrar Libro</h5>
-                        <button type="button" class="btn-close" onclick="cerrarModalRegistro1()"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="form-registro1" method="POST">
-                            <input type="hidden" name="modulo_libro" value="registrar">
-
-                            <div class="mb-3">
-                                <label class="form-label">Código</label>
-                                <input class="form-control" type="text" name="libro_codigo" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Título del Libro</label>
-                                <input class="form-control" type="text" name="libro_titulo" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Autor</label>
-                                <input class="form-control" type="text" name="libro_autor" required>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Editorial</label>
-                                <input class="form-control" type="text" name="libro_editorial">
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Año de Publicación</label>
-                                    <input class="form-control" type="number" name="libro_año">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Género</label>
-                                    <input class="form-control" type="text" name="libro_genero">
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Precio de Venta</label>
-                                    <input class="form-control" type="number" step="0.01" name="libro_precio" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Cantidad</label>
-                                    <input class="form-control" type="number" name="libro_cantidad" required>
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Idioma</label>
-                                    <input class="form-control" type="text" name="libro_idioma">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Número de Páginas</label>
-                                    <input class="form-control" type="number" name="libro_paginas">
-                                </div>
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Formato</label>
-                                <select class="form-select" name="libro_formato">
-                                    <option value="Tapa Dura">Tapa Dura</option>
-                                    <option value="Tapa Blanda">Tapa Blanda</option>
-                                    <option value="Digital">Digital</option>
-                                </select>
-                            </div>
-
-                            <div class="text-end">
-                                <button type="submit" class="btn btn-success">Registrar Libro</button>
-                            </div>
-                        </form>
-                    </div>
+    <!-- Modal de Registro -->
+    <div id="modal-registro_inventario" class="modal fade" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalRegistroLabel">Registrar Libro</h5>
+                    <button type="button" class="btn-close" aria-label="Close" onclick="cerrarModalRegistroInventario()"></button>
                 </div>
-            </div>
-        </div>
+                <div class="modal-body">
+                    <form id="form-registro_inventario" method="POST">
+                        <input type="hidden" name="modulo_inventario" value="registrar">
 
-        <!-- Modal de Actualización -->
-        <div class="modal fade" id="modal-editar1" tabindex="-1">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Actualizar Libro</h5>
-                        <button type="button" class="btn-close" onclick="cerrarModalEditar1()"></button>
-                    </div>
-                    <div class="modal-body">
-                        <form id="form-edicion1" method="POST">
-                            <input type="hidden" name="modulo_libro" value="actualizar">
-                            <input type="hidden" id="libro_id" name="libro_id">
-
-                            <div class="mb-3">
-                                <label class="form-label">Código</label>
-                                <input id="edit_libro_codigo" class="form-control" type="text" name="libro_codigo" required>
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="libro_codigo" class="form-label">Código *</label>
+                                <input class="form-control" type="text" id="libro_codigo" name="libro_codigo" required>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Título del Libro</label>
-                                <input id="edit_libro_titulo" class="form-control" type="text" name="libro_titulo" required>
+                            <div class="col-md-6 mb-3">
+                                <label for="libro_titulo" class="form-label">Título *</label>
+                                <input class="form-control" type="text" id="libro_titulo" name="libro_titulo" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="libro_autor" class="form-label">Autor *</label>
+                                <input class="form-control" type="text" id="libro_autor" name="libro_autor" required>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Autor</label>
-                                <input id="edit_libro_autor" class="form-control" type="text" name="libro_autor" required>
+                            <div class="col-md-6 mb-3">
+                                <label for="libro_editorial" class="form-label">Editorial</label>
+                                <input class="form-control" type="text" id="libro_editorial" name="libro_editorial">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="libro_anio" class="form-label">Año de Publicación</label>
+                                <input class="form-control" type="number" id="libro_anio" name="libro_anio">
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Editorial</label>
-                                <input id="edit_libro_editorial" class="form-control" type="text" name="libro_editorial">
+                            <div class="col-md-4 mb-3">
+                                <label for="libro_genero" class="form-label">Género</label>
+                                <input class="form-control" type="text" id="libro_genero" name="libro_genero">
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Año de Publicación</label>
-                                    <input id="edit_libro_año" class="form-control" type="number" name="libro_año">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Género</label>
-                                    <input id="edit_libro_genero" class="form-control" type="text" name="libro_genero">
-                                </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="libro_idioma" class="form-label">Idioma</label>
+                                <input class="form-control" type="text" id="libro_idioma" name="libro_idioma">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="libro_precio" class="form-label">Precio *</label>
+                                <input class="form-control" type="number" step="0.01" id="libro_precio" name="libro_precio" required>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Precio de Venta</label>
-                                    <input id="edit_libro_precio" class="form-control" type="number" step="0.01" name="libro_precio" required>
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Cantidad</label>
-                                    <input id="edit_libro_cantidad" class="form-control" type="number" name="libro_cantidad" required>
-                                </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="libro_cantidad" class="form-label">Cantidad *</label>
+                                <input class="form-control" type="number" id="libro_cantidad" name="libro_cantidad" required>
                             </div>
 
-                            <div class="row">
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Idioma</label>
-                                    <input id="edit_libro_idioma" class="form-control" type="text" name="libro_idioma">
-                                </div>
-                                <div class="col-md-6 mb-3">
-                                    <label class="form-label">Número de Páginas</label>
-                                    <input id="edit_libro_paginas" class="form-control" type="number" name="libro_paginas">
-                                </div>
+                            <div class="col-md-4 mb-3">
+                                <label for="libro_paginas" class="form-label">Número de Páginas</label>
+                                <input class="form-control" type="number" id="libro_paginas" name="libro_paginas">
                             </div>
+                        </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Formato</label>
-                                <select id="edit_libro_formato" class="form-select" name="libro_formato">
-                                    <option value="Tapa Dura">Tapa Dura</option>
-                                    <option value="Tapa Blanda">Tapa Blanda</option>
-                                    <option value="Digital">Digital</option>
-                                </select>
-                            </div>
+                        <div class="mb-3">
+                            <label for="libro_formato" class="form-label">Formato</label>
+                            <input class="form-control" type="text" id="libro_formato" name="libro_formato">
+                        </div>
 
-                            <div class="text-end">
-                                <button type="submit" class="btn btn-success">Actualizar Libro</button>
-                            </div>
-                        </form>
-                    </div>
+                        <button type="submit" class="btn btn-success">Registrar Libro</button>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 
- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <!-- Modal de Actualización -->
+    <div id="modal-editar_inventario" class="modal fade" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 id="modalEditarLabel" class="modal-title">Actualizar Libro</h5>
+                    <button type="button" class="btn-close" aria-label="Close" onclick="cerrarModalEditarInventario()"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-edicion_inventario">
+                        <input type="hidden" name="modulo_inventario" value="actualizar">
+                        <input type="hidden" id="libro_id" name="libro_id">
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="edit_libro_codigo" class="form-label">Código *</label>
+                                <input class="form-control" type="text" id="edit_libro_codigo" name="libro_codigo" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="edit_libro_titulo" class="form-label">Título *</label>
+                                <input class="form-control" type="text" id="edit_libro_titulo" name="libro_titulo" required>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="edit_libro_autor" class="form-label">Autor *</label>
+                                <input class="form-control" type="text" id="edit_libro_autor" name="libro_autor" required>
+                            </div>
+
+                            <div class="col-md-6 mb-3">
+                                <label for="edit_libro_editorial" class="form-label">Editorial</label>
+                                <input class="form-control" type="text" id="edit_libro_editorial" name="libro_editorial">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="edit_libro_anio" class="form-label">Año de Publicación</label>
+                                <input class="form-control" type="number" id="edit_libro_anio" name="libro_anio">
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label for="edit_libro_genero" class="form-label">Género</label>
+                                <input class="form-control" type="text" id="edit_libro_genero" name="libro_genero">
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label for="edit_libro_idioma" class="form-label">Idioma</label>
+                                <input class="form-control" type="text" id="edit_libro_idioma" name="libro_idioma">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4 mb-3">
+                                <label for="edit_libro_precio" class="form-label">Precio *</label>
+                                <input class="form-control" type="number" step="0.01" id="edit_libro_precio" name="libro_precio" required>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label for="edit_libro_cantidad" class="form-label">Cantidad *</label>
+                                <input class="form-control" type="number" id="edit_libro_cantidad" name="libro_cantidad" required>
+                            </div>
+
+                            <div class="col-md-4 mb-3">
+                                <label for="edit_libro_paginas" class="form-label">Número de Páginas</label>
+                                <input class="form-control" type="number" id="edit_libro_paginas" name="libro_paginas">
+                            </div>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="edit_libro_formato" class="form-label">Formato</label>
+                            <input class="form-control" type="text" id="edit_libro_formato" name="libro_formato">
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Actualizar Libro</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 <script>
-  
-// // Funciones para los modales
-// function abrirModalRegistro1() {
-//     document.getElementById("modal-registro1").classList.add("is-active");
-// }
+// Funciones para los modales
+function abrirModalRegistroInventario() {
+    const modal = new bootstrap.Modal(document.getElementById("modal-registro_inventario"));
+    modal.show();
+}
 
-// function cerrarModalRegistro1() {
-//     document.getElementById("modal-registro1").classList.remove("is-active");
-//     document.getElementById("form-registro1").reset();
-// }
+function cerrarModalRegistroInventario() {
+    const modal = bootstrap.Modal.getInstance(document.getElementById("modal-registro_inventario"));
+    modal.hide();
+    document.getElementById("form-registro_inventario").reset();
+}
 
-// function abrirModalEditar1(libro) {
-//     document.getElementById("libro_id").value = libro.id_libro;
-//     document.getElementById("edit_libro_codigo").value = libro.codigo;
-//     document.getElementById("edit_libro_titulo").value = libro.titulo;
-//     document.getElementById("edit_libro_autor").value = libro.autor;
-//     document.getElementById("edit_libro_editorial").value = libro.editorial;
-//     document.getElementById("edit_libro_año").value = libro.año;
-//     document.getElementById("edit_libro_genero").value = libro.genero;
-//     document.getElementById("edit_libro_precio").value = libro.precio;
-//     document.getElementById("edit_libro_cantidad").value = libro.cantidad;
-//     document.getElementById("edit_libro_idioma").value = libro.idioma;
-//     document.getElementById("edit_libro_paginas").value = libro.paginas;
-//     document.getElementById("edit_libro_formato").value = libro.formato;
-//     document.getElementById("modal-editar1").classList.add("is-active");
-// }
+function abrirModalEditarInventario(libro) {
+    const modal = new bootstrap.Modal(document.getElementById("modal-editar_inventario"));
+    
+    // Establece los valores en el formulario de edición
+    document.getElementById("libro_id").value = libro.id_libro;
+    document.getElementById("edit_libro_codigo").value = libro.codigo;
+    document.getElementById("edit_libro_titulo").value = libro.tituloLibro;
+    document.getElementById("edit_libro_autor").value = libro.autor;
+    document.getElementById("edit_libro_editorial").value = libro.editorial;
+    document.getElementById("edit_libro_anio").value = libro.anioPublicacion;
+    document.getElementById("edit_libro_genero").value = libro.genero;
+    document.getElementById("edit_libro_precio").value = libro.precioVenta;
+    document.getElementById("edit_libro_cantidad").value = libro.cantidad;
+    document.getElementById("edit_libro_idioma").value = libro.idioma;
+    document.getElementById("edit_libro_paginas").value = libro.noPaginas;
+    document.getElementById("edit_libro_formato").value = libro.formato;
+    
+    modal.show();
+}
 
-// function cerrarModalEditar1() {
-//     document.getElementById("modal-editar1").classList.remove("is-active");
-//     document.getElementById("form-edicion1").reset();
-// }
+function cerrarModalEditarInventario() {
+    const modal = bootstrap.Modal.getInstance(document.getElementById("modal-editar_inventario"));
+    modal.hide();
+    document.getElementById("form-edicion_inventario").reset();
+}
 
-// // Función para cargar la lista de libros
-// function cargarLibros() {
-//     $.ajax({
-//         url: "<?= APP_URL ?>app/ajax/inventarioAjax.php",
-//         type: "POST",
-//         data: {
-//             modulo_libro: "listar",
-//             pagina: 1,
-//             registros: 10,
-//             url: "libro",
-//         },
-//         success: function(response) {
-//             $("#lista-libros").html(response);
-//         },
-//     });
-// }
+// Función para cargar la lista de libros
+function cargarInventario() {
+    $.ajax({
+        url: "<?= APP_URL ?>app/ajax/inventarioAjax.php",
+        type: "POST",
+        data: {
+            modulo_inventario: "listar",
+            pagina: 1,
+            registros: 15,
+            url: "inventario",
+            busqueda: ""
+        },
+        success: function(response) {
+            $("#lista-inventario").html(response);
+        }
+    });
+}
 
-// // Manejador para el formulario de registro
-// $("#form-registro1").on("submit", function(e) {
-//     e.preventDefault();
-//     $.ajax({
-//         url: "<?= APP_URL ?>app/ajax/inventarioAjax.php",
-//         type: "POST",
-//         data: $(this).serialize(),
-//         success: function(response) {
-//             const resp = JSON.parse(response);
-//             alert(resp.texto);
-//             if (resp.tipo === "limpiar") {
-//                 cerrarModalRegistro1();
-//                 cargarLibros();
-//             }
-//         },
-//     });
-// });
+// Manejador para el formulario de registro
+$("#form-registro_inventario").on("submit", function(e) {
+    e.preventDefault();
+    $.ajax({
+        url: "<?= APP_URL ?>app/ajax/inventarioAjax.php",
+        type: "POST",
+        data: $(this).serialize(),
+        success: function(response) {
+            const resp = JSON.parse(response);
+            alert(resp.texto);
+            if (resp.tipo === "limpiar") {
+                cerrarModalRegistroInventario();
+                cargarInventario();
+            }
+        }
+    });
+});
 
-// // Manejador para el formulario de edición
-// $("#form-edicion1").on("submit", function(e) {
-//     e.preventDefault();
-//     $.ajax({
-//         url: "<?= APP_URL ?>app/ajax/inventarioAjax.php",
-//         type: "POST",
-//         data: $(this).serialize(),
-//         success: function(response) {
-//             const resp = JSON.parse(response);
-//             alert(resp.texto);
-//             if (resp.tipo === "recargar") {
-//                 cerrarModalEditar1();
-//                 cargarLibros();
-//             }
-//         },
-//     });
-// });
+// Manejador para el formulario de edición
+$("#form-edicion_inventario").on("submit", function(e) {
+    e.preventDefault();
+    const formData = $(this).serialize() + "&modulo_inventario=actualizar";
+    
+    $.ajax({
+        url: "<?= APP_URL ?>app/ajax/inventarioAjax.php",
+        type: "POST",
+        data: formData,
+        dataType: "json",
+        success: function(response) {
+            alert(response.texto);
+            if (response.tipo === "recargar") {
+                cerrarModalEditarInventario();
+                cargarInventario();
+            }
+        },
+        error: function(xhr, status, error) {
+            console.error("Error en la petición:", error);
+            console.log("Respuesta del servidor:", xhr.responseText);
+            alert("Error al actualizar el libro. Por favor, intente nuevamente.");
+        }
+    });
+});
 
-// // Función para eliminar libro
-// function eliminarLibro(id) {
-//     if (confirm("¿Está seguro de eliminar este libro?")) {
-//         $.ajax({
-//             url: "<?= APP_URL ?>app/ajax/inventarioAjax.php",
-//             type: "POST",
-//             data: {
-//                 modulo_libro: "eliminar",
-//                 libro_id: id,
-//             },
-//             success: function(response) {
-//                 const resp = JSON.parse(response);
-//                 alert(resp.texto);
-//                 if (resp.tipo === "recargar") {
-//                     cargarLibros();
-//                 }
-//             },
-//         });
-//     }
-// }
+// Función para eliminar libro
+function eliminarLibro(id) {
+    if (confirm("¿Está seguro de eliminar este libro?")) {
+        $.ajax({
+            url: "<?= APP_URL ?>app/ajax/inventarioAjax.php",
+            type: "POST",
+            data: {
+                modulo_inventario: "eliminar",
+                libro_id: id
+            },
+            success: function(response) {
+                const resp = JSON.parse(response);
+                alert(resp.texto);
+                if (resp.tipo === "recargar") {
+                    cargarInventario();
+                }
+            }
+        });
+    }
+}
 
-// // Cargar libros al iniciar la página
-// $(document).ready(function() {
-//     cargarLibros();
-// }); 
+// Cargar inventario al iniciar la página
+$(document).ready(function() {
+    cargarInventario();
+});
 </script>

@@ -200,6 +200,9 @@
         <?php include "./app/views/content/editorial-view.php"; ?>
     </div>
 
+    <div id="inventario" class="content-section">
+        <?php include "./app/views/content/inventario-view.php"; ?>
+    </div>
 
 
     <div id="inventario-view" class="content-section">
