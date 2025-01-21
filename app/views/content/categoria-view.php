@@ -1,11 +1,11 @@
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
 <div class="container-fluid mb-4">
     <h1 class="display-4">Categorías</h1>
     <h2 class="h4 text-muted">Gestión de Categorías</h2>
 </div>
 
 <div class="container py-4">
-    <button class="btn btn-primary mb-4" onclick="abrirModalRegistro()">
+    <button class="btn btn-primary mb-4" onclick="abrirModalRegistroC()">
         Registrar Nueva Categoría
     </button>
 
@@ -15,15 +15,15 @@
     </div>
 
     <!-- Modal de Registro -->
-    <div id="modal-registro" class="modal fade" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
+    <div id="modal-registro_categoria" class="modal fade" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalRegistroLabel">Registrar Categoría</h5>
-                    <button type="button" class="btn-close" aria-label="Close" onclick="cerrarModalRegistro()"></button>
+                    <button type="button" class="btn-close" aria-label="Close" onclick="cerrarModalRegistroC()"></button>
                 </div>
                 <div class="modal-body">
-                    <form id="form-registro" method="POST">
+                    <form id="form-registro_categoria" method="POST">
                         <input type="hidden" name="modulo_categoria" value="registrar">
 
                         <div class="mb-3">
@@ -49,15 +49,16 @@
     </div>
 
     <!-- Modal de Actualización -->
-   <div id="modal-editar" class="modal fade" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+   <div id="modal-editar_categoria" class="modal fade" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 id="modalEditarLabel" class="modal-title">Actualizar Categoría</h5>
-                <button type="button" class="btn-close" aria-label="Close" onclick="cerrarModalEditar()"></button>
+                <button type="button" class="btn-close" aria-label="Close" onclick="cerrarModalEditarC()"></button>
             </div>
             <div class="modal-body">
-                <form id="form-edicion">
+                <form id="form-edicion_categoria">
+                    <input type="hidden" name="modulo_categoria" value="actualizar">
                     <input type="hidden" id="categoria_id" name="categoria_id">
                     <div class="mb-3">
                         <label for="edit_categoria_codigo" class="form-label">Código</label>
@@ -88,38 +89,36 @@
       // Funciones para los modales
 // Funciones para los modales
 // Función para abrir el modal de registro
-function abrirModalRegistro() {
-    const modal = new bootstrap.Modal(document.getElementById("modal-registro"));
+function abrirModalRegistroC() {
+    const modal = new bootstrap.Modal(document.getElementById("modal-registro_categoria"));
     modal.show();
 }
 
 // Función para cerrar el modal de registro
-function cerrarModalRegistro() {
-    const modal = bootstrap.Modal.getInstance(document.getElementById("modal-registro"));
+function cerrarModalRegistroC() {
+    const modal = bootstrap.Modal.getInstance(document.getElementById("modal-registro_categoria"));
     modal.hide();
-    document.getElementById("form-registro").reset(); // Limpia el formulario
+    document.getElementById("form-registro_categoria").reset(); // Limpia el formulario
 }
 
 // Función para abrir el modal de edición
-function abrirModalEditar(categoria) {
-    const modal = new bootstrap.Modal(document.getElementById("modal-editar"));
-    modal.show();
-
+function abrirModalEditarC(categoria) {
+    const modal = new bootstrap.Modal(document.getElementById("modal-editar_categoria"));
+    
     // Establece los valores en el formulario de edición
     document.getElementById("categoria_id").value = categoria.id_categoria;
     document.getElementById("edit_categoria_codigo").value = categoria.codigo;
     document.getElementById("edit_categoria_nombre").value = categoria.nombre;
-    document.getElementById("edit_categoria_subcategoria").value = categoria.subcategoria;
-
-    // Mueve el foco al primer campo
-    document.getElementById("edit_categoria_codigo").focus();
+    document.getElementById("edit_categoria_subcategoria").value = categoria.subcategoria || '';
+    
+    modal.show();
 }
 
 // Función para cerrar el modal de edición
-function cerrarModalEditar() {
-    const modal = bootstrap.Modal.getInstance(document.getElementById("modal-editar"));
+function cerrarModalEditarC() {
+    const modal = bootstrap.Modal.getInstance(document.getElementById("modal-editar_categoria"));
     modal.hide();
-    document.getElementById("form-edicion").reset(); // Limpia el formulario
+    document.getElementById("form-edicion_categoria").reset(); // Limpia el formulario
 }
 
 
@@ -141,7 +140,7 @@ function cargarCategorias() {
 }
 
 // Manejador para el formulario de registro
-$("#form-registro").on("submit", function (e) {
+$("#form-registro_categoria").on("submit", function (e) {
   e.preventDefault();
   $.ajax({
     url: "<?= APP_URL ?>app/ajax/categoriaAjax.php",
@@ -151,7 +150,7 @@ $("#form-registro").on("submit", function (e) {
       const resp = JSON.parse(response);
       alert(resp.texto);
       if (resp.tipo === "limpiar") {
-        cerrarModalRegistro();
+        cerrarModalRegistroC();
         cargarCategorias();
       }
     },
@@ -159,20 +158,29 @@ $("#form-registro").on("submit", function (e) {
 });
 
 // Manejador para el formulario de edición
-$("#form-edicion").on("submit", function (e) {
+// Manejador para el formulario de edición
+$("#form-edicion_categoria").on("submit", function (e) {
   e.preventDefault();
+  const formData = $(this).serialize() + "&modulo_categoria=actualizar";
+  
   $.ajax({
     url: "<?= APP_URL ?>app/ajax/categoriaAjax.php",
     type: "POST",
-    data: $(this).serialize(),
+    data: formData,
+    dataType: "json", // Especificamos que esperamos JSON
     success: function (response) {
-      const resp = JSON.parse(response);
-      alert(resp.texto);
-      if (resp.tipo === "recargar") {
-        cerrarModalEditar();
+      alert(response.texto);
+      if (response.tipo === "recargar") {
+        cerrarModalEditarC();
         cargarCategorias();
       }
     },
+    error: function(xhr, status, error) {
+      // Manejador de errores para depuración
+      console.error("Error en la petición:", error);
+      console.log("Respuesta del servidor:", xhr.responseText);
+      alert("Error al actualizar la categoría. Por favor, intente nuevamente.");
+    }
   });
 });
 
@@ -203,4 +211,4 @@ $(document).ready(function () {
 });
 
 
-    </script>
+</script>

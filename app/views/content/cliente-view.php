@@ -1,11 +1,8 @@
+ <div class="container py-4">
+        <h1>Clientes</h1>
+        <h4 class="text-muted mb-4">Gestión de Clientes</h4>
 
-    <div class="container is-fluid mb-6">
-        <h1 class="title">Clientes</h1>
-        <h2 class="subtitle">Gestión de Clientes</h2>
-    </div>
-
-    <div class="container pb-6 pt-6">
-        <button class="button is-primary mb-4" onclick="abrirModalRegistro()">
+        <button class="btn btn-primary mb-4" onclick="abrirModalRegistro()">
             Registrar Nuevo Cliente
         </button>
 
@@ -15,123 +12,109 @@
         </div>
 
         <!-- Modal de Registro -->
-        <div id="modal-registro" class="modal">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Registrar Cliente</p>
-                    <button class="delete" aria-label="close" onclick="cerrarModalRegistro()"></button>
-                </header>
-                <section class="modal-card-body">
-                    <form id="form-registro" method="POST">
-                        <input type="hidden" name="modulo_cliente" value="registrar">
+        <div class="modal fade" id="modal-registro" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Registrar Cliente</h5>
+                        <button type="button" class="btn-close" onclick="cerrarModalRegistro()"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-registro" method="POST">
+                            <input type="hidden" name="modulo_cliente" value="registrar">
 
-                        <div class="field">
-                            <label class="label">Nombre</label>
-                            <div class="control">
-                                <input class="input" type="text" name="cliente_nombre" required>
+                            <div class="mb-3">
+                                <label class="form-label">Nombre</label>
+                                <input class="form-control" type="text" name="cliente_nombre" required>
                             </div>
-                        </div>
 
-                        <div class="field">
-                            <label class="label">Tipo de Documento</label>
-                            <div class="control">
-                                <div class="select">
-                                    <select name="cliente_tipo_documento" required>
-                                        <option value="DNI">DNI</option>
-                                        <option value="Pasaporte">Pasaporte</option>
-                                    </select>
-                                </div>
+                            <div class="mb-3">
+                                <label class="form-label">Tipo de Documento</label>
+                                <select class="form-select" name="cliente_tipo_documento" required>
+                                    <option value="DNI">DNI</option>
+                                    <option value="Pasaporte">Pasaporte</option>
+                                </select>
                             </div>
-                        </div>
 
-                        <div class="field">
-                            <label class="label">Número de Documento</label>
-                            <div class="control">
-                                <input class="input" type="text" name="cliente_numero_documento" required>
+                            <div class="mb-3">
+                                <label class="form-label">Número de Documento</label>
+                                <input class="form-control" type="text" name="cliente_numero_documento" required>
                             </div>
-                        </div>
 
-                        <div class="field">
-                            <label class="label">Teléfono</label>
-                            <div class="control">
-                                <input class="input" type="text" name="cliente_telefono" required>
+                            <div class="mb-3">
+                                <label class="form-label">Teléfono</label>
+                                <input class="form-control" type="text" name="cliente_telefono" required>
                             </div>
-                        </div>
 
-                        <div class="field">
-                            <button type="submit" class="button is-success">Registrar Cliente</button>
-                        </div>
-                    </form>
-                </section>
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-success">Registrar Cliente</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Modal de Actualización -->
-        <div id="modal-editar" class="modal">
-            <div class="modal-background"></div>
-            <div class="modal-card">
-                <header class="modal-card-head">
-                    <p class="modal-card-title">Actualizar Cliente</p>
-                    <button class="delete" aria-label="close" onclick="cerrarModalEditar()"></button>
-                </header>
-                <section class="modal-card-body">
-                    <form id="form-edicion" method="POST">
-                        <input type="hidden" name="modulo_cliente" value="actualizar">
-                        <input type="hidden" id="cliente_id" name="cliente_id">
+        <div class="modal fade" id="modal-editar" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Actualizar Cliente</h5>
+                        <button type="button" class="btn-close" onclick="cerrarModalEditar()"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="form-edicion" method="POST">
+                            <input type="hidden" name="modulo_cliente" value="actualizar">
+                            <input type="hidden" id="cliente_id" name="cliente_id">
 
-                        <div class="field">
-                            <label class="label">Nombre</label>
-                            <div class="control">
-                                <input id="edit_cliente_nombre" class="input" type="text" name="cliente_nombre" required>
+                            <div class="mb-3">
+                                <label class="form-label">Nombre</label>
+                                <input id="edit_cliente_nombre" class="form-control" type="text" name="cliente_nombre" required>
                             </div>
-                        </div>
 
-                        <div class="field">
-                            <label class="label">Tipo de Documento</label>
-                            <div class="control">
-                                <div class="select">
-                                    <select id="edit_cliente_tipo_documento" name="cliente_tipo_documento" required>
-                                        <option value="DNI">DNI</option>
-                                        <option value="Pasaporte">Pasaporte</option>
-                                    </select>
-                                </div>
+                            <div class="mb-3">
+                                <label class="form-label">Tipo de Documento</label>
+                                <select id="edit_cliente_tipo_documento" class="form-select" name="cliente_tipo_documento" required>
+                                    <option value="DNI">DNI</option>
+                                    <option value="Pasaporte">Pasaporte</option>
+                                </select>
                             </div>
-                        </div>
 
-                        <div class="field">
-                            <label class="label">Número de Documento</label>
-                            <div class="control">
-                                <input id="edit_cliente_numero_documento" class="input" type="text" name="cliente_numero_documento" required>
+                            <div class="mb-3">
+                                <label class="form-label">Número de Documento</label>
+                                <input id="edit_cliente_numero_documento" class="form-control" type="text" name="cliente_numero_documento" required>
                             </div>
-                        </div>
 
-                        <div class="field">
-                            <label class="label">Teléfono</label>
-                            <div class="control">
-                                <input id="edit_cliente_telefono" class="input" type="text" name="cliente_telefono" required>
+                            <div class="mb-3">
+                                <label class="form-label">Teléfono</label>
+                                <input id="edit_cliente_telefono" class="form-control" type="text" name="cliente_telefono" required>
                             </div>
-                        </div>
 
-                        <div class="field">
-                            <button type="submit" class="button is-success">Actualizar Cliente</button>
-                        </div>
-                    </form>
-                </section>
+                            <div class="text-end">
+                                <button type="submit" class="btn btn-success">Actualizar Cliente</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
         // Funciones para los modales
+        const modalRegistro = new bootstrap.Modal(document.getElementById('modal-registro'));
+        const modalEditar = new bootstrap.Modal(document.getElementById('modal-editar'));
+
         function abrirModalRegistro() {
-            document.getElementById('modal-registro').classList.add('is-active');
+            modalRegistro.show();
         }
 
         function cerrarModalRegistro() {
-            document.getElementById('modal-registro').classList.remove('is-active');
+            modalRegistro.hide();
             document.getElementById('form-registro').reset();
         }
 
@@ -141,11 +124,11 @@
             document.getElementById('edit_cliente_tipo_documento').value = cliente.tipo_documento;
             document.getElementById('edit_cliente_numero_documento').value = cliente.numero_documento;
             document.getElementById('edit_cliente_telefono').value = cliente.telefono;
-            document.getElementById('modal-editar').classList.add('is-active');
+            modalEditar.show();
         }
 
         function cerrarModalEditar() {
-            document.getElementById('modal-editar').classList.remove('is-active');
+            modalEditar.hide();
             document.getElementById('form-edicion').reset();
         }
 

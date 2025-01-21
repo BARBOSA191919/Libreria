@@ -170,20 +170,20 @@ class libroController extends mainModel {
 
         $numeroPaginas = ceil($total/$registros);
 
-        $tabla.='
-        <div class="table-container">
-        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+           $tabla.='
+        <div class="table-responsive">
+        <table class="table table-bordered table-striped table-hover">
             <thead>
                 <tr>
-                    <th class="has-text-centered">#</th>
-                    <th class="has-text-centered">Código</th>
-                    <th class="has-text-centered">Título</th>
-                    <th class="has-text-centered">Autor</th>
-                    <th class="has-text-centered">Editorial</th>
-                    <th class="has-text-centered">Género</th>
-                    <th class="has-text-centered">Precio</th>
-                    <th class="has-text-centered">Stock</th>
-                    <th class="has-text-centered" colspan="2">Opciones</th>
+                    <th class="text-center">#</th>
+                    <th class="text-center">Código</th>
+                    <th class="text-center">Título</th>
+                    <th class="text-center">Autor</th>
+                    <th class="text-center">Editorial</th>
+                    <th class="text-center">Género</th>
+                    <th class="text-center">Precio</th>
+                    <th class="text-center">Stock</th>
+                    <th class="text-center" colspan="2">Opciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -194,7 +194,7 @@ class libroController extends mainModel {
             $pag_inicio=$inicio+1;
             foreach($datos as $rows){
                 $tabla.='
-                    <tr class="has-text-centered">
+                    <tr class="text-center">
                         <td>'.$contador.'</td>
                         <td>'.$rows['codigo'].'</td>
                         <td>'.$rows['tituloLibro'].'</td>
@@ -204,7 +204,7 @@ class libroController extends mainModel {
                         <td>$'.$rows['precioVenta'].'</td>
                         <td>'.$rows['cantidad'].'</td>
                         <td>
-                            <button class="button is-success is-rounded is-small" onclick="abrirModalEditar({
+                            <button class="btn btn-success btn-sm rounded-pill" onclick="abrirModalEditar1({
                                 id_libro: \''.$rows['id_libro'].'\',
                                 codigo: \''.addslashes($rows['codigo']).'\',
                                 titulo: \''.addslashes($rows['tituloLibro']).'\',
@@ -220,7 +220,7 @@ class libroController extends mainModel {
                             })">Actualizar</button>
                         </td>
                         <td>
-                            <button onclick="eliminarLibro('.$rows['id_libro'].')" class="button is-danger is-rounded is-small">Eliminar</button>
+                            <button onclick="eliminarLibro('.$rows['id_libro'].')" class="btn btn-danger btn-sm rounded-pill">Eliminar</button>
                         </td>
                     </tr>
                 ';
@@ -230,9 +230,9 @@ class libroController extends mainModel {
         }else{
             if($total>=1){
                 $tabla.='
-                    <tr class="has-text-centered">
+                    <tr class="text-center">
                         <td colspan="10">
-                            <a href="'.$url.'1/" class="button is-link is-rounded is-small mt-4 mb-4">
+                            <a href="'.$url.'1/" class="btn btn-primary btn-sm rounded-pill mt-4 mb-4">
                                 Haga clic acá para recargar el listado
                             </a>
                         </td>
@@ -240,7 +240,7 @@ class libroController extends mainModel {
                 ';
             }else{
                 $tabla.='
-                    <tr class="has-text-centered">
+                    <tr class="text-center">
                         <td colspan="10">
                             No hay registros en el sistema
                         </td>
@@ -252,7 +252,7 @@ class libroController extends mainModel {
         $tabla.='</tbody></table></div>';
 
         if($total>0 && $pagina<=$numeroPaginas){
-            $tabla.='<p class="has-text-right">Mostrando libros <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
+            $tabla.='<p class="text-end">Mostrando libros <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
             $tabla.=$this->paginadorTablas($pagina,$numeroPaginas,$url,7);
         }
 
