@@ -33,7 +33,7 @@
       <span class="menu-text">Ventas</span>
     </div>
 
-    <div class="menu-item" onclick="showContent('perfil')">
+    <div class="menu-item" onclick="showContent('categoria-view')">
       <span class="emoji">
         <i class="bi bi-grid"></i>
       </span>
@@ -47,21 +47,21 @@
       <span class="menu-text">Reportes</span>
     </div>
 
-    <div class="menu-item" onclick="showContent('mensajes')">
+    <div class="menu-item" onclick="showContent('inventario-view'')">
       <span class="emoji">
         <i class="bi bi-boxes"></i>
       </span>
       <span class="menu-text">Inventario</span>
     </div>
 
-    <div class="menu-item" onclick="showContent('mensajes')">
+    <div class="menu-item" onclick="showContent('cliente')">
       <span class="emoji">
         <i class="bi bi-person-lines-fill"></i>
       </span>
       <span class="menu-text">Clientes</span>
     </div>
 
-    <div class="menu-item" onclick="showContent('mensajes')">
+    <div class="menu-item" onclick="showContent('proveedor')">
       <span class="emoji">
         <i class="bi bi-truck"></i>
       </span>
@@ -110,15 +110,17 @@
                     <a class="navbar-item" href="<?php echo APP_URL; ?>userNew/">
                         Nuevo
                     </a>
-                    <a class="navbar-item" href="<?php echo APP_URL; ?>cliente/">
-                        Nuevo cliente
-                    </a>
-                    <a class="navbar-item" href="<?php echo APP_URL; ?>categoria/">
-                        Nuevo categoria
-                    </a>
                     <a class="navbar-item" href="<?php echo APP_URL; ?>proveedor/">
-                        Nuevo Proveedor
+                        Nuevo proveedor
                     </a>
+                    <a class="navbar-item" href="<?php echo APP_URL; ?>autor/">
+                        Nuevo autor
+                    </a>
+
+                    <a class="navbar-item" href="<?php echo APP_URL; ?>editorial/">
+                        Nueva editorial
+                    </a>
+             
                     <a class="navbar-item" href="<?php echo APP_URL; ?>userList/">
                         Lista
                     </a>
@@ -156,6 +158,7 @@
     </header>
 
 
+
     <div id="inicio" class="content-section">
 
       <span class="icon-main__content">
@@ -166,27 +169,26 @@
       <p>Bienvenido a la página principal. Aquí podrás ver un resumen de toda tu información.</p>
     </div>
 
-    <div id="perfil" class="content-section">
-      <h2>👤 Mi Perfil</h2>
-      <p>Aquí puedes editar tu información personal y configurar tu perfil.</p>
+   
+
+    <div id="categoria-view" class="content-section">
+        <?php include "./app/views/content/categoria-view.php"; ?>
     </div>
 
-    <div id="mensajes" class="content-section">
-      <h2>📩 Mensajes</h2>
-      <p>Bandeja de entrada de tus mensajes y notificaciones.</p>
+    <div id="proveedor" class="content-section">
+        <?php include "./app/views/content/proveedor-view.php"; ?>
     </div>
 
-    <div id="configuracion" class="content-section">
-      <h2>⚙️ Configuración</h2>
-      <p>Ajusta las preferencias de tu cuenta y la aplicación.</p>
+    <div id="cliente" class="content-section">
+        <?php include "./app/views/content/cliente-view.php"; ?>
     </div>
 
-    <div id="ayuda" class="content-section">
-      <h2>❓ Ayuda</h2>
-      <p>Centro de ayuda y soporte para usuarios.</p>
+
+    <div id="inventario-view" class="content-section">
+        <!-- Contenido del inventario -->
     </div>
 
-  </div>
+</div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>

@@ -1,12 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <meta charset="UTF-8">
-    <title>Gestión de Proveedores</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.9.3/css/bulma.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-</head>
-<body>
+
+
     <div class="container is-fluid mb-6">
         <h1 class="title">Proveedores</h1>
         <h2 class="subtitle">Gestión de Proveedores</h2>
@@ -147,6 +140,8 @@
             </div>
         </div>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
     <script>
         // Funciones para los modales
@@ -224,7 +219,7 @@
                 }
             });
         });
-
+      
         // Función para eliminar proveedor
         function eliminarProveedor(id) {
             if(confirm('¿Está seguro de eliminar este proveedor?')) {

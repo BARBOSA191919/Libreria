@@ -142,7 +142,7 @@ class categoriaController extends mainModel {
                             <a href="'.APP_URL.'categoriaUpdate/'.$rows['id_categoria'].'/" class="button is-success is-rounded is-small">Actualizar</a>
                         </td>
                         <td>
-                            <form class="FormularioAjax" action="'.APP_URL.'app/ajax/categoriaAjax.php" method="POST" autocomplete="off">
+                            <form class="FormularioCategoriaAjax" action="'.APP_URL.'app/ajax/categoriaAjax.php" method="POST" autocomplete="off">
                                 <input type="hidden" name="modulo_categoria" value="eliminar">
                                 <input type="hidden" name="categoria_id" value="'.$rows['id_categoria'].'">
                                 <button type="submit" class="button is-danger is-rounded is-small">Eliminar</button>
