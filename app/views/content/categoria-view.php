@@ -5,7 +5,7 @@
 </div>
 
 <div class="container py-4">
-    <button class="btn btn-primary mb-4" onclick="abrirModalRegistroC()">
+    <button class="btn btn-primary mb-4" onclick="abrirModalRegistrocategoria()">
         Registrar Nueva Categoría
     </button>
 
@@ -20,7 +20,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalRegistroLabel">Registrar Categoría</h5>
-                    <button type="button" class="btn-close" aria-label="Close" onclick="cerrarModalRegistroC()"></button>
+                    <button type="button" class="btn-close" aria-label="Close" onclick="cerrarModalRegistrocategoria()"></button>
                 </div>
                 <div class="modal-body">
                     <form id="form-registro_categoria" method="POST">
@@ -54,7 +54,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 id="modalEditarLabel" class="modal-title">Actualizar Categoría</h5>
-                <button type="button" class="btn-close" aria-label="Close" onclick="cerrarModalEditarC()"></button>
+                <button type="button" class="btn-close" aria-label="Close" onclick="cerrarModalEditarcategoria()"></button>
             </div>
             <div class="modal-body">
                 <form id="form-edicion_categoria">
@@ -83,26 +83,27 @@
 
 
  
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+  <script>
       // Funciones para los modales
 // Funciones para los modales
 // Función para abrir el modal de registro
-function abrirModalRegistroC() {
+function abrirModalRegistrocategoria() {
     const modal = new bootstrap.Modal(document.getElementById("modal-registro_categoria"));
     modal.show();
 }
 
 // Función para cerrar el modal de registro
-function cerrarModalRegistroC() {
+function cerrarModalRegistrocategoria() {
     const modal = bootstrap.Modal.getInstance(document.getElementById("modal-registro_categoria"));
     modal.hide();
     document.getElementById("form-registro_categoria").reset(); // Limpia el formulario
 }
 
 // Función para abrir el modal de edición
-function abrirModalEditarC(categoria) {
+function abrirModalEditarcategoria(categoria) {
     const modal = new bootstrap.Modal(document.getElementById("modal-editar_categoria"));
     
     // Establece los valores en el formulario de edición
@@ -115,7 +116,7 @@ function abrirModalEditarC(categoria) {
 }
 
 // Función para cerrar el modal de edición
-function cerrarModalEditarC() {
+function cerrarModalEditarcategoria() {
     const modal = bootstrap.Modal.getInstance(document.getElementById("modal-editar_categoria"));
     modal.hide();
     document.getElementById("form-edicion_categoria").reset(); // Limpia el formulario
@@ -150,7 +151,7 @@ $("#form-registro_categoria").on("submit", function (e) {
       const resp = JSON.parse(response);
       alert(resp.texto);
       if (resp.tipo === "limpiar") {
-        cerrarModalRegistroC();
+        cerrarModalRegistrocategoria();
         cargarCategorias();
       }
     },
@@ -171,7 +172,7 @@ $("#form-edicion_categoria").on("submit", function (e) {
     success: function (response) {
       alert(response.texto);
       if (response.tipo === "recargar") {
-        cerrarModalEditarC();
+        cerrarModalEditarcategoria();
         cargarCategorias();
       }
     },

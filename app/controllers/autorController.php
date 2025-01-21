@@ -1,17 +1,18 @@
 <?php
+
 namespace app\controllers;
 use app\models\mainModel;
 
-class categoriaController extends mainModel {
-  
+class autorController extends mainModel {
 
-    /*----------  Controlador registrar categoria  ----------*/
-    public function registrarCategoriaControlador(){
+    /*----------  Controlador registrar autor  ----------*/
+    public function registrarAutorControlador(){
 
         # Almacenando datos #
-        $codigo = $this->limpiarCadena($_POST['categoria_codigo']);
-        $nombre = $this->limpiarCadena($_POST['categoria_nombre']);
-        $subcategoria = $this->limpiarCadena($_POST['categoria_subcategoria']);
+        $codigo = $this->limpiarCadena($_POST['autor_codigo']);
+        $nombre = $this->limpiarCadena($_POST['autor_nombre']);
+        $biografia = $this->limpiarCadena($_POST['autor_biografia']);
+        $paisorigen = $this->limpiarCadena($_POST['autor_paisorigen']);
 
         # Verificando campos obligatorios #
         if($codigo=="" || $nombre==""){
@@ -26,19 +27,19 @@ class categoriaController extends mainModel {
         }
 
         # Verificando integridad de los datos #
-        if($this->verificarDatos("[a-zA-Z0-9-]{1,70}",$codigo)){
+        if($this->verificarDatos("[a-zA-ZáéíóúÁÉÍÓÚñÑ ]{3,100}",$nombre)){
             $alerta=[
                 "tipo"=>"simple",
                 "titulo"=>"Ocurrió un error inesperado",
-                "texto"=>"El CÓDIGO no coincide con el formato solicitado",
+                "texto"=>"El NOMBRE no coincide con el formato solicitado",
                 "icono"=>"error"
             ];
             return json_encode($alerta);
             exit();
         }
 
-        # Verificando código #
-        $check_codigo = $this->ejecutarConsulta("SELECT codigo FROM categoria WHERE codigo='$codigo'");
+        # Verificando código único #
+        $check_codigo = $this->ejecutarConsulta("SELECT codigo FROM autor WHERE codigo='$codigo'");
         if($check_codigo->rowCount()>0){
             $alerta=[
                 "tipo"=>"simple",
@@ -50,7 +51,7 @@ class categoriaController extends mainModel {
             exit();
         }
 
-        $categoria_datos_reg=[
+        $autor_datos_reg=[
             [
                 "campo_nombre"=>"codigo",
                 "campo_marcador"=>":Codigo",
@@ -62,31 +63,31 @@ class categoriaController extends mainModel {
                 "campo_valor"=>$nombre
             ],
             [
-                "campo_nombre"=>"subcategoria",
-                "campo_marcador"=>":Subcategoria",
-                "campo_valor"=>$subcategoria
+                "campo_nombre"=>"biografia",
+                "campo_marcador"=>":Biografia",
+                "campo_valor"=>$biografia
             ],
             [
-                "campo_nombre"=>"fecha_registro",
-                "campo_marcador"=>":FechaRegistro",
-                "campo_valor"=>date("Y-m-d H:i:s")
+                "campo_nombre"=>"paisorigen",
+                "campo_marcador"=>":PaisOrigen",
+                "campo_valor"=>$paisorigen
             ]
         ];
 
-        $registrar_categoria = $this->guardarDatos("categoria", $categoria_datos_reg);
+        $registrar_autor = $this->guardarDatos("autor", $autor_datos_reg);
 
-        if($registrar_categoria->rowCount()==1){
+        if($registrar_autor->rowCount()==1){
             $alerta=[
                 "tipo"=>"limpiar",
-                "titulo"=>"Categoría registrada",
-                "texto"=>"La categoría ".$nombre." se registró con éxito",
+                "titulo"=>"Autor registrado",
+                "texto"=>"El autor ".$nombre." se registró con éxito",
                 "icono"=>"success"
             ];
         }else{
             $alerta=[
                 "tipo"=>"simple",
                 "titulo"=>"Ocurrió un error inesperado",
-                "texto"=>"No se pudo registrar la categoría, por favor intente nuevamente",
+                "texto"=>"No se pudo registrar el autor, por favor intente nuevamente",
                 "icono"=>"error"
             ];
         }
@@ -94,37 +95,37 @@ class categoriaController extends mainModel {
         return json_encode($alerta);
     }
 
-    /*----------  Controlador listar categoria  ----------*/
-    public function listarCategoriaControlador($pagina, $registros, $url, $busqueda){
+    /*----------  Controlador listar autor  ----------*/
+    public function listarAutorControlador($pagina, $registros, $url, $busqueda){
         $pagina = $this->limpiarCadena($pagina);
         $registros = $this->limpiarCadena($registros);
         $url = $this->limpiarCadena($url);
         $url = APP_URL.$url."/";
         $busqueda = $this->limpiarCadena($busqueda);
         $tabla = "";
-    
+
         $pagina = (isset($pagina) && $pagina>0) ? (int) $pagina : 1;
         $inicio = ($pagina>0) ? (($pagina * $registros)-$registros) : 0;
-        
+
         $pag_inicio = 0;
         $pag_final = 0;
-    
+
         if(isset($busqueda) && $busqueda!=""){
-            $consulta_datos = "SELECT * FROM categoria WHERE (codigo LIKE '%$busqueda%' OR nombre LIKE '%$busqueda%') ORDER BY nombre ASC LIMIT $inicio,$registros";
-            $consulta_total = "SELECT COUNT(id_categoria) FROM categoria WHERE (codigo LIKE '%$busqueda%' OR nombre LIKE '%$busqueda%')";
+            $consulta_datos = "SELECT * FROM autor WHERE (nombre LIKE '%$busqueda%' OR codigo LIKE '%$busqueda%') ORDER BY nombre ASC LIMIT $inicio,$registros";
+            $consulta_total = "SELECT COUNT(idAutor) FROM autor WHERE (nombre LIKE '%$busqueda%' OR codigo LIKE '%$busqueda%')";
         }else{
-            $consulta_datos = "SELECT * FROM categoria ORDER BY nombre ASC LIMIT $inicio,$registros";
-            $consulta_total = "SELECT COUNT(id_categoria) FROM categoria";
+            $consulta_datos = "SELECT * FROM autor ORDER BY nombre ASC LIMIT $inicio,$registros";
+            $consulta_total = "SELECT COUNT(idAutor) FROM autor";
         }
-    
+
         $datos = $this->ejecutarConsulta($consulta_datos);
         $datos = $datos->fetchAll();
-    
+
         $total = $this->ejecutarConsulta($consulta_total);
         $total = (int) $total->fetchColumn();
-    
+
         $numeroPaginas = ceil($total/$registros);
-    
+
         $tabla.='
         <div class="table-container">
         <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
@@ -133,14 +134,14 @@ class categoriaController extends mainModel {
                     <th class="has-text-centered">#</th>
                     <th class="has-text-centered">Código</th>
                     <th class="has-text-centered">Nombre</th>
-                    <th class="has-text-centered">Subcategoría</th>
-                    <th class="has-text-centered">Fecha Registro</th>
+                    <th class="has-text-centered">País de Origen</th>
+                    <th class="has-text-centered">Biografía</th>
                     <th class="has-text-centered" colspan="2">Opciones</th>
                 </tr>
             </thead>
             <tbody>
         ';
-    
+
         if($total>=1 && $pagina<=$numeroPaginas){
             $contador=$inicio+1;
             $pag_inicio=$inicio+1;
@@ -150,18 +151,19 @@ class categoriaController extends mainModel {
                         <td>'.$contador.'</td>
                         <td>'.$rows['codigo'].'</td>
                         <td>'.$rows['nombre'].'</td>
-                        <td>'.$rows['subcategoria'].'</td>
-                        <td>'.date("d-m-Y  h:i:s A",strtotime($rows['fecha_registro'])).'</td>
+                        <td>'.$rows['paisorigen'].'</td>
+                        <td>'.$rows['biografia'].'</td>
                         <td>
-                            <button class="button is-success is-rounded is-small" onclick="abrirModalEditarcategoria({
-                                id_categoria: \''.$rows['id_categoria'].'\',
-                                codigo: \''.addslashes($rows['codigo']).'\',
+                            <button class="button is-success is-rounded is-small" onclick="abrirModalEditarautor({
+                                idAutor: \''.$rows['idAutor'].'\',
+                                codigo: \''.$rows['codigo'].'\',
                                 nombre: \''.addslashes($rows['nombre']).'\',
-                                subcategoria: \''.addslashes($rows['subcategoria']).'\'
+                                biografia: \''.addslashes($rows['biografia']).'\',
+                                paisorigen: \''.addslashes($rows['paisorigen']).'\'
                             })">Actualizar</button>
                         </td>
                         <td>
-                            <button onclick="eliminarCategoria('.$rows['id_categoria'].')" class="button is-danger is-rounded is-small">Eliminar</button>
+                            <button onclick="eliminarAutor('.$rows['idAutor'].')" class="button is-danger is-rounded is-small">Eliminar</button>
                         </td>
                     </tr>
                 ';
@@ -172,7 +174,7 @@ class categoriaController extends mainModel {
             if($total>=1){
                 $tabla.='
                     <tr class="has-text-centered">
-                        <td colspan="7">
+                        <td colspan="6">
                             <a href="'.$url.'1/" class="button is-link is-rounded is-small mt-4 mb-4">
                                 Haga clic acá para recargar el listado
                             </a>
@@ -182,74 +184,74 @@ class categoriaController extends mainModel {
             }else{
                 $tabla.='
                     <tr class="has-text-centered">
-                        <td colspan="7">
+                        <td colspan="6">
                             No hay registros en el sistema
                         </td>
                     </tr>
                 ';
             }
         }
-    
+
         $tabla.='</tbody></table></div>';
-    
+
         if($total>0 && $pagina<=$numeroPaginas){
-            $tabla.='<p class="has-text-right">Mostrando categorías <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
+            $tabla.='<p class="has-text-right">Mostrando autores <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
             $tabla.=$this->paginadorTablas($pagina,$numeroPaginas,$url,7);
         }
-    
+
         return $tabla;
     }
 
-    /*----------  Controlador eliminar categoria  ----------*/
-    public function eliminarCategoriaControlador(){
-        $id = $this->limpiarCadena($_POST['categoria_id']);
-    
-        # Verificando categoria #
-        $datos = $this->ejecutarConsulta("SELECT * FROM categoria WHERE id_categoria='$id'");
+    /*----------  Controlador eliminar autor  ----------*/
+    public function eliminarAutorControlador(){
+        $id = $this->limpiarCadena($_POST['autor_id']);
+
+        # Verificando autor #
+        $datos = $this->ejecutarConsulta("SELECT * FROM autor WHERE idAutor='$id'");
         if($datos->rowCount()<=0){
             $alerta=[
                 "tipo"=>"simple",
                 "titulo"=>"Ocurrió un error inesperado",
-                "texto"=>"No hemos encontrado la categoría en el sistema",
+                "texto"=>"No hemos encontrado el autor en el sistema",
                 "icono"=>"error"
             ];
             return json_encode($alerta);
             exit();
         }
-    
-        # Eliminando categoria #
-        $eliminar = $this->ejecutarConsulta("DELETE FROM categoria WHERE id_categoria='$id'");
+
+        # Eliminando autor #
+        $eliminar = $this->ejecutarConsulta("DELETE FROM autor WHERE idAutor='$id'");
         
         if($eliminar->rowCount()==1){
             $alerta=[
                 "tipo"=>"recargar",
-                "titulo"=>"Categoría eliminada",
-                "texto"=>"La categoría ha sido eliminada exitosamente",
+                "titulo"=>"Autor eliminado",
+                "texto"=>"El autor ha sido eliminado exitosamente",
                 "icono"=>"success"
             ];
         }else{
             $alerta=[
                 "tipo"=>"simple",
                 "titulo"=>"Ocurrió un error inesperado",
-                "texto"=>"No se pudo eliminar la categoría, por favor intente nuevamente",
+                "texto"=>"No se pudo eliminar el autor, por favor intente nuevamente",
                 "icono"=>"error"
             ];
         }
-    
+
         return json_encode($alerta);
     }
 
-    /*----------  Controlador actualizar categoria  ----------*/
-    public function actualizarCategoriaControlador(){
-        $id = $this->limpiarCadena($_POST['categoria_id']);
+    /*----------  Controlador actualizar autor  ----------*/
+    public function actualizarAutorControlador(){
+        $id = $this->limpiarCadena($_POST['autor_id']);
 
-        # Verificando categoria #
-        $datos = $this->ejecutarConsulta("SELECT * FROM categoria WHERE id_categoria='$id'");
+        # Verificando autor #
+        $datos = $this->ejecutarConsulta("SELECT * FROM autor WHERE idAutor='$id'");
         if($datos->rowCount()<=0){
             $alerta=[
                 "tipo"=>"simple",
                 "titulo"=>"Ocurrió un error inesperado",
-                "texto"=>"No hemos encontrado la categoría en el sistema",
+                "texto"=>"No hemos encontrado el autor en el sistema",
                 "icono"=>"error"
             ];
             return json_encode($alerta);
@@ -259,9 +261,10 @@ class categoriaController extends mainModel {
         }
 
         # Almacenando datos #
-        $codigo = $this->limpiarCadena($_POST['categoria_codigo']);
-        $nombre = $this->limpiarCadena($_POST['categoria_nombre']);
-        $subcategoria = $this->limpiarCadena($_POST['categoria_subcategoria']);
+        $codigo = $this->limpiarCadena($_POST['autor_codigo']);
+        $nombre = $this->limpiarCadena($_POST['autor_nombre']);
+        $biografia = $this->limpiarCadena($_POST['autor_biografia']);
+        $paisorigen = $this->limpiarCadena($_POST['autor_paisorigen']);
 
         # Verificando campos obligatorios #
         if($codigo=="" || $nombre==""){
@@ -275,9 +278,9 @@ class categoriaController extends mainModel {
             exit();
         }
 
-        # Verificando código #
+        # Verificando código único #
         if($datos['codigo'] != $codigo){
-            $check_codigo = $this->ejecutarConsulta("SELECT codigo FROM categoria WHERE codigo='$codigo'");
+            $check_codigo = $this->ejecutarConsulta("SELECT codigo FROM autor WHERE codigo='$codigo'");
             if($check_codigo->rowCount()>0){
                 $alerta=[
                     "tipo"=>"simple",
@@ -290,7 +293,7 @@ class categoriaController extends mainModel {
             }
         }
 
-        $categoria_datos_up=[
+        $autor_datos_up=[
             [
                 "campo_nombre"=>"codigo",
                 "campo_marcador"=>":Codigo",
@@ -302,30 +305,35 @@ class categoriaController extends mainModel {
                 "campo_valor"=>$nombre
             ],
             [
-                "campo_nombre"=>"subcategoria",
-                "campo_marcador"=>":Subcategoria",
-                "campo_valor"=>$subcategoria
+                "campo_nombre"=>"biografia",
+                "campo_marcador"=>":Biografia",
+                "campo_valor"=>$biografia
+            ],
+            [
+                "campo_nombre"=>"paisorigen",
+                "campo_marcador"=>":PaisOrigen",
+                "campo_valor"=>$paisorigen
             ]
         ];
 
         $condicion=[
-            "condicion_campo"=>"id_categoria",
+            "condicion_campo"=>"idAutor",
             "condicion_marcador"=>":ID",
             "condicion_valor"=>$id
         ];
 
-        if($this->actualizarDatos("categoria",$categoria_datos_up,$condicion)){
+        if($this->actualizarDatos("autor",$autor_datos_up,$condicion)){
             $alerta=[
                 "tipo"=>"recargar",
-                "titulo"=>"Categoría actualizada",
-                "texto"=>"Los datos de la categoría ".$nombre." se actualizaron correctamente",
+                "titulo"=>"Autor actualizado",
+                "texto"=>"Los datos del autor ".$nombre." se actualizaron correctamente",
                 "icono"=>"success"
             ];
         }else{
             $alerta=[
                 "tipo"=>"simple",
                 "titulo"=>"Ocurrió un error inesperado",
-                "texto"=>"No hemos podido actualizar los datos de la categoría ".$nombre.", por favor intente nuevamente",
+                "texto"=>"No hemos podido actualizar los datos del autor ".$nombre.", por favor intente nuevamente",
                 "icono"=>"error"
             ];
         }
