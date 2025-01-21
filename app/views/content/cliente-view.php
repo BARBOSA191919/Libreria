@@ -145,7 +145,7 @@
             document.getElementById('edit_cliente_tipo_documento').value = cliente.tipo_documento;
             document.getElementById('edit_cliente_numero_documento').value = cliente.numero_documento;
             document.getElementById('edit_cliente_telefono').value = cliente.telefono;
-            document.getElementById('modal-editar').classList.add('is-active');
+            document.getElementById('modal-editar-cliente').classList.add('is-active');
         }
 
         function cerrarModalEditarcliente() {

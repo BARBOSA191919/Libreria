@@ -131,11 +131,11 @@
         document.getElementById('edit_autor_nombre').value = autor.nombre;
         document.getElementById('edit_autor_paisorigen').value = autor.paisorigen;
         document.getElementById('edit_autor_biografia').value = autor.biografia;
-        document.getElementById('modal-editar').classList.add('is-active');
+        document.getElementById('modal-editar-autor').classList.add('is-active');
     }
 
     function cerrarModalEditarautor() {
-        document.getElementById('modal-editar').classList.remove('is-active');
+        document.getElementById('modal-editar-autor').classList.remove('is-active');
         document.getElementById('form-edicion').reset();
     }
 

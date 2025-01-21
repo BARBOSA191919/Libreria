@@ -124,17 +124,17 @@
         document.getElementById('form-registro-editorial').reset();
     }
 
-    function abrirModalEditar(editorial) {
+    function abrirModalEditareditorial(editorial) {
         document.getElementById('editorial_id').value = editorial.idEditorial;
         document.getElementById('edit_editorial_codigo').value = editorial.codigo;
         document.getElementById('edit_editorial_nombre').value = editorial.nombre;
         document.getElementById('edit_editorial_pais').value = editorial.pais;
         document.getElementById('edit_editorial_informacioncontacto').value = editorial.informacioncontacto;
-        document.getElementById('modal-editar').classList.add('is-active');
+        document.getElementById('modal-editar-editorial').classList.add('is-active');
     }
 
     function cerrarModalEditareditorial() {
-        document.getElementById('modal-editar').classList.remove('is-active');
+        document.getElementById('modal-editar-editorial').classList.remove('is-active');
         document.getElementById('form-edicion').reset();
     }
 

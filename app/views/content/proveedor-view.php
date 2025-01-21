@@ -162,11 +162,11 @@
             document.getElementById('edit_proveedor_direccion').value = proveedor.direccion;
             document.getElementById('edit_proveedor_telefono').value = proveedor.telefono;
             document.getElementById('edit_proveedor_email').value = proveedor.email;
-            document.getElementById('modal-editar').classList.add('is-active');
+            document.getElementById('modal-editar-proveedor').classList.add('is-active');
         }
 
         function cerrarModalEditarproveedor() {
-            document.getElementById('modal-editar').classList.remove('is-active');
+            document.getElementById('modal-editar-proveedor').classList.remove('is-active');
             document.getElementById('form-edicion').reset();
         }
 
