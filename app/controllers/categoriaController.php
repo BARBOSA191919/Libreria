@@ -153,6 +153,7 @@ class categoriaController extends mainModel {
                         <td>'.$rows['subcategoria'].'</td>
                         <td>'.date("d-m-Y  h:i:s A",strtotime($rows['fecha_registro'])).'</td>
                         <td>
+
                             <button class="button is-success is-rounded is-small" onclick="abrirModalEditarcategoria({
                                 id_categoria: \''.$rows['id_categoria'].'\',
                                 codigo: \''.addslashes($rows['codigo']).'\',
