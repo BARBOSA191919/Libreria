@@ -47,7 +47,7 @@
       <span class="menu-text">Reportes</span>
     </div>
 
-    <div class="menu-item" onclick="showContent('inventario-view'')">
+    <div class="menu-item" onclick="showContent('inventario')">
       <span class="emoji">
         <i class="bi bi-boxes"></i>
       </span>
@@ -127,7 +127,6 @@
                         Nuevo
                     </a>
           
-             
                     <a class="navbar-item" href="<?php echo APP_URL; ?>userList/">
                         Lista
                     </a>
@@ -189,6 +188,9 @@
     <div id="cliente" class="content-section">
         <?php include "./app/views/content/cliente-view.php"; ?>
     </div>
+    <div id="inventario" class="content-section">
+        <?php include "./app/views/content/inventario-view.php"; ?>
+    </div>
 
     
     <div id="autor" class="content-section">
@@ -200,18 +202,11 @@
         <?php include "./app/views/content/editorial-view.php"; ?>
     </div>
 
-
-
-    <div id="inventario-view" class="content-section">
-        <!-- Contenido del inventario -->
-    </div>
-
 </div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-  <script src="app/views/js/main.js"></script>
- 
+<script src="<?php echo APP_URL; ?>app/views/js/main.js"></script> 
 </body>
 
 </html>
