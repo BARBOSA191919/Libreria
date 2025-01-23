@@ -139,18 +139,18 @@ class proveedorController extends mainModel {
         $numeroPaginas = ceil($total/$registros);
 
         $tabla.='
-        <div class="table-container">
-        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-            <thead>
-                <tr>
-                    <th class="has-text-centered">#</th>
-                    <th class="has-text-centered">Código</th>
-                    <th class="has-text-centered">Empresa</th>
-                    <th class="has-text-centered">Contacto</th>
-                    <th class="has-text-centered">Dirección</th>
-                    <th class="has-text-centered">Teléfono</th>
-                    <th class="has-text-centered">Email</th>
-                    <th class="has-text-centered" colspan="2">Opciones</th>
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="table-dark">
+                <tr class="text-center">
+                    <th class="text-th">#</th>
+                    <th class="text-th">Código</th>
+                    <th class="text-th">Empresa</th>
+                    <th class="text-th">Contacto</th>
+                    <th class="text-th">Dirección</th>
+                    <th class="text-th">Teléfono</th>
+                    <th class="text-th">Email</th>
+                    <th class="text-th">Opciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -161,16 +161,16 @@ class proveedorController extends mainModel {
             $pag_inicio=$inicio+1;
             foreach($datos as $rows){
                 $tabla.='
-                    <tr class="has-text-centered">
-                        <td>'.$contador.'</td>
-                        <td>'.$rows['codigo'].'</td>
-                        <td>'.$rows['nombreEmpresa'].'</td>
-                        <td>'.$rows['contacto'].'</td>
-                        <td>'.$rows['direccion'].'</td>
-                        <td>'.$rows['telefono'].'</td>
-                        <td>'.$rows['email'].'</td>
-                        <td>
-                            <button class="button is-success is-rounded is-small" onclick="abrirModalEditarproveedor({
+                    <tr class="tr-main text-center">
+                        <td class="text-td">'.$contador.'</td>
+                        <td class="text-td">'.$rows['codigo'].'</td>
+                        <td class="text-td">'.$rows['nombreEmpresa'].'</td>
+                        <td class="text-td">'.$rows['contacto'].'</td>
+                        <td class="text-td">'.$rows['direccion'].'</td>
+                        <td class="text-td">'.$rows['telefono'].'</td>
+                        <td class="text-td">'.$rows['email'].'</td>
+                        <td class="text-td">
+                            <button class="text-td btn btn-success btn-sm rounded-pill" onclick="abrirModalEditarproveedor({
                                 id_proveedor: \''.$rows['id_proveedor'].'\',
                                 codigo: \''.$rows['codigo'].'\',
                                 nombreEmpresa: \''.addslashes($rows['nombreEmpresa']).'\',
@@ -178,10 +178,15 @@ class proveedorController extends mainModel {
                                 direccion: \''.addslashes($rows['direccion']).'\',
                                 telefono: \''.$rows['telefono'].'\',
                                 email: \''.$rows['email'].'\'
-                            })">Actualizar</button>
-                        </td>
-                        <td>
-                            <button onclick="eliminarProveedor('.$rows['id_proveedor'].')" class="button is-danger is-rounded is-small">Eliminar</button>
+                            })"><i class=" bi bi-arrow-repeat"></i>
+                        <span class="text-icono">
+                        Actualizar
+                        </span>
+                        </button>
+                       
+                            <button onclick="eliminarProveedor('.$rows['id_proveedor'].')" class="text-td btn btn-danger btn-sm rounded-pill">
+                            <i class="bi bi-trash"></i>
+                            </button>
                         </td>
                     </tr>
                 ';

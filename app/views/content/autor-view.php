@@ -1,73 +1,77 @@
-<div class="container is-fluid mb-6">
-    <h1 class="title">Autores</h1>
-    <h2 class="subtitle">Gestión de Autores</h2>
-</div>
+<div class="container">
+  <div class="position-contenido">
 
-<div class="container pb-6 pt-6">
-    <button class="button is-primary mb-4" onclick="abrirModalRegistroautor()">
+  <div class="position-buttom">
+   <button class="btn btn-registrar btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#registroAutorModal">
         Registrar Nuevo Autor
     </button>
+  </div>
 
-    <!-- Listado de Autores -->
+  <div class="content-name">
+    <div class="container-fluid mb-4">
+    <h1 class="text-titulo">Autores</h1>
+    <h2 class="h5 text-muted">Gestión de Autores</h2>
+</div>
+  </div>
+
+  </div>
+
+   
+
+    <!-- Lista de Autores -->
     <div id="lista-autores" class="mt-4">
         <!-- Aquí se cargará la lista de autores -->
     </div>
 
     <!-- Modal de Registro -->
-    <div id="modal-registro-autor" class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">Registrar Autor</p>
-                <button class="delete" aria-label="close" onclick="cerrarModalRegistroautor()"></button>
-            </header>
-            <section class="modal-card-body">
-                <form id="form-registro-autor" method="POST">
-                    <input type="hidden" name="modulo_autor" value="registrar">
+    <div class="modal fade" id="registroAutorModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title fw-bold text-model_title">Registrar Autor</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="form-registro-autor">
+                        <input type="hidden" name="modulo_autor" value="registrar">
 
-                    <div class="field">
-                        <label class="label">Código</label>
-                        <div class="control">
-                            <input class="input" type="text" name="autor_codigo" required>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-model">Código</label>
+                            <input class="form-control" type="text" name="autor_codigo" required>
                         </div>
-                    </div>
 
-                    <div class="field">
-                        <label class="label">Nombre</label>
-                        <div class="control">
-                            <input class="input" type="text" name="autor_nombre" required>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-model">Nombre</label>
+                            <input class="form-control" type="text" name="autor_nombre" required>
                         </div>
-                    </div>
 
-                    <div class="field">
-                        <label class="label">País de Origen</label>
-                        <div class="control">
-                            <input class="input" type="text" name="autor_paisorigen">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-model">País de Origen</label>
+                            <input class="form-control" type="text" name="autor_paisorigen">
                         </div>
-                    </div>
 
-                    <div class="field">
-                        <label class="label">Biografía</label>
-                        <div class="control">
-                            <textarea class="textarea" name="autor_biografia"></textarea>
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold text-model">Biografía</label>
+                            <textarea class="form-control" name="autor_biografia" rows="4"></textarea>
                         </div>
-                    </div>
 
-                    <div class="field">
-                        <button type="submit" class="button is-success">Registrar Autor</button>
-                    </div>
-                </form>
-            </section>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary text-model" data-bs-dismiss="modal">Cancelar</button>
+                            <button type="submit" class="btn btn-success text-model">Registrar Autor</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 
     <!-- Modal de Actualización -->
-    <div id="modal-editar-autor" class="modal">
-        <div class="modal-background"></div>
-        <div class="modal-card">
-            <header class="modal-card-head">
-                <p class="modal-card-title">Actualizar Autor</p>
-                <button class="delete" aria-label="close" onclick="cerrarModalEditarautor()"></button>
+   <div id="modal-editar-autor" class="modal" class="modal fade" tabindex="-1" aria-labelledby="modalEditarLabel">
+        <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <header class="modal-header">
+                <h5 class="modal-title fw-bold text-model_title">Actualizar Autor</h5>
+                <button type="button" class="btn-close" aria-label="Close" onclick="cerrarModalEditarautor()"></button>
             </header>
             <section class="modal-card-body">
                 <form id="form-edicion-autor" method="POST">
@@ -75,47 +79,44 @@
                     <input type="hidden" id="autor_id" name="autor_id">
 
                     <div class="field">
-                        <label class="label">Código</label>
-                        <div class="control">
-                            <input id="edit_autor_codigo" class="input" type="text" name="autor_codigo" required>
-                        </div>
+                        <label class="label fw-semibold text-model">Código</label>
+                        <input id="edit_autor_codigo" class="form-control form-control-lg text-model_input" type="text" name="autor_codigo" required>
                     </div>
 
                     <div class="field">
-                        <label class="label">Nombre</label>
-                        <div class="control">
-                            <input id="edit_autor_nombre" class="input" type="text" name="autor_nombre" required>
-                        </div>
+                        <label class="label fw-semibold text-model">Nombre</label>
+                        <input id="edit_autor_nombre" class="form-control form-control-lg text-model_input" type="text" name="autor_nombre" required>
                     </div>
 
                     <div class="field">
-                        <label class="label">País de Origen</label>
-                        <div class="control">
-                            <input id="edit_autor_paisorigen" class="input" type="text" name="autor_paisorigen">
-                        </div>
+                        <label class="label fw-semibold text-model">País de Origen</label>
+                        <input id="edit_autor_paisorigen" class="form-control form-control-lg text-model_input" type="text" name="autor_paisorigen">
                     </div>
 
                     <div class="field">
-                        <label class="label">Biografía</label>
-                        <div class="control">
-                            <textarea id="edit_autor_biografia" class="textarea" name="autor_biografia"></textarea>
-                        </div>
+                        <label class="label fw-semibold text-model">Biografía</label>
+                        <textarea id="edit_autor_biografia" class="textarea" name="autor_biografia"></textarea>
                     </div>
 
                     <div class="field">
-                        <button type="submit" class="button is-success">Actualizar Autor</button>
+                        <button type="submit" class="btn btn-success text-model">Actualizar Autor</button>
                     </div>
                 </form>
             </section>
         </div>
     </div>
+    </div>
 </div>
 
+
+<link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/autor.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 <script>
-    // Funciones para los modales
+    // Función para cargar la lista de autores
+     // Funciones para los modales
     function abrirModalRegistroautor() {
         document.getElementById('modal-registro-autor').classList.add('is-active');
     }

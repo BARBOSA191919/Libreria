@@ -114,21 +114,21 @@ class inventarioController extends mainModel {
     $numeroPaginas = ceil($total/$registros);
 
     $tabla.='
-    <div class="table-container">
-    <table class="table table-striped table-hover">
-        <thead>
-            <tr>
-                <th class="text-center">#</th>
-                <th class="text-center">Código</th>
-                <th class="text-center">Título</th>
-                <th class="text-center">Autor</th>
-                <th class="text-center">Editorial</th>
-                <th class="text-center">Año</th>
-                <th class="text-center">Género</th>
-                <th class="text-center">Precio</th>
-                <th class="text-center">Stock</th>
-                <th class="text-center">Formato</th>
-                <th class="text-center" colspan="2">Opciones</th>
+    <div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="table-dark">
+            <tr class="text-center" >
+                <th class="text-th">#</th>
+                <th class="text-th">Código</th>
+                <th class="text-th">Título</th>
+                <th class="text-th">Autor</th>
+                <th class="text-th">Editorial</th>
+                <th class="text-th">Año</th>
+                <th class="text-th">Género</th>
+                <th class="text-th">Precio</th>
+                <th class="text-th">Stock</th>
+                <th class="text-th">Formato</th>
+                <th class="text-th">Opciones</th>
             </tr>
         </thead>
         <tbody>
@@ -139,19 +139,19 @@ class inventarioController extends mainModel {
         $pag_inicio=$inicio+1;
         foreach($datos as $rows){
             $tabla.='
-                <tr class="text-center">
-                    <td>'.$contador.'</td>
-                    <td>'.$rows['codigo'].'</td>
-                    <td>'.$rows['tituloLibro'].'</td>
-                    <td>'.$rows['autor'].'</td>
-                    <td>'.$rows['editorial'].'</td>
-                    <td>'.$rows['anioPublicacion'].'</td>
-                    <td>'.$rows['genero'].'</td>
-                    <td>'.$rows['precioVenta'].'</td>
-                    <td>'.$rows['cantidad'].'</td>
-                    <td>'.$rows['formato'].'</td>
-                    <td>
-                        <button class="btn btn-primary btn-sm" onclick="abrirModalEditarInventario({
+                <tr class="tr-main text-center">
+                    <td class="text-td">'.$contador.'</td>
+                    <td class="text-td">'.$rows['codigo'].'</td>
+                    <td class="text-td">'.$rows['tituloLibro'].'</td>
+                    <td class="text-td">'.$rows['autor'].'</td>
+                    <td class="text-td">'.$rows['editorial'].'</td>
+                    <td class="text-td">'.$rows['anioPublicacion'].'</td>
+                    <td class="text-td">'.$rows['genero'].'</td>
+                    <td class="text-td">'.$rows['precioVenta'].'</td>
+                    <td class="text-td">'.$rows['cantidad'].'</td>
+                    <td class="text-td">'.$rows['formato'].'</td>
+                    <td td class="text-td">
+                        <button class="text-td btn btn-success btn-sm rounded-pill" onclick="abrirModalEditarInventario({
                             id_libro: \''.$rows['id_inventario'].'\',
                             codigo: \''.addslashes($rows['codigo']).'\',
                             tituloLibro: \''.addslashes($rows['tituloLibro']).'\',
@@ -164,10 +164,11 @@ class inventarioController extends mainModel {
                             idioma: \''.addslashes($rows['idioma']).'\',
                             noPaginas: \''.addslashes($rows['noPaginas']).'\',
                             formato: \''.addslashes($rows['formato']).'\'
-                        })">Editar</button>
-                    </td>
-                    <td>
-                        <button onclick="eliminarLibro('.$rows['id_inventario'].')" class="btn btn-danger btn-sm">Eliminar</button>
+                        })"><i class=" bi bi-arrow-repeat"></i>
+                    
+                        </button>
+                    
+                <button onclick="eliminarLibro('.$rows['id_inventario'].')" class="text-td btn btn-danger btn-sm rounded-pill"><i class="bi bi-trash"></i></button>
                     </td>
                 </tr>
             ';

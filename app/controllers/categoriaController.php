@@ -15,12 +15,13 @@ class categoriaController extends mainModel {
 
         # Verificando campos obligatorios #
         if($codigo=="" || $nombre==""){
-            $alerta=[
-                "tipo"=>"simple",
-                "titulo"=>"Ocurrió un error inesperado",
-                "texto"=>"No has llenado todos los campos que son obligatorios",
-                "icono"=>"error"
-            ];
+             echo "<script>
+			        Swal.fire({
+              icon: 'error',
+              title: 'Ocurrió un error inesperado',
+              text: 'No has llenado todos los campos que son obligatorios'
+					});
+				</script>";
             return json_encode($alerta);
             exit();
         }
@@ -40,12 +41,13 @@ class categoriaController extends mainModel {
         # Verificando código #
         $check_codigo = $this->ejecutarConsulta("SELECT codigo FROM categoria WHERE codigo='$codigo'");
         if($check_codigo->rowCount()>0){
-            $alerta=[
-                "tipo"=>"simple",
-                "titulo"=>"Ocurrió un error inesperado",
-                "texto"=>"El CÓDIGO ingresado ya se encuentra registrado",
-                "icono"=>"error"
-            ];
+            echo "<script>
+			        Swal.fire({
+              icon: 'error',
+              title: 'Ocurrió un error inesperado',
+              text: 'El CODIGO ya se encuentra registrado'
+					});
+				</script>";
             return json_encode($alerta);
             exit();
         }
@@ -95,111 +97,111 @@ class categoriaController extends mainModel {
     }
 
     /*----------  Controlador listar categoria  ----------*/
-    public function listarCategoriaControlador($pagina, $registros, $url, $busqueda){
-        $pagina = $this->limpiarCadena($pagina);
-        $registros = $this->limpiarCadena($registros);
-        $url = $this->limpiarCadena($url);
-        $url = APP_URL.$url."/";
-        $busqueda = $this->limpiarCadena($busqueda);
-        $tabla = "";
-    
-        $pagina = (isset($pagina) && $pagina>0) ? (int) $pagina : 1;
-        $inicio = ($pagina>0) ? (($pagina * $registros)-$registros) : 0;
-        
-        $pag_inicio = 0;
-        $pag_final = 0;
-    
-        if(isset($busqueda) && $busqueda!=""){
-            $consulta_datos = "SELECT * FROM categoria WHERE (codigo LIKE '%$busqueda%' OR nombre LIKE '%$busqueda%') ORDER BY nombre ASC LIMIT $inicio,$registros";
-            $consulta_total = "SELECT COUNT(id_categoria) FROM categoria WHERE (codigo LIKE '%$busqueda%' OR nombre LIKE '%$busqueda%')";
-        }else{
-            $consulta_datos = "SELECT * FROM categoria ORDER BY nombre ASC LIMIT $inicio,$registros";
-            $consulta_total = "SELECT COUNT(id_categoria) FROM categoria";
-        }
-    
-        $datos = $this->ejecutarConsulta($consulta_datos);
-        $datos = $datos->fetchAll();
-    
-        $total = $this->ejecutarConsulta($consulta_total);
-        $total = (int) $total->fetchColumn();
-    
-        $numeroPaginas = ceil($total/$registros);
-    
-        $tabla.='
-        <div class="table-container">
-        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-            <thead>
-                <tr>
-                    <th class="has-text-centered">#</th>
-                    <th class="has-text-centered">Código</th>
-                    <th class="has-text-centered">Nombre</th>
-                    <th class="has-text-centered">Subcategoría</th>
-                    <th class="has-text-centered">Fecha Registro</th>
-                    <th class="has-text-centered" colspan="2">Opciones</th>
-                </tr>
-            </thead>
-            <tbody>
-        ';
-    
-        if($total>=1 && $pagina<=$numeroPaginas){
-            $contador=$inicio+1;
-            $pag_inicio=$inicio+1;
-            foreach($datos as $rows){
-                $tabla.='
-                    <tr class="has-text-centered">
-                        <td>'.$contador.'</td>
-                        <td>'.$rows['codigo'].'</td>
-                        <td>'.$rows['nombre'].'</td>
-                        <td>'.$rows['subcategoria'].'</td>
-                        <td>'.date("d-m-Y  h:i:s A",strtotime($rows['fecha_registro'])).'</td>
-                        <td>
+   public function listarCategoriaControlador($pagina, $registros, $url, $busqueda){
+    $pagina = $this->limpiarCadena($pagina);
+    $registros = $this->limpiarCadena($registros);
+    $url = $this->limpiarCadena($url);
+    $url = APP_URL.$url."/";
+    $busqueda = $this->limpiarCadena($busqueda);
+    $tabla = "";
 
-                            <button class="button is-success is-rounded is-small" onclick="abrirModalEditarcategoria({
-                                id_categoria: \''.$rows['id_categoria'].'\',
-                                codigo: \''.addslashes($rows['codigo']).'\',
-                                nombre: \''.addslashes($rows['nombre']).'\',
-                                subcategoria: \''.addslashes($rows['subcategoria']).'\'
-                            })">Actualizar</button>
-                        </td>
-                        <td>
-                            <button onclick="eliminarCategoria('.$rows['id_categoria'].')" class="button is-danger is-rounded is-small">Eliminar</button>
-                        </td>
-                    </tr>
-                ';
-                $contador++;
-            }
-            $pag_final=$contador-1;
-        }else{
-            if($total>=1){
-                $tabla.='
-                    <tr class="has-text-centered">
-                        <td colspan="7">
-                            <a href="'.$url.'1/" class="button is-link is-rounded is-small mt-4 mb-4">
-                                Haga clic acá para recargar el listado
-                            </a>
-                        </td>
-                    </tr>
-                ';
-            }else{
-                $tabla.='
-                    <tr class="has-text-centered">
-                        <td colspan="7">
-                            No hay registros en el sistema
-                        </td>
-                    </tr>
-                ';
-            }
-        }
+    $pagina = (isset($pagina) && $pagina>0) ? (int) $pagina : 1;
+    $inicio = ($pagina>0) ? (($pagina * $registros)-$registros) : 0;
     
-        $tabla.='</tbody></table></div>';
-    
-        if($total>0 && $pagina<=$numeroPaginas){
-            $tabla.='<p class="has-text-right">Mostrando categorías <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
-            $tabla.=$this->paginadorTablas($pagina,$numeroPaginas,$url,7);
-        }
-    
-        return $tabla;
+    $pag_inicio = 0;
+    $pag_final = 0;
+
+    if(isset($busqueda) && $busqueda!=""){
+        $consulta_datos = "SELECT * FROM categoria WHERE (codigo LIKE '%$busqueda%' OR nombre LIKE '%$busqueda%') ORDER BY nombre ASC LIMIT $inicio,$registros";
+        $consulta_total = "SELECT COUNT(id_categoria) FROM categoria WHERE (codigo LIKE '%$busqueda%' OR nombre LIKE '%$busqueda%')";
+    }else{
+        $consulta_datos = "SELECT * FROM categoria ORDER BY nombre ASC LIMIT $inicio,$registros";
+        $consulta_total = "SELECT COUNT(id_categoria) FROM categoria";
     }
+
+    $datos = $this->ejecutarConsulta($consulta_datos);
+    $datos = $datos->fetchAll();
+
+    $total = $this->ejecutarConsulta($consulta_total);
+    $total = (int) $total->fetchColumn();
+
+    $numeroPaginas = ceil($total/$registros);
+
+    $tabla.='
+    <div class="table-responsive">
+    <table class="table table-striped table-bordered table-hover">
+        <thead class="table-dark">
+            <tr class="text-center">
+                <th class="text-th">Código</th>
+                <th class="text-th">Nombre</th>
+                <th class="text-th">Subcategoría</th>
+                <th class="text-th">Fecha Registro</th>
+                <th class="text-th">Opciones</th>
+            </tr>
+        </thead>
+        <tbody>
+    ';
+
+    if($total>=1 && $pagina<=$numeroPaginas){
+        $contador=$inicio+1;
+        $pag_inicio=$inicio+1;
+        foreach($datos as $rows){
+            $tabla.='
+                <tr class="tr-main text-center">
+                    <td class="text-td">'.$rows['codigo'].'</td>
+                    <td class="text-td">'.$rows['nombre'].'</td>
+                    <td class="text-td">'.$rows['subcategoria'].'</td>
+                    <td class="text-td">'.date("d-m-Y  h:i:s A",strtotime($rows['fecha_registro'])).'</td>
+                    <td class="text-td">
+                        <button class="text-td btn btn-success btn-sm rounded-pill" onclick="abrirModalEditarcategoria({
+                            id_categoria: \''.$rows['id_categoria'].'\',
+                            codigo: \''.addslashes($rows['codigo']).'\',
+                            nombre: \''.addslashes($rows['nombre']).'\',
+                            subcategoria: \''.addslashes($rows['subcategoria']).'\'
+                        })"><i class=" bi bi-arrow-repeat"></i>
+                        <span class="text-icono">
+                        Actualizar
+                        </span>
+                        </button>
+                  
+                        <button onclick="eliminarCategoria('.$rows['id_categoria'].')" class="text-td btn btn-danger btn-sm rounded-pill"><i class="bi bi-trash"></i></button>
+                    </td>
+                </tr>
+            ';
+            $contador++;
+        }
+        $pag_final=$contador-1;
+    }else{
+        if($total>=1){
+            $tabla.='
+                <tr class="text-center">
+                    <td colspan="7">
+                        <a href="'.$url.'1/" class="btn btn-primary btn-sm rounded-pill mt-3 mb-3">
+                            Haga clic acá para recargar el listado
+                        </a>
+                    </td>
+                </tr>
+            ';
+        }else{
+            $tabla.='
+                <tr class="text-center">
+                    <td colspan="7">
+                        No hay registros en el sistema
+                    </td>
+                </tr>
+            ';
+        }
+    }
+
+    $tabla.='</tbody></table></div>';
+
+    if($total>0 && $pagina<=$numeroPaginas){
+        $tabla.='<p class="text-end">Mostrando categorías <strong>'.$pag_inicio.'</strong> al <strong>'.$pag_final.'</strong> de un <strong>total de '.$total.'</strong></p>';
+        $tabla.=$this->paginadorTablas($pagina,$numeroPaginas,$url,7);
+    }
+
+    return $tabla;
+}
 
     /*----------  Controlador eliminar categoria  ----------*/
     public function eliminarCategoriaControlador(){

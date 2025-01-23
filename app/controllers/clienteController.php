@@ -133,17 +133,17 @@ class clienteController extends mainModel {
         $numeroPaginas = ceil($total/$registros);
     
         $tabla.='
-        <div class="table-container">
-        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-            <thead>
-                <tr>
-                    <th class="has-text-centered">#</th>
-                    <th class="has-text-centered">Nombre</th>
-                    <th class="has-text-centered">Tipo Documento</th>
-                    <th class="has-text-centered">Número Documento</th>
-                    <th class="has-text-centered">Teléfono</th>
-                    <th class="has-text-centered">Fecha Registro</th>
-                    <th class="has-text-centered" colspan="2">Opciones</th>
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="table-dark">
+                <tr class="text-center">
+                    <th class="text-th">#</th>
+                    <th class="text-th">Nombre</th>
+                    <th class="text-th">Tipo Documento</th>
+                    <th class="text-th">Número Documento</th>
+                    <th class="text-th">Teléfono</th>
+                    <th class="text-th">Fecha Registro</th>
+                    <th class="text-th">Opciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -154,24 +154,29 @@ class clienteController extends mainModel {
             $pag_inicio=$inicio+1;
             foreach($datos as $rows){
                 $tabla.='
-                    <tr class="has-text-centered">
-                        <td>'.$contador.'</td>
-                        <td>'.$rows['nombre'].'</td>
-                        <td>'.$rows['tipo_documento'].'</td>
-                        <td>'.$rows['numero_documento'].'</td>
-                        <td>'.$rows['telefono'].'</td>
-                        <td>'.date("d-m-Y  h:i:s A",strtotime($rows['fecha_registro'])).'</td>
-                        <td>
-                            <button class="button is-success is-rounded is-small" onclick="abrirModalEditarcliente({
+                    <tr class="tr-main text-center">
+                        <td class="text-td">'.$contador.'</td>
+                        <td class="text-td">'.$rows['nombre'].'</td>
+                        <td class="text-td">'.$rows['tipo_documento'].'</td>
+                        <td class="text-td">'.$rows['numero_documento'].'</td>
+                        <td class="text-td">'.$rows['telefono'].'</td>
+                        <td class="text-td">'.date("d-m-Y  h:i:s A",strtotime($rows['fecha_registro'])).'</td>
+                        <td class="text-td">
+                            <button class="text-td btn btn-success btn-sm rounded-pill" onclick="abrirModalEditarcliente({
                                 id_cliente: \''.$rows['id_cliente'].'\',
                                 nombre: \''.addslashes($rows['nombre']).'\',
                                 tipo_documento: \''.$rows['tipo_documento'].'\',
                                 numero_documento: \''.$rows['numero_documento'].'\',
                                 telefono: \''.$rows['telefono'].'\'
-                            })">Actualizar</button>
-                        </td>
-                        <td>
-                            <button onclick="eliminarCliente('.$rows['id_cliente'].')" class="button is-danger is-rounded is-small">Eliminar</button>
+                            })"><i class=" bi bi-arrow-repeat"></i>
+                          <span class="text-icono">
+                           Actualizar
+                          </span>
+                        </button>
+                        
+                            <button onclick="eliminarCliente('.$rows['id_cliente'].')" class="text-td btn btn-danger btn-sm rounded-pill">
+                            <i class="bi bi-trash"></i>
+                            </button>
                         </td>
                     </tr>
                 ';
