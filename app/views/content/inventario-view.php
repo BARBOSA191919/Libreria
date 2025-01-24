@@ -144,7 +144,6 @@
                                   </select>
                             </div>
                           
-                            
 
                             <div class="col-md-6 mb-3">
                                 <label for="edit_libro_editorial" class="form-label text-model">Editorial</label>
