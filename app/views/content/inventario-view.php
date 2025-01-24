@@ -31,6 +31,7 @@
                     <button type="button" class="btn-close" aria-label="Close" onclick="cerrarModalRegistroInventario()"></button>
                 </div>
                 <div class="modal-body">
+                  
                     <form id="form-registro_inventario" method="POST">
                         <input type="hidden" name="modulo_inventario" value="registrar">
 
@@ -47,9 +48,13 @@
                         </div>
 
                         <div class="row">
+
                             <div class="col-md-6 mb-3">
-                                <label for="libro_autor" class="form-label fw-semibold text-model">Autor *</label>
-                                <input class="form-control text-model_input" type="text" id="libro_autor" name="libro_autor" required>
+                              <label for="libro_autor" class="form-label fw-semibold text-model">Autor *</label>
+                                  <select class="form-control text-model_input" id="libro_autor" name="libro_autor" required>
+                                      <option value="">Seleccionar Autor</option>
+                                      <!-- AQUI SE VAN A SELECCIOANR LOS AUTORES -->
+                                  </select>
                             </div>
 
                             <div class="col-md-6 mb-3">
@@ -130,10 +135,16 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-md-6 mb-3">
-                                <label for="edit_libro_autor" class="form-label text-model">Autor *</label>
-                                <input class="form-control text-model_input" type="text" id="edit_libro_autor" name="libro_autor" required>
+
+                        <div class="col-md-6 mb-3">
+                              <label for="edit_libro_autor" class="form-label fw-semibold text-model">Autor *</label>
+                                  <select class="form-control text-model_input" id="edit_libro_autor" name="libro_autor" required>
+                                      <option value="">Seleccionar Autor</option>
+                                      <!-- AQUI SE VAN A SELECCIOANR LOS AUTORES -->
+                                  </select>
                             </div>
+                          
+                            
 
                             <div class="col-md-6 mb-3">
                                 <label for="edit_libro_editorial" class="form-label text-model">Editorial</label>
@@ -196,6 +207,7 @@
 // Funciones para los modales
 function abrirModalRegistroInventario() {
     const modal = new bootstrap.Modal(document.getElementById("modal-registro_inventario"));
+    cargarAutores();
     modal.show();
 }
 
@@ -212,7 +224,11 @@ function abrirModalEditarInventario(libro) {
     document.getElementById("libro_id").value = libro.id_libro;
     document.getElementById("edit_libro_codigo").value = libro.codigo;
     document.getElementById("edit_libro_titulo").value = libro.tituloLibro;
-    document.getElementById("edit_libro_autor").value = libro.autor;
+    
+    // Seleccionar el autor correcto en el dropdown
+    const autorSelect = document.getElementById("edit_libro_autor");
+    autorSelect.value = libro.libro_autor; // Asegúrate de que coincida con el nombre del campo en tu controlador
+    
     document.getElementById("edit_libro_editorial").value = libro.editorial;
     document.getElementById("edit_libro_anio").value = libro.anioPublicacion;
     document.getElementById("edit_libro_genero").value = libro.genero;
@@ -248,6 +264,41 @@ function cargarInventario() {
         }
     });
 }
+
+// Función para cargar los autores
+function cargarAutores() {
+    $.ajax({
+        url: "<?= APP_URL ?>app/ajax/inventarioAjax.php",
+        type: "POST",
+        data: { 
+            modulo_inventario: "obtenerAutores"  // Nuevo endpoint para obtener autores
+        },
+        beforeSend: function() {
+            $("#libro_autor, #edit_libro_autor").html('<option>Cargando autores...</option>');
+        },
+        success: function(response) {
+            const autores = JSON.parse(response);
+            
+            // Limpiar los select
+            $("#libro_autor, #edit_libro_autor").empty();
+            
+            // Añadir la opción por defecto
+            $("#libro_autor, #edit_libro_autor").append('<option value="">Seleccionar Autor</option>');
+            
+            // Llenar el select con los autores obtenidos
+            autores.forEach(function(autor) {
+                $("#libro_autor, #edit_libro_autor").append(
+                    `<option value="${autor.idAutor}">${autor.nombre}</option>`
+                );
+            });
+        },
+        error: function() {
+            $("#libro_autor, #edit_libro_autor").html('<option>Error al cargar los autores</option>');
+        }
+    });
+}
+
+
 
 // Manejador para el formulario de registro
 $("#form-registro_inventario").on("submit", function(e) {
@@ -384,5 +435,6 @@ function eliminarLibro(id) {
 
 $(document).ready(function() {
     cargarInventario();
+    cargarAutores();
 });
 </script>

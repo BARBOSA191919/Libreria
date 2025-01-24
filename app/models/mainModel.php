@@ -204,5 +204,29 @@
 	        $tabla.='</nav>';
 	        return $tabla;
 	    }
+
+      /*----------  Función para obtener libros con información del autor  ----------*/
+    public function obtenerLibrosConAutores() {
+    $consulta = "SELECT 
+                    i.codigo,
+                    i.tituloLibro,
+                    a.nombre AS autor, 
+                    i.editorial,
+                    i.anioPublicacion,
+                    i.genero,
+                    i.precioVenta,
+                    i.cantidad,
+                    i.formato
+                 FROM 
+                    inventario i
+                 INNER JOIN 
+                    autor a
+                 ON 
+                    i.idAutor = a.idAutor";
+
+    $sql = $this->ejecutarConsulta($consulta);
+    return $sql->fetchAll(PDO::FETCH_ASSOC); // Devuelve los resultados como un array asociativo
+}
+
 	    
-	}
+}

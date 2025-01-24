@@ -8,7 +8,7 @@ use app\controllers\inventarioController;
 
 if (isset($_POST['modulo_inventario'])) {
     $insInventario = new inventarioController();
-    
+
     if ($_POST['modulo_inventario'] == "registrar") {
         echo $insInventario->registrarInventarioControlador();
     }
@@ -24,6 +24,11 @@ if (isset($_POST['modulo_inventario'])) {
     if ($_POST['modulo_inventario'] == "listar") {
         echo $insInventario->listarInventarioControlador(1, 15, "", "");
     }
+  
+    if ($_POST['modulo_inventario'] == "obtenerAutores") {
+    $insInventario = new inventarioController();
+    echo json_encode($insInventario->obtenerAutoresControlador());
+}
 } else {
     session_destroy();
     header("Location: " . APP_URL . "login/");
