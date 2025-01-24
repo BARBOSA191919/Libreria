@@ -265,7 +265,7 @@ function cargarInventario() {
 }
 
 // Función para cargar los autores
-function cargarAutores() {
+function cargarAutoresInventario() {
     $.ajax({
         url: "<?= APP_URL ?>app/ajax/inventarioAjax.php",
         type: "POST",
@@ -434,6 +434,6 @@ function eliminarLibro(id) {
 
 $(document).ready(function() {
     cargarInventario();
-    cargarAutores();
+    cargarAutoresInventario();
 });
 </script>
