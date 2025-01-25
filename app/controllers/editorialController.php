@@ -127,16 +127,16 @@ class editorialController extends mainModel {
         $numeroPaginas = ceil($total/$registros);
 
         $tabla.='
-        <div class="table-container">
-        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-            <thead>
-                <tr>
-                    <th class="has-text-centered">#</th>
-                    <th class="has-text-centered">Código</th>
-                    <th class="has-text-centered">Nombre</th>
-                    <th class="has-text-centered">País</th>
-                    <th class="has-text-centered">Información de Contacto</th>
-                    <th class="has-text-centered" colspan="2">Opciones</th>
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="table-dark">
+                <tr class="text-center">
+                    <th class="text-th">#</th>
+                    <th class="text-th">Código</th>
+                    <th class="text-th">Nombre</th>
+                    <th class="text-th">País</th>
+                    <th class="text-th">Información de Contacto</th>
+                    <th class="text-th" colspan="2">Opciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -147,23 +147,28 @@ class editorialController extends mainModel {
             $pag_inicio=$inicio+1;
             foreach($datos as $rows){
                 $tabla.='
-                    <tr class="has-text-centered">
-                        <td>'.$contador.'</td>
-                        <td>'.$rows['codigo'].'</td>
-                        <td>'.$rows['nombre'].'</td>
-                        <td>'.$rows['pais'].'</td>
-                        <td>'.$rows['informacioncontacto'].'</td>
-                        <td>
-                            <button class="button is-success is-rounded is-small" onclick="abrirModalEditareditorial({
+                    <tr class="tr-main text-center">
+                        <td class="text-td">'.$contador.'</td>
+                        <td class="text-td">'.$rows['codigo'].'</td>
+                        <td class="text-td">'.$rows['nombre'].'</td>
+                        <td class="text-td">'.$rows['pais'].'</td>
+                        <td class="text-td">'.$rows['informacioncontacto'].'</td>
+                        <td class="text-td">
+                            <button class="text-td btn btn-success btn-sm rounded-pill" onclick="abrirModalEditareditorial({
                                 idEditorial: \''.$rows['idEditorial'].'\',
                                 codigo: \''.$rows['codigo'].'\',
                                 nombre: \''.addslashes($rows['nombre']).'\',
                                 informacioncontacto: \''.addslashes($rows['informacioncontacto']).'\',
                                 pais: \''.addslashes($rows['pais']).'\'
-                            })">Actualizar</button>
-                        </td>
-                        <td>
-                            <button onclick="eliminarEditorial('.$rows['idEditorial'].')" class="button is-danger is-rounded is-small">Eliminar</button>
+                            })"><i class=" bi bi-arrow-repeat"></i>
+                        <span class="text-icono">
+                        Actualizar
+                        </span>
+                        </button>
+                        
+                            <button onclick="eliminarEditorial('.$rows['idEditorial'].')" class="text-td btn btn-danger btn-sm rounded-pill">
+                            <i class="bi bi-trash"></i>
+                            </button>
                         </td>
                     </tr>
                 ';

@@ -9,8 +9,6 @@
   
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="icon" href="/frontend/public/assets/logo/icon-library.ico">
-
-  <title>Libreria Pinto</title>
 </head>
 
 <body>
@@ -128,14 +126,12 @@
                         Nuevo
                     </a>
           
-             
                     <a class="navbar-item" href="<?php echo APP_URL; ?>userList/">
                         Lista
                     </a>
                     <a class="navbar-item" href="<?php echo APP_URL; ?>userSearch/">
                         Buscar
                     </a>
-
                 </div>
             </div>
         </div>

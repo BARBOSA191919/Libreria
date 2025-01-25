@@ -3,7 +3,8 @@
 
   <div class="position-buttom">
    <button class="btn btn-registrar btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#registroAutorModal">
-        Registrar Nuevo Autor
+    <i class="bi bi-plus-square"></i>
+      Nuevo Autor
     </button>
   </div>
 
@@ -115,84 +116,144 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
 
 <script>
-    // Función para cargar la lista de autores
-     // Funciones para los modales
-    function abrirModalRegistroautor() {
-        document.getElementById('modal-registro-autor').classList.add('is-active');
-    }
+ // Funciones para los modales
+function abrirModalRegistroautor() {
+    const modal = new bootstrap.Modal(document.getElementById('modal-registro-autor'));
+    modal.show();
+}
 
-    function cerrarModalRegistroautor() {
-        document.getElementById('modal-registro-autor').classList.remove('is-active');
-        document.getElementById('form-registro-autor').reset();
-    }
+function cerrarModalRegistroautor() {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('modal-registro-autor'));
+    modal.hide();
+    document.getElementById('form-registro-autor').reset();
+}
 
-    function abrirModalEditarautor(autor) {
-        document.getElementById('autor_id').value = autor.idAutor;
-        document.getElementById('edit_autor_codigo').value = autor.codigo;
-        document.getElementById('edit_autor_nombre').value = autor.nombre;
-        document.getElementById('edit_autor_paisorigen').value = autor.paisorigen;
-        document.getElementById('edit_autor_biografia').value = autor.biografia;
-        document.getElementById('modal-editar-autor').classList.add('is-active');
-    }
+function abrirModalEditarautor(autor) {
+    document.getElementById('autor_id').value = autor.idAutor;
+    document.getElementById('edit_autor_codigo').value = autor.codigo;
+    document.getElementById('edit_autor_nombre').value = autor.nombre;
+    document.getElementById('edit_autor_paisorigen').value = autor.paisorigen;
+    document.getElementById('edit_autor_biografia').value = autor.biografia;
+    
+    const modal = new bootstrap.Modal(document.getElementById('modal-editar-autor'));
+    modal.show();
+}
 
-    function cerrarModalEditarautor() {
-        document.getElementById('modal-editar-autor').classList.remove('is-active');
-        document.getElementById('form-edicion').reset();
-    }
+function cerrarModalEditarautor() {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('modal-editar-autor'));
+    modal.hide();
+    document.getElementById('form-edicion').reset();
+}
 
-    // Función para cargar la lista de autores
-    function cargarAutores() {
-        $.ajax({
-            url: '<?= APP_URL ?>app/ajax/autorAjax.php',
-            type: 'POST',
-            data: {
-                modulo_autor: 'listar'
-            },
-            success: function(response) {
-                $('#lista-autores').html(response);
-            }
-        });
-    }
+// Función para cargar la lista de autores
+function cargarAutores() {
+    $.ajax({
+        url: '<?= APP_URL ?>app/ajax/autorAjax.php',
+        type: 'POST',
+        data: {
+            modulo_autor: 'listar'
+        },
+        success: function(response) {
+            $('#lista-autores').html(response);
+        }
+    });
+}
 
-    // Manejador para el formulario de registro
-    $('#form-registro-autor').on('submit', function(e) {
-        e.preventDefault();
-        $.ajax({
-            url: '<?= APP_URL ?>app/ajax/autorAjax.php',
-            type: 'POST',
-            data: $(this).serialize(),
-            success: function(response) {
-                const resp = JSON.parse(response);
-                alert(resp.texto);
-                if(resp.tipo === 'limpiar') {
+// Manejador para el formulario de registro
+$('#form-registro-autor').on('submit', function(e) {
+    e.preventDefault();
+    $.ajax({
+        url: '<?= APP_URL ?>app/ajax/autorAjax.php',
+        type: 'POST',
+        data: $(this).serialize(),
+        success: function(response) {
+            const resp = JSON.parse(response);
+            Swal.fire({
+                icon: resp.icono || 'info',
+                title: resp.titulo,
+                text: resp.texto,
+                width: '400px',
+                padding: '2em',
+                customClass: {
+                    title: 'fs-4',          
+                    htmlContainer: 'fs-4',  
+                    confirmButton: 'fs-5',
+                    timer: 2000,
+                    timerProgressBar: true
+                }
+            }).then((result) => {
+                if (resp.tipo === "limpiar") {
                     cerrarModalRegistroautor();
                     cargarAutores();
                 }
-            }
-        });
+            });
+        }
     });
+});
 
-    // Manejador para el formulario de edición
-    $('#form-edicion-autor').on('submit', function(e) {
-        e.preventDefault();
-        $.ajax({
-            url: '<?= APP_URL ?>app/ajax/autorAjax.php',
-            type: 'POST',
-            data: $(this).serialize(),
-            success: function(response) {
-                const resp = JSON.parse(response);
-                alert(resp.texto);
-                if(resp.tipo === 'recargar') {
+// Manejador para el formulario de edición
+$('#form-edicion-autor').on('submit', function(e) {
+    e.preventDefault();
+    const formData = $(this).serialize() + "&modulo_autor=actualizar";
+    
+    $.ajax({
+        url: '<?= APP_URL ?>app/ajax/autorAjax.php',
+        type: 'POST',
+        data: formData,
+        dataType: "json",
+        success: function(response) {
+            Swal.fire({
+                icon: response.icono || 'info',
+                title: response.titulo,
+                text: response.texto,
+                width: '400px',
+                padding: '2em',
+                customClass: {
+                    title: 'fs-4',
+                    htmlContainer: 'fs-5',
+                    confirmButton: 'fs-5'
+                }
+            }).then((result) => {
+                if (response.tipo === "recargar") {
                     cerrarModalEditarautor();
                     cargarAutores();
                 }
-            }
-        });
+            });
+        },
+        error: function(xhr, status, error) {
+            console.error("Error en la petición:", error);
+            console.log("Respuesta del servidor:", xhr.responseText);
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al actualizar el autor. Por favor, intente nuevamente.'
+            });
+        }
     });
+});
 
-    // Función para eliminar autor
-    function eliminarAutor(id) {
-        if(confirm('¿Está seguro de eliminar este autor?')) {
+// Función para eliminar autor
+function eliminarAutor(id) {
+    Swal.fire({
+        title: '¿Está seguro?',
+        text: "¿Desea eliminar este autor?",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        width: '400px',
+        padding: '2em',
+        customClass: {
+            title: 'fs-4',
+            htmlContainer: 'fs-5',
+            confirmButton: 'fs-5',
+            cancelButton: 'fs-5',
+            popup: 'custom-popup'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
             $.ajax({
                 url: '<?= APP_URL ?>app/ajax/autorAjax.php',
                 type: 'POST',
@@ -202,17 +263,30 @@
                 },
                 success: function(response) {
                     const resp = JSON.parse(response);
-                    alert(resp.texto);
-                    if(resp.tipo === 'recargar') {
-                        cargarAutores();
-                    }
+                    Swal.fire({
+                        icon: resp.icono || 'info',
+                        title: resp.titulo,
+                        text: resp.texto,
+                        width: '400px',
+                        padding: '2em',
+                        customClass: {
+                            title: 'fs-4',
+                            htmlContainer: 'fs-5',
+                            confirmButton: 'fs-5'
+                        }
+                    }).then((result) => {
+                        if (resp.tipo === "recargar") {
+                            cargarAutores();
+                        }
+                    });
                 }
             });
         }
-    }
-
-    // Cargar autores al iniciar la página
-    $(document).ready(function() {
-        cargarAutores();
     });
+}
+
+// Cargar autores al iniciar la página
+$(document).ready(function() {
+    cargarAutores();
+});
 </script>
