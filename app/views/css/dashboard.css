@@ -6,6 +6,7 @@
   --amarilloMostaza: ##ec7b01;
   --amarillo: #faca06;
   --fuentePrincipal: "Poppins", sans-serif;
+  --vinotintoFondo: #4a1d1f;
 }
 html {
   font-size: 62.5%;
@@ -215,4 +216,43 @@ html {
 
 .image img {
   width: 4rem;
+}
+
+/*Estilos del dropdown para el menu desplegable */
+.menu-item {
+  position: relative;
+}
+
+.dropdown-menu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 3rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+  z-index: 1000;
+  border-radius: 4px;
+}
+
+.has-dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2.5rem;
+  color: var(--negro);
+  text-decoration: none;
+  transition: background-color 0.3s ease;
+  font-family: var(--fuentePrincipal);
+  font-size: 1.6rem;
+}
+
+.dropdown-item:hover {
+  background-color: var(--vinotintoFondo);
+}
+
+.dropdown-item .emoji {
+  margin-right: 1rem;
+  font-size: 2rem;
 }

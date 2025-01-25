@@ -32,6 +32,28 @@
       <span class="menu-text">Ventas</span>
     </div>
 
+   <div class="menu-item has-dropdown">
+    <span class="emoji">
+        <i class="bi bi-boxes"></i>
+    </span>
+    <span class="menu-text">Inventario</span>
+    
+    <div class="dropdown-menu" id="dropdown-inventario">
+        <a class="dropdown-item" href="#" onclick="showContent('inventario')">
+            <span class="emoji"><i class="bi bi-list-ul"></i></span>
+            Inventario
+        </a>
+        <a class="dropdown-item" href="#" onclick="showContent('editorial')">
+            <span class="emoji"><i class="bi bi-book"></i></span>
+            Editorial
+        </a>
+        <a class="dropdown-item" href="#" onclick="showContent('autor')">
+            <span class="emoji"><i class="bi bi-person-lines-fill"></i></span>
+            Autor
+        </a>
+    </div>
+</div>
+
     <div class="menu-item" onclick="showContent('categoria-view')">
       <span class="emoji">
         <i class="bi bi-grid"></i>
@@ -67,7 +89,7 @@
       <span class="menu-text">Proveedores</span>
     </div>
 
-    <div class="menu-item" onclick="showContent('autor')">
+  <!--  <div class="menu-item" onclick="showContent('autor')">
       <span class="emoji">
         <i class="bi bi-truck"></i>
       </span>
@@ -80,16 +102,9 @@
         <i class="bi bi-truck"></i>
       </span>
       <span class="menu-text">Editorial</span>
-    </div>
+    </div> -->
 
-
-    <div class="menu-item" onclick="showContent('configuracion')">
-      <span class="emoji">
-        <i class="bi bi-gear-fill"></i>
-      </span>
-      <span class="menu-text">Configuración</span>
-    </div>
-
+  
 
   </div>
 
@@ -111,7 +126,7 @@
               </div>
           </div>
 
-           <div class="navbar-start">
+        <div class="navbar-start">
             <a class="navbar-item" href="<?php echo APP_URL; ?>dashboard/">
                 Dashboard
             </a>
@@ -157,6 +172,7 @@
               <li><a class="dropdown-item" href="<?php echo APP_URL."logOut/"; ?>" id="btn_exit">Salir</a></li>
             </ul>
           </div>
+
         </div>
       </nav>
     </header>
@@ -174,7 +190,6 @@
     </div>
 
    
-
     <div id="categoria-view" class="content-section">
         <?php include "./app/views/content/categoria-view.php"; ?>
     </div>
