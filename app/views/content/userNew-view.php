@@ -61,8 +61,8 @@
 
     <div class="registration-container">
         <div class="form-header">
-            <h1>Registro de Usuarios</h1>
-            <h2>Sistema Integral de Gestión de Librería</h2>
+          <center>  <h1>Registro de Usuarios</h1>
+            <h2>Sistema Integral de Gestión de Librería</h2></center>
         </div>
 
 		<form class="FormularioAjax" action="<?php echo APP_URL; ?>app/ajax/usuarioAjax.php" method="POST" autocomplete="off" enctype="multipart/form-data" >
@@ -146,7 +146,7 @@
 }
 // Llama a la función con la ruta del favicon
 cargarFavicon('http://localhost/Libreria/app/views/img/allbooks.jpg');
-    </script>
+</script>
 
 </body>
 </html>

@@ -1,0 +1,128 @@
+/* 4K and Professional Design Enhancements */
+:root {
+    /* Enhanced Color Palette */
+    --primary-color: #1E4E8C;
+    --secondary-color: #2A9D8F;
+    --accent-color: #E9C46A;
+    --background-color: #F4F6F9;
+    --text-color: #2C3E50;
+    --border-radius: 12px;
+    
+    /* 4K Responsive Typography */
+    --font-size-base: clamp(16px, 1vw + 1rem, 24px);
+    --font-size-large: clamp(20px, 2vw + 1rem, 36px);
+}
+
+/* Modern Search Bar with 4K Optimization */
+.search-container {
+    position: relative;
+    max-width: 800px;
+    margin: 2rem auto;
+    transition: all 0.3s ease;
+}
+
+.search-input {
+    width: 100%;
+    padding: 18px 25px 18px 60px;
+    font-size: var(--font-size-base);
+    border: 2px solid transparent;
+    border-radius: var(--border-radius);
+    background-color: white;
+    color: var(--text-color);
+    box-shadow: 
+        0 10px 25px rgba(0, 0, 0, 0.1),
+        0 6px 10px rgba(0, 0, 0, 0.05);
+    transition: all 0.4s ease;
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.15),
+        0 5px 15px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
+
+.search-icon {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--secondary-color);
+    font-size: 1.5rem;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+}
+
+.search-input:focus + .search-icon {
+    opacity: 1;
+}
+
+/* High-Resolution Table Styling */
+.table-responsive {
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: 
+        0 15px 35px rgba(0, 0, 0, 0.1),
+        0 5px 15px rgba(0, 0, 0, 0.05);
+}
+
+.table {
+    width: 100%;
+    background-color: white;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+
+.table thead {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.table th, .table td {
+    padding: 20px;
+    font-size: var(--font-size-base);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    transition: background-color 0.3s ease;
+}
+
+.table-hover tbody tr:hover {
+    background-color: rgba(42, 157, 143, 0.05);
+    cursor: pointer;
+    transform: scale(1.01);
+    transition: all 0.3s ease;
+}
+
+/* Responsive Typography for 4K */
+@media screen and (min-width: 3840px) {
+    :root {
+        --font-size-base: 28px;
+        --font-size-large: 48px;
+    }
+    
+    .search-input, .table th, .table td {
+        padding: 25px;
+    }
+}
+
+/* Subtle Animations and Interactions */
+* {
+    scroll-behavior: smooth;
+}
+
+/* No Results State */
+.no-results {
+    background-color: var(--accent-color);
+    color: var(--text-color);
+    border-radius: var(--border-radius);
+    padding: 2rem;
+    text-align: center;
+    font-size: var(--font-size-base);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Smooth Transitions for Interactive Elements */
+a, button, .nav-link, .search-input, .table-hover tbody tr {
+    transition: all 0.3s ease;
+}

@@ -30,3 +30,13 @@ document.getElementById('usuario_foto').addEventListener('change', function(even
     const fileName = event.target.files[0] ? event.target.files[0].name : 'Seleccionar Archivo';
     document.querySelector('.file-input-text').textContent = fileName;
 });
+
+
+function cargarFavicon(url) {
+    const link = document.createElement('link');
+    link.rel = 'icon';
+    link.type = 'image/png';
+    link.href = url;
+    document.head.appendChild(link);
+}
+cargarFavicon('http://localhost/Libreria/app/views/img/allbooks.jpg');
