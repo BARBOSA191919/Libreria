@@ -3,20 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lista de Usuarios | Sistema de Gestión de Librería</title>
+    <title>Lista  de Usuarios | Sistema de Gestión de Librería</title>
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet">
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
 	<link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/userList.css">
 </head>
 <body>
-    <header class="header-main">
-        <nav class="navbar navbar-expand-lg navbar-light">
-            <div class="container-fluid">
-                <a class="navbar-brand" href="<?php echo APP_URL; ?>dashboard/">
-                    <img src="<?php echo APP_URL; ?>app/views/img/allBooksC.jpeg" alt="logo libreria">
-                </a>
+<header class="header-main">
+    <nav class="navbar navbar-expand-lg navbar-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="<?php echo APP_URL; ?>dashboard/">
+            <img src="<?php echo APP_URL; ?>app/views/img/allBooksC.jpeg" 
+            alt="Logo Librería" 
+            style="height: 50px; width: auto; object-fit: contain;">        
+        </a>
                 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
                     <span class="navbar-toggler-icon"></span>
@@ -34,7 +38,6 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="<?php echo APP_URL; ?>userNew/">Nuevo</a></li>
                                 <li><a class="dropdown-item" href="<?php echo APP_URL; ?>userList/">Lista</a></li>
-                                <li><a class="dropdown-item" href="<?php echo APP_URL; ?>userSearch/">Buscar</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -58,20 +61,35 @@
         </nav>
     </header>
 
-    <div class="container pb-6 pt-6">
-        <div class="mb-3">
-            <input type="text" id="searchInput" class="form-control" placeholder="Buscar usuarios...">
-        </div>
-
+    <div class="search-container">
+    <div class="search-group">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" id="searchInput" class="search-input" placeholder="Buscar usuarios...">
+     
+    </div>
+</div>
         <div class="form-rest mb-6 mt-6"></div>
+        
         <?php 
         use app\controllers\userController;
         $insUsuario = new userController();
         echo $insUsuario->listarUsuarioControlador($url[1], 15, $url[0], ""); 
         ?>
     </div>
+    <script>
+        function cargarFavicon(url) {
+    const link = document.createElement('link');
+    link.rel = 'icon';
+    link.type = 'image/png';
+    link.href = url;
+    document.head.appendChild(link);
+}
+// Llama a la función con la ruta del favicon
+cargarFavicon('http://localhost/Libreria/app/views/img/allbooks.jpg');
+</script>
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="<?php echo APP_URL; ?>app/views/js/userList.js"></script>
 </body>
 </html>

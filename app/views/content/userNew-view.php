@@ -9,7 +9,6 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 	<link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/userNew.css">
-
 </head>
 <body>
     <header class="header-main">
@@ -35,7 +34,6 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="<?php echo APP_URL; ?>userNew/">Nuevo</a></li>
                                 <li><a class="dropdown-item" href="<?php echo APP_URL; ?>userList/">Lista</a></li>
-                                <li><a class="dropdown-item" href="<?php echo APP_URL; ?>userSearch/">Buscar</a></li>
                             </ul>
                         </li>
                     </ul>

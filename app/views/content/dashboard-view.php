@@ -128,12 +128,8 @@
                         Nuevo
                     </a>
           
-             
                     <a class="navbar-item" href="<?php echo APP_URL; ?>userList/">
                         Lista
-                    </a>
-                    <a class="navbar-item" href="<?php echo APP_URL; ?>userSearch/">
-                        Buscar
                     </a>
 
                 </div>

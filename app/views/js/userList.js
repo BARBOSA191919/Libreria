@@ -22,12 +22,3 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 });
-
-function cargarFavicon(url) {
-    const link = document.createElement('link');
-    link.rel = 'icon';
-    link.type = 'image/png';
-    link.href = url;
-    document.head.appendChild(link);
-}
-cargarFavicon('http://localhost/Libreria/app/views/img/allbooks.jpg');

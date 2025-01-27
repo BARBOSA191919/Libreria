@@ -1,128 +1,193 @@
-/* 4K and Professional Design Enhancements */
+/* Variables y estilos base */
 :root {
-    /* Enhanced Color Palette */
-    --primary-color: #1E4E8C;
-    --secondary-color: #2A9D8F;
-    --accent-color: #E9C46A;
-    --background-color: #F4F6F9;
-    --text-color: #2C3E50;
+    --primary-color: #1A5F7A;
+    --secondary-color: #159895;
+    --background-gradient: linear-gradient(135deg, #F6F6F6 0%, #E8F5E9 100%);
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
     --border-radius: 12px;
-    
-    /* 4K Responsive Typography */
-    --font-size-base: clamp(16px, 1vw + 1rem, 24px);
-    --font-size-large: clamp(20px, 2vw + 1rem, 36px);
 }
 
-/* Modern Search Bar with 4K Optimization */
+/* Container principal */
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Estilos del buscador */
 .search-container {
-    position: relative;
-    max-width: 800px;
     margin: 2rem auto;
+    max-width: 400px;
+    padding: 0 1rem;
+}
+
+.search-group {
+    position: relative;
+    background: white;
+    border-radius: 50px;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
     transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
 }
 
-.search-input {
-    width: 100%;
-    padding: 18px 25px 18px 60px;
-    font-size: var(--font-size-base);
-    border: 2px solid transparent;
-    border-radius: var(--border-radius);
-    background-color: white;
-    color: var(--text-color);
-    box-shadow: 
-        0 10px 25px rgba(0, 0, 0, 0.1),
-        0 6px 10px rgba(0, 0, 0, 0.05);
-    transition: all 0.4s ease;
-    outline: none;
-}
-
-.search-input:focus {
-    border-color: var(--secondary-color);
-    box-shadow: 
-        0 15px 35px rgba(0, 0, 0, 0.15),
-        0 5px 15px rgba(0, 0, 0, 0.1);
-    transform: translateY(-5px);
+.search-group:focus-within {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
 }
 
 .search-icon {
     position: absolute;
-    left: 20px;
-    top: 50%;
-    transform: translateY(-50%);
-    color: var(--secondary-color);
-    font-size: 1.5rem;
-    opacity: 0.7;
-    transition: opacity 0.3s ease;
+    left: 1.2rem;
+    color: var(--primary-color);
+    font-size: 1.1rem;
 }
 
-.search-input:focus + .search-icon {
-    opacity: 1;
+.search-input {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 3rem;
+    border: 2px solid transparent;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    color: #2C3E50;
+    transition: all 0.3s ease;
 }
 
-/* High-Resolution Table Styling */
-.table-responsive {
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.search-button {
+    position: absolute;
+    right: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.search-button:hover {
+    background: var(--secondary-color);
+    transform: translateY(-1px);
+}
+
+/* Estilos de la tabla */
+.table-container {
+    background: white;
     border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    margin: 2rem auto;
     overflow: hidden;
-    box-shadow: 
-        0 15px 35px rgba(0, 0, 0, 0.1),
-        0 5px 15px rgba(0, 0, 0, 0.05);
+    max-width: 1200px;
 }
 
 .table {
     width: 100%;
-    background-color: white;
     border-collapse: separate;
     border-spacing: 0;
+    margin-bottom: 0;
+    font-size: 1.1rem;
 }
 
-.table thead {
-    background-color: var(--primary-color);
+.table thead th {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    border: none;
+}
+
+.table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(21, 152, 149, 0.05);
+}
+
+.table td {
+    padding: 0.9rem;
+    border-bottom: 1px solid #e9ecef;
+    color: #2C3E50;
+    vertical-align: middle;
+}
+
+/* Estilos para los botones de acción */
+.button {
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.8rem;
+    margin: 0 0.2rem;
+}
+
+.button.is-info {
+    background: #3498db;
     color: white;
 }
 
-.table th, .table td {
-    padding: 20px;
-    font-size: var(--font-size-base);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-    transition: background-color 0.3s ease;
+.button.is-success {
+    background: #2ecc71;
+    color: white;
 }
 
-.table-hover tbody tr:hover {
-    background-color: rgba(42, 157, 143, 0.05);
-    cursor: pointer;
-    transform: scale(1.01);
-    transition: all 0.3s ease;
+.button.is-danger {
+    background: #e74c3c;
+    color: white;
 }
 
-/* Responsive Typography for 4K */
-@media screen and (min-width: 3840px) {
-    :root {
-        --font-size-base: 28px;
-        --font-size-large: 48px;
-    }
-    
-    .search-input, .table th, .table td {
-        padding: 25px;
-    }
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    opacity: 0.9;
 }
 
-/* Subtle Animations and Interactions */
-* {
-    scroll-behavior: smooth;
+/* Paginación */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 1rem;
 }
 
-/* No Results State */
-.no-results {
-    background-color: var(--accent-color);
-    color: var(--text-color);
+.pagination-link {
+    padding: 0.4rem 0.8rem;
     border-radius: var(--border-radius);
-    padding: 2rem;
-    text-align: center;
-    font-size: var(--font-size-base);
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    background: white;
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
 }
 
-/* Smooth Transitions for Interactive Elements */
-a, button, .nav-link, .search-input, .table-hover tbody tr {
-    transition: all 0.3s ease;
+.pagination-link:hover,
+.pagination-link.is-current {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Información de registros */
+.records-info {
+    text-align: right;
+    color: #666;
+    font-size: 0.9rem;
+    margin: 1rem 0;
+    padding: 0 1rem;
 }

@@ -34,7 +34,6 @@
                             <ul class="dropdown-menu">
                                 <li><a class="dropdown-item" href="<?php echo APP_URL; ?>userNew/">Nuevo</a></li>
                                 <li><a class="dropdown-item" href="<?php echo APP_URL; ?>userList/">Lista</a></li>
-                                <li><a class="dropdown-item" href="<?php echo APP_URL; ?>userSearch/">Buscar</a></li>
                             </ul>
                         </li>
                     </ul>
