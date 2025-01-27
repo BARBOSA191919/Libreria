@@ -127,16 +127,16 @@ class autorController extends mainModel {
         $numeroPaginas = ceil($total/$registros);
 
         $tabla.='
-        <div class="table-container">
-        <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
-            <thead>
-                <tr>
-                    <th class="has-text-centered">#</th>
-                    <th class="has-text-centered">Código</th>
-                    <th class="has-text-centered">Nombre</th>
-                    <th class="has-text-centered">País de Origen</th>
-                    <th class="has-text-centered">Biografía</th>
-                    <th class="has-text-centered" colspan="2">Opciones</th>
+        <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+            <thead class="table-dark">
+                <tr class="text-center">
+                    <th class="text-th">#</th>
+                    <th class="text-th">Código</th>
+                    <th class="text-th">Nombre</th>
+                    <th class="text-th">País de Origen</th>
+                    <th class="text-th">Biografía</th>
+                    <th class="text-th">Opciones</th>
                 </tr>
             </thead>
             <tbody>
@@ -147,23 +147,28 @@ class autorController extends mainModel {
             $pag_inicio=$inicio+1;
             foreach($datos as $rows){
                 $tabla.='
-                    <tr class="has-text-centered">
-                        <td>'.$contador.'</td>
-                        <td>'.$rows['codigo'].'</td>
-                        <td>'.$rows['nombre'].'</td>
-                        <td>'.$rows['paisorigen'].'</td>
-                        <td>'.$rows['biografia'].'</td>
-                        <td>
-                            <button class="button is-success is-rounded is-small" onclick="abrirModalEditarautor({
+                    <tr class="tr-main text-center">
+                        <td class="text-td">'.$contador.'</td>
+                        <td class="text-td">'.$rows['codigo'].'</td>
+                        <td class="text-td">'.$rows['nombre'].'</td>
+                        <td class="text-td">'.$rows['paisorigen'].'</td>
+                        <td class="text-td">'.$rows['biografia'].'</td>
+                        <td class="text-td">
+                            <button class="text-td btn btn-success btn-sm rounded-pill" onclick="abrirModalEditarautor({
                                 idAutor: \''.$rows['idAutor'].'\',
                                 codigo: \''.$rows['codigo'].'\',
                                 nombre: \''.addslashes($rows['nombre']).'\',
                                 biografia: \''.addslashes($rows['biografia']).'\',
                                 paisorigen: \''.addslashes($rows['paisorigen']).'\'
-                            })">Actualizar</button>
-                        </td>
-                        <td>
-                            <button onclick="eliminarAutor('.$rows['idAutor'].')" class="button is-danger is-rounded is-small">Eliminar</button>
+                            })"><i class=" bi bi-arrow-repeat"></i>
+                        <span class="text-icono">
+                        Actualizar
+                        </span>
+                        </button>
+                
+                            <button onclick="eliminarAutor('.$rows['idAutor'].')" class="text-td btn btn-danger btn-sm rounded-pill">
+                            <i class="bi bi-trash"></i>
+                            </button>
                         </td>
                     </tr>
                 ';
@@ -173,7 +178,7 @@ class autorController extends mainModel {
         }else{
             if($total>=1){
                 $tabla.='
-                    <tr class="has-text-centered">
+                    <tr class="has-text-centered text-td">
                         <td colspan="6">
                             <a href="'.$url.'1/" class="button is-link is-rounded is-small mt-4 mb-4">
                                 Haga clic acá para recargar el listado
@@ -183,7 +188,7 @@ class autorController extends mainModel {
                 ';
             }else{
                 $tabla.='
-                    <tr class="has-text-centered">
+                    <tr class="has-text-centered text-td">
                         <td colspan="6">
                             No hay registros en el sistema
                         </td>

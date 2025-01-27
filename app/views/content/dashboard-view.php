@@ -71,7 +71,7 @@
 
     <div class="menu-item" onclick="showContent('autor')">
       <span class="emoji">
-        <i class="bi bi-truck"></i>
+      <i class="bi bi-person-check"></i>
       </span>
       <span class="menu-text">Autor</span>
     </div>
@@ -79,8 +79,8 @@
     
     <div class="menu-item" onclick="showContent('editorial')">
       <span class="emoji">
-        <i class="bi bi-truck"></i>
-      </span>
+      <i class="bi bi-book-half"></i>
+          </span>
       <span class="menu-text">Editorial</span>
     </div>
 
@@ -172,8 +172,6 @@
 
       <p>Bienvenido a la página principal. Aquí podrás ver un resumen de toda tu información.</p>
     </div>
-
-   
 
     <div id="categoria-view" class="content-section">
         <?php include "./app/views/content/categoria-view.php"; ?>
