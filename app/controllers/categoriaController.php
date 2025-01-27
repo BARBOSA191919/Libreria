@@ -6,95 +6,105 @@ class categoriaController extends mainModel {
   
 
     /*----------  Controlador registrar categoria  ----------*/
-    public function registrarCategoriaControlador(){
+  public function registrarCategoriaControlador() {
+    # Almacenando datos #
+    $codigo = $this->limpiarCadena($_POST['categoria_codigo']);
+    $nombre = $this->limpiarCadena($_POST['categoria_nombre']);
+    $subcategorias = isset($_POST['categoria_subcategoria']) ? $_POST['categoria_subcategoria'] : []; // Asegúrate de que sea un array
 
-        # Almacenando datos #
-        $codigo = $this->limpiarCadena($_POST['categoria_codigo']);
-        $nombre = $this->limpiarCadena($_POST['categoria_nombre']);
-        $subcategoria = $this->limpiarCadena($_POST['categoria_subcategoria']);
-
-        # Verificando campos obligatorios #
-        if($codigo=="" || $nombre==""){
-             echo "<script>
-			        Swal.fire({
-              icon: 'error',
-              title: 'Ocurrió un error inesperado',
-              text: 'No has llenado todos los campos que son obligatorios'
-					});
-				</script>";
-            return json_encode($alerta);
-            exit();
-        }
-
-        # Verificando integridad de los datos #
-        if($this->verificarDatos("[a-zA-Z0-9-]{1,70}",$codigo)){
-            $alerta=[
-                "tipo"=>"simple",
-                "titulo"=>"Ocurrió un error inesperado",
-                "texto"=>"El CÓDIGO no coincide con el formato solicitado",
-                "icono"=>"error"
-            ];
-            return json_encode($alerta);
-            exit();
-        }
-
-        # Verificando código #
-        $check_codigo = $this->ejecutarConsulta("SELECT codigo FROM categoria WHERE codigo='$codigo'");
-        if($check_codigo->rowCount()>0){
-            echo "<script>
-			        Swal.fire({
-              icon: 'error',
-              title: 'Ocurrió un error inesperado',
-              text: 'El CODIGO ya se encuentra registrado'
-					});
-				</script>";
-            return json_encode($alerta);
-            exit();
-        }
-
-        $categoria_datos_reg=[
-            [
-                "campo_nombre"=>"codigo",
-                "campo_marcador"=>":Codigo",
-                "campo_valor"=>$codigo
-            ],
-            [
-                "campo_nombre"=>"nombre",
-                "campo_marcador"=>":Nombre",
-                "campo_valor"=>$nombre
-            ],
-            [
-                "campo_nombre"=>"subcategoria",
-                "campo_marcador"=>":Subcategoria",
-                "campo_valor"=>$subcategoria
-            ],
-            [
-                "campo_nombre"=>"fecha_registro",
-                "campo_marcador"=>":FechaRegistro",
-                "campo_valor"=>date("Y-m-d H:i:s")
-            ]
+    # Verificando campos obligatorios #
+    if ($codigo == "" || $nombre == "" || empty($subcategorias)) {
+        $alerta = [
+            "tipo" => "simple",
+            "titulo" => "Ocurrió un error inesperado",
+            "texto" => "No has llenado todos los campos que son obligatorios",
+            "icono" => "error"
         ];
-
-        $registrar_categoria = $this->guardarDatos("categoria", $categoria_datos_reg);
-
-        if($registrar_categoria->rowCount()==1){
-            $alerta=[
-                "tipo"=>"limpiar",
-                "titulo"=>"Categoría registrada",
-                "texto"=>"La categoría ".$nombre." se registró con éxito",
-                "icono"=>"success"
-            ];
-        }else{
-            $alerta=[
-                "tipo"=>"simple",
-                "titulo"=>"Ocurrió un error inesperado",
-                "texto"=>"No se pudo registrar la categoría, por favor intente nuevamente",
-                "icono"=>"error"
-            ];
-        }
-
         return json_encode($alerta);
     }
+
+    # Verificando integridad de los datos #
+    if ($this->verificarDatos("[a-zA-Z0-9-]{1,70}", $codigo)) {
+        $alerta = [
+            "tipo" => "simple",
+            "titulo" => "Ocurrió un error inesperado",
+            "texto" => "El CÓDIGO no coincide con el formato solicitado",
+            "icono" => "error"
+        ];
+        return json_encode($alerta);
+    }
+
+    # Verificando código #
+    $check_codigo = $this->ejecutarConsulta("SELECT codigo FROM categoria WHERE codigo='$codigo'");
+    if ($check_codigo->rowCount() > 0) {
+        $alerta = [
+            "tipo" => "simple",
+            "titulo" => "Ocurrió un error inesperado",
+            "texto" => "El CODIGO ya se encuentra registrado",
+            "icono" => "error"
+        ];
+        return json_encode($alerta);
+    }
+
+    # Guardar la categoría #
+    $categoria_datos_reg = [
+        [
+            "campo_nombre" => "codigo",
+            "campo_marcador" => ":Codigo",
+            "campo_valor" => $codigo
+        ],
+        [
+            "campo_nombre" => "nombre",
+            "campo_marcador" => ":Nombre",
+            "campo_valor" => $nombre
+        ],
+        [
+            "campo_nombre" => "fecha_registro",
+            "campo_marcador" => ":FechaRegistro",
+            "campo_valor" => date("Y-m-d H:i:s")
+        ]
+    ];
+
+    $registrar_categoria = $this->guardarDatos("categoria", $categoria_datos_reg);
+
+    if ($registrar_categoria->rowCount() == 1) {
+        $id_categoria = $this->conectar()->lastInsertId(); // Obtener el ID de la categoría recién creada
+
+        # Guardar subcategorías #
+        foreach ($subcategorias as $subcategoria) {
+            $subcategoria_datos_reg = [
+                [
+                    "campo_nombre" => "nombre",
+                    "campo_marcador" => ":NombreSubcategoria",
+                    "campo_valor" => $this->limpiarCadena($subcategoria)
+                ],
+                [
+                    "campo_nombre" => "id_categoria",
+                    "campo_marcador" => ":IdCategoria",
+                    "campo_valor" => $id_categoria
+                ]
+            ];
+            $this->guardarDatos("subcategoria", $subcategoria_datos_reg);
+        }
+
+        $alerta = [
+            "tipo" => "limpiar",
+            "titulo" => "Categoría registrada",
+            "texto" => "La categoría " . $nombre . " se registró con éxito",
+            "icono" => "success"
+        ];
+    } else {
+        $alerta = [
+            "tipo" => "simple",
+            "titulo" => "Ocurrió un error inesperado",
+            "texto" => "No se pudo registrar la categoría, por favor intente nuevamente",
+            "icono" => "error"
+        ];
+    }
+
+    return json_encode($alerta);
+}
+
 
     /*----------  Controlador listar categoria  ----------*/
    public function listarCategoriaControlador($pagina, $registros, $url, $busqueda){
@@ -243,96 +253,111 @@ class categoriaController extends mainModel {
     }
 
     /*----------  Controlador actualizar categoria  ----------*/
-    public function actualizarCategoriaControlador(){
-        $id = $this->limpiarCadena($_POST['categoria_id']);
+    public function actualizarCategoriaControlador() {
+    $id = $this->limpiarCadena($_POST['categoria_id']);
 
-        # Verificando categoria #
-        $datos = $this->ejecutarConsulta("SELECT * FROM categoria WHERE id_categoria='$id'");
-        if($datos->rowCount()<=0){
-            $alerta=[
-                "tipo"=>"simple",
-                "titulo"=>"Ocurrió un error inesperado",
-                "texto"=>"No hemos encontrado la categoría en el sistema",
-                "icono"=>"error"
-            ];
-            return json_encode($alerta);
-            exit();
-        }else{
-            $datos = $datos->fetch();
-        }
-
-        # Almacenando datos #
-        $codigo = $this->limpiarCadena($_POST['categoria_codigo']);
-        $nombre = $this->limpiarCadena($_POST['categoria_nombre']);
-        $subcategoria = $this->limpiarCadena($_POST['categoria_subcategoria']);
-
-        # Verificando campos obligatorios #
-        if($codigo=="" || $nombre==""){
-            $alerta=[
-                "tipo"=>"simple",
-                "titulo"=>"Ocurrió un error inesperado",
-                "texto"=>"No has llenado todos los campos que son obligatorios",
-                "icono"=>"error"
-            ];
-            return json_encode($alerta);
-            exit();
-        }
-
-        # Verificando código #
-        if($datos['codigo'] != $codigo){
-            $check_codigo = $this->ejecutarConsulta("SELECT codigo FROM categoria WHERE codigo='$codigo'");
-            if($check_codigo->rowCount()>0){
-                $alerta=[
-                    "tipo"=>"simple",
-                    "titulo"=>"Ocurrió un error inesperado",
-                    "texto"=>"El CÓDIGO ingresado ya se encuentra registrado",
-                    "icono"=>"error"
-                ];
-                return json_encode($alerta);
-                exit();
-            }
-        }
-
-        $categoria_datos_up=[
-            [
-                "campo_nombre"=>"codigo",
-                "campo_marcador"=>":Codigo",
-                "campo_valor"=>$codigo
-            ],
-            [
-                "campo_nombre"=>"nombre",
-                "campo_marcador"=>":Nombre",
-                "campo_valor"=>$nombre
-            ],
-            [
-                "campo_nombre"=>"subcategoria",
-                "campo_marcador"=>":Subcategoria",
-                "campo_valor"=>$subcategoria
-            ]
+    # Verificando categoria #
+    $datos = $this->ejecutarConsulta("SELECT * FROM categoria WHERE id_categoria='$id'");
+    if ($datos->rowCount() <= 0) {
+        $alerta = [
+            "tipo" => "simple",
+            "titulo" => "Ocurrió un error inesperado",
+            "texto" => "No hemos encontrado la categoría en el sistema",
+            "icono" => "error"
         ];
-
-        $condicion=[
-            "condicion_campo"=>"id_categoria",
-            "condicion_marcador"=>":ID",
-            "condicion_valor"=>$id
-        ];
-
-        if($this->actualizarDatos("categoria",$categoria_datos_up,$condicion)){
-            $alerta=[
-                "tipo"=>"recargar",
-                "titulo"=>"Categoría actualizada",
-                "texto"=>"Los datos de la categoría ".$nombre." se actualizaron correctamente",
-                "icono"=>"success"
-            ];
-        }else{
-            $alerta=[
-                "tipo"=>"simple",
-                "titulo"=>"Ocurrió un error inesperado",
-                "texto"=>"No hemos podido actualizar los datos de la categoría ".$nombre.", por favor intente nuevamente",
-                "icono"=>"error"
-            ];
-        }
-
         return json_encode($alerta);
+        exit();
+    } else {
+        $datos = $datos->fetch();
     }
+
+    # Almacenando datos #
+    $codigo = $this->limpiarCadena($_POST['categoria_codigo']);
+    $nombre = $this->limpiarCadena($_POST['categoria_nombre']);
+    $subcategorias = $_POST['categoria_subcategoria']; // Suponiendo que es un array
+
+    # Verificando campos obligatorios #
+    if ($codigo == "" || $nombre == "" || empty($subcategorias)) {
+        $alerta = [
+            "tipo" => "simple",
+            "titulo" => "Ocurrió un error inesperado",
+            "texto" => "No has llenado todos los campos que son obligatorios",
+            "icono" => "error"
+        ];
+        return json_encode($alerta);
+        exit();
+    }
+
+    # Verificando código #
+    if ($datos['codigo'] != $codigo) {
+        $check_codigo = $this->ejecutarConsulta("SELECT codigo FROM categoria WHERE codigo='$codigo'");
+        if ($check_codigo->rowCount() > 0) {
+            $alerta = [
+                "tipo" => "simple",
+                "titulo" => "Ocurrió un error inesperado",
+                "texto" => "El CÓDIGO ingresado ya se encuentra registrado",
+                "icono" => "error"
+            ];
+            return json_encode($alerta);
+            exit();
+        }
+    }
+
+    $categoria_datos_up = [
+        [
+            "campo_nombre" => "codigo",
+            "campo_marcador" => ":Codigo",
+            "campo_valor" => $codigo
+        ],
+        [
+            "campo_nombre" => "nombre",
+            "campo_marcador" => ":Nombre",
+            "campo_valor" => $nombre
+        ]
+    ];
+
+    $condicion = [
+        "condicion_campo" => "id_categoria",
+        "condicion_marcador" => ":ID",
+        "condicion_valor" => $id
+    ];
+
+    if ($this->actualizarDatos("categoria", $categoria_datos_up, $condicion)) {
+        # Eliminar subcategorías existentes #
+        $this->ejecutarConsulta("DELETE FROM subcategoria WHERE id_categoria='$id'");
+
+        # Guardar nuevas subcategorías #
+        foreach ($subcategorias as $subcategoria) {
+            $subcategoria_datos_reg = [
+                [
+                    "campo_nombre" => "nombre",
+                    "campo_marcador" => ":NombreSubcategoria",
+                    "campo_valor" => $this->limpiarCadena($subcategoria)
+                ],
+                [
+                    "campo_nombre" => "id_categoria",
+                    "campo_marcador" => ":IdCategoria",
+                    "campo_valor" => $id
+                ]
+            ];
+            $this->guardarDatos("subcategoria", $subcategoria_datos_reg);
+        }
+
+        $alerta = [
+            "tipo" => "recargar",
+            "titulo" => "Categoría actualizada",
+            "texto" => "Los datos de la categoría " . $nombre . " se actualizaron correctamente",
+            "icono" => "success"
+        ];
+    } else {
+        $alerta = [
+            "tipo" => "simple",
+            "titulo" => "Ocurrió un error inesperado",
+            "texto" => "No hemos podido actualizar los datos de la categoría " . $nombre . ", por favor intente nuevamente",
+            "icono" => "error"
+        ];
+    }
+
+    return json_encode($alerta);
+}
 }
