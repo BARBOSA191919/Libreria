@@ -40,4 +40,11 @@ function showContent(sectionId) {
 // Mostrar la página de inicio por defecto
 showContent("inicio");
 
-// Seccion de categoria ---------------------------------------------------
+// Seccion de dropdwn ---------------------------------------------------
+function showDropdown() {
+  document.getElementById("dropdown-inventario").style.display = "block";
+}
+
+function hideDropdown() {
+  document.getElementById("dropdown-inventario").style.display = "none";
+}

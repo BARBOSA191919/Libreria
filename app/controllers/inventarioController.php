@@ -11,13 +11,19 @@ class inventarioController extends mainModel {
         return $sql->fetchAll(\PDO::FETCH_ASSOC);
     }
 
+    public function obtenerEditorialesControlador() {
+        $consulta = "SELECT idEditorial, nombre FROM editorial ORDER BY nombre";
+        $sql = $this->ejecutarConsulta($consulta);
+        return $sql->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
     /*----------  Controlador registrar inventario  ----------*/
     public function registrarInventarioControlador(){
         # Almacenando datos #
         $codigo = $this->limpiarCadena($_POST['libro_codigo']);
         $titulo = $this->limpiarCadena($_POST['libro_titulo']);
         $idAutor = $this->limpiarCadena($_POST['libro_autor']); // Cambiado de autor a idAutor
-        $editorial = $this->limpiarCadena($_POST['libro_editorial']);
+        $idEditorial = $this->limpiarCadena($_POST['libro_editorial']);
         $anio = $this->limpiarCadena($_POST['libro_anio']);
         $genero = $this->limpiarCadena($_POST['libro_genero']);
         $precio = $this->limpiarCadena($_POST['libro_precio']);
@@ -56,7 +62,7 @@ class inventarioController extends mainModel {
             ["campo_nombre" => "codigo", "campo_marcador" => ":Codigo", "campo_valor" => $codigo],
             ["campo_nombre" => "tituloLibro", "campo_marcador" => ":Titulo", "campo_valor" => $titulo],
             ["campo_nombre" => "idAutor", "campo_marcador" => ":Autor", "campo_valor" => $idAutor],
-            ["campo_nombre" => "editorial", "campo_marcador" => ":Editorial", "campo_valor" => $editorial],
+            ["campo_nombre" => "idEditorial", "campo_marcador" => ":Editorial", "campo_valor" => $idEditorial],
             ["campo_nombre" => "anioPublicacion", "campo_marcador" => ":Anio", "campo_valor" => $anio],
             ["campo_nombre" => "genero", "campo_marcador" => ":Genero", "campo_valor" => $genero],
             ["campo_nombre" => "precioVenta", "campo_marcador" => ":Precio", "campo_valor" => $precio],
@@ -104,23 +110,32 @@ class inventarioController extends mainModel {
         $pag_inicio = 0;
         $pag_final = 0;
 
-        if(isset($busqueda) && $busqueda!=""){
-            $consulta_datos = "SELECT i.*, a.nombre AS nombre_autor 
+        if (isset($busqueda) && $busqueda != "") {
+            $consulta_datos = "SELECT i.*, a.nombre AS nombre_autor, e.nombre AS nombre_editorial
                                FROM inventario i 
                                INNER JOIN autor a ON i.idAutor = a.idAutor 
-                               WHERE (i.codigo LIKE '%$busqueda%' OR i.tituloLibro LIKE '%$busqueda%' OR a.nombre LIKE '%$busqueda%') 
+                               INNER JOIN editorial e ON i.idEditorial = e.idEditorial
+                               WHERE (i.codigo LIKE '%$busqueda%' OR i.tituloLibro LIKE '%$busqueda%' OR a.nombre LIKE '%$busqueda%' OR e.nombre LIKE '%$busqueda%') 
                                ORDER BY i.tituloLibro ASC LIMIT $inicio,$registros";
+        
             $consulta_total = "SELECT COUNT(i.id_inventario) 
-                                FROM inventario i 
-                                INNER JOIN autor a ON i.idAutor = a.idAutor 
-                                WHERE (i.codigo LIKE '%$busqueda%' OR i.tituloLibro LIKE '%$busqueda%' OR a.nombre LIKE '%$busqueda%')";
-        }else{
-            $consulta_datos = "SELECT i.*, a.nombre AS nombre_autor 
                                FROM inventario i 
                                INNER JOIN autor a ON i.idAutor = a.idAutor 
+                               INNER JOIN editorial e ON i.idEditorial = e.idEditorial
+                               WHERE (i.codigo LIKE '%$busqueda%' OR i.tituloLibro LIKE '%$busqueda%' OR a.nombre LIKE '%$busqueda%' OR e.nombre LIKE '%$busqueda%')";
+        } else {
+            $consulta_datos = "SELECT i.*, a.nombre AS nombre_autor, e.nombre AS nombre_editorial
+                               FROM inventario i 
+                               INNER JOIN autor a ON i.idAutor = a.idAutor 
+                               INNER JOIN editorial e ON i.idEditorial = e.idEditorial
                                ORDER BY i.tituloLibro ASC LIMIT $inicio,$registros";
-            $consulta_total = "SELECT COUNT(id_inventario) FROM inventario";
+        
+            $consulta_total = "SELECT COUNT(i.id_inventario) 
+                               FROM inventario i 
+                               INNER JOIN autor a ON i.idAutor = a.idAutor 
+                               INNER JOIN editorial e ON i.idEditorial = e.idEditorial";
         }
+        
 
         $datos = $this->ejecutarConsulta($consulta_datos);
         $datos = $datos->fetchAll();
@@ -136,7 +151,7 @@ class inventarioController extends mainModel {
             <thead class="table-dark">
                 <tr class="text-center" >
                     <th class="text-th">#</th>
-                                        <th class="text-th">Código</th>
+                    <th class="text-th">Código</th>
                     <th class="text-th">Título</th>
                     <th class="text-th">Autor</th>
                     <th class="text-th">Editorial</th>
@@ -161,7 +176,7 @@ class inventarioController extends mainModel {
                         <td class="text-td">'.$rows['codigo'].'</td>
                         <td class="text-td">'.$rows['tituloLibro'].'</td>
                         <td class="text-td">'.$rows['nombre_autor'].'</td>
-                        <td class="text-td">'.$rows['editorial'].'</td>
+                        <td class="text-td">'.$rows['nombre_editorial'].'</td>
                         <td class="text-td">'.$rows['anioPublicacion'].'</td>
                         <td class="text-td">'.$rows['genero'].'</td>
                         <td class="text-td">'.$rows['precioVenta'].'</td>
@@ -173,7 +188,7 @@ class inventarioController extends mainModel {
                                 codigo: \''.addslashes($rows['codigo']).'\',
                                 tituloLibro: \''.addslashes($rows['tituloLibro']).'\',
                                 libro_autor: \''.addslashes($rows['idAutor']).'\',
-                                editorial: \''.addslashes($rows['editorial']).'\',
+                                editorial: \''.addslashes($rows['idEditorial']).'\',
                                 anioPublicacion: \''.addslashes($rows['anioPublicacion']).'\',
                                 genero: \''.addslashes($rows['genero']).'\',
                                 precioVenta: \''.addslashes($rows['precioVenta']).'\',
@@ -286,7 +301,7 @@ class inventarioController extends mainModel {
         $codigo = $this->limpiarCadena($_POST['libro_codigo']);
         $tituloLibro = $this->limpiarCadena($_POST['libro_titulo']);
         $idAutor = $this->limpiarCadena($_POST['libro_autor']); // Cambiado de autor a idAutor
-        $editorial = $this->limpiarCadena($_POST['libro_editorial']);
+        $idEditorial = $this->limpiarCadena($_POST['libro_editorial']);
         $anioPublicacion = $this->limpiarCadena($_POST['libro_anio']);
         $genero = $this->limpiarCadena($_POST['libro_genero']);
         $precioVenta = $this->limpiarCadena($_POST['libro_precio']);
@@ -326,7 +341,7 @@ class inventarioController extends mainModel {
             ["campo_nombre"=>"codigo", "campo_marcador"=>":Codigo", "campo_valor"=>$codigo],
             ["campo_nombre"=>"tituloLibro", "campo_marcador"=>":Titulo", "campo_valor"=>$tituloLibro],
             ["campo_nombre"=>"idAutor", "campo_marcador"=>":Autor", "campo_valor"=>$idAutor], // Cambiado
-            ["campo_nombre"=>"editorial", "campo_marcador"=>":Editorial", "campo_valor"=>$editorial],
+            ["campo_nombre"=>"idEditorial", "campo_marcador"=>":Editorial", "campo_valor"=>$idEditorial],
             ["campo_nombre"=>"anioPublicacion", "campo_marcador"=>":Anio", "campo_valor"=>$anioPublicacion],
             ["campo_nombre"=>"genero", "campo_marcador"=>":Genero", "campo_valor"=>$genero],
             ["campo_nombre"=>"precioVenta", "campo_marcador"=>":Precio", "campo_valor"=>$precioVenta],
