@@ -4,6 +4,15 @@ use app\models\mainModel;
 
 class inventarioController extends mainModel {
 
+  
+  /*----------  Método para obtener autores  ----------*/
+    public function obtenerCategoriaInventarioControlador() {
+        $consulta = "SELECT id_categoria, nombre FROM categoria ORDER BY nombre";
+        $sql = $this->ejecutarConsulta($consulta);
+        return $sql->fetchAll(\PDO::FETCH_ASSOC);
+    }
+
+
     /*----------  Método para obtener autores  ----------*/
     public function obtenerAutoresControlador() {
         $consulta = "SELECT idAutor, nombre FROM autor ORDER BY nombre";
@@ -33,7 +42,7 @@ class inventarioController extends mainModel {
         $formato = $this->limpiarCadena($_POST['libro_formato']);
 
         # Verificando campos obligatorios #
-        if ($codigo == "" || $titulo == "" || $idAutor == "" || $precio == "" || $cantidad == "") {
+        if ($codigo == "" || $titulo == "" || $idAutor == "" || $precio == "" || $cantidad == "" || $genero == "") {
             $alerta = [
                 "tipo" => "simple",
                 "titulo" => "Ocurrió un error inesperado",
@@ -111,10 +120,11 @@ class inventarioController extends mainModel {
         $pag_final = 0;
 
         if (isset($busqueda) && $busqueda != "") {
-            $consulta_datos = "SELECT i.*, a.nombre AS nombre_autor, e.nombre AS nombre_editorial
+            $consulta_datos = "SELECT i.*, a.nombre AS nombre_autor, e.nombre AS nombre_editorial, c.nombre AS nombre_categoria
                                FROM inventario i 
                                INNER JOIN autor a ON i.idAutor = a.idAutor 
                                INNER JOIN editorial e ON i.idEditorial = e.idEditorial
+                                 INNER JOIN categoria c ON i.genero = c.id_categoria 
                                WHERE (i.codigo LIKE '%$busqueda%' OR i.tituloLibro LIKE '%$busqueda%' OR a.nombre LIKE '%$busqueda%' OR e.nombre LIKE '%$busqueda%') 
                                ORDER BY i.tituloLibro ASC LIMIT $inicio,$registros";
         
@@ -124,10 +134,11 @@ class inventarioController extends mainModel {
                                INNER JOIN editorial e ON i.idEditorial = e.idEditorial
                                WHERE (i.codigo LIKE '%$busqueda%' OR i.tituloLibro LIKE '%$busqueda%' OR a.nombre LIKE '%$busqueda%' OR e.nombre LIKE '%$busqueda%')";
         } else {
-            $consulta_datos = "SELECT i.*, a.nombre AS nombre_autor, e.nombre AS nombre_editorial
+            $consulta_datos = "SELECT i.*, a.nombre AS nombre_autor, e.nombre AS nombre_editorial, c.nombre AS nombre_categoria
                                FROM inventario i 
                                INNER JOIN autor a ON i.idAutor = a.idAutor 
                                INNER JOIN editorial e ON i.idEditorial = e.idEditorial
+                               INNER JOIN categoria c ON i.genero = c.id_categoria 
                                ORDER BY i.tituloLibro ASC LIMIT $inicio,$registros";
         
             $consulta_total = "SELECT COUNT(i.id_inventario) 
@@ -135,8 +146,7 @@ class inventarioController extends mainModel {
                                INNER JOIN autor a ON i.idAutor = a.idAutor 
                                INNER JOIN editorial e ON i.idEditorial = e.idEditorial";
         }
-        
-
+      
         $datos = $this->ejecutarConsulta($consulta_datos);
         $datos = $datos->fetchAll();
 
@@ -178,7 +188,7 @@ class inventarioController extends mainModel {
                         <td class="text-td">'.$rows['nombre_autor'].'</td>
                         <td class="text-td">'.$rows['nombre_editorial'].'</td>
                         <td class="text-td">'.$rows['anioPublicacion'].'</td>
-                        <td class="text-td">'.$rows['genero'].'</td>
+                        <td class="text-td">'.$rows['nombre_categoria'].'</td>
                         <td class="text-td">'.$rows['precioVenta'].'</td>
                         <td class="text-td">'.$rows['cantidad'].'</td>
                         <td class="text-td">'.$rows['formato'].'</td>

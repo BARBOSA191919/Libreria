@@ -11,7 +11,6 @@ class categoriaController extends mainModel {
         # Almacenando datos #
         $codigo = $this->limpiarCadena($_POST['categoria_codigo']);
         $nombre = $this->limpiarCadena($_POST['categoria_nombre']);
-        $subcategoria = $this->limpiarCadena($_POST['categoria_subcategoria']);
 
         # Verificando campos obligatorios #
         if($codigo=="" || $nombre==""){
@@ -62,11 +61,6 @@ class categoriaController extends mainModel {
                 "campo_nombre"=>"nombre",
                 "campo_marcador"=>":Nombre",
                 "campo_valor"=>$nombre
-            ],
-            [
-                "campo_nombre"=>"subcategoria",
-                "campo_marcador"=>":Subcategoria",
-                "campo_valor"=>$subcategoria
             ],
             [
                 "campo_nombre"=>"fecha_registro",
@@ -134,7 +128,6 @@ class categoriaController extends mainModel {
             <tr class="text-center">
                 <th class="text-th">Código</th>
                 <th class="text-th">Nombre</th>
-                <th class="text-th">Subcategoría</th>
                 <th class="text-th">Fecha Registro</th>
                 <th class="text-th">Opciones</th>
             </tr>
@@ -150,14 +143,12 @@ class categoriaController extends mainModel {
                 <tr class="tr-main text-center">
                     <td class="text-td">'.$rows['codigo'].'</td>
                     <td class="text-td">'.$rows['nombre'].'</td>
-                    <td class="text-td">'.$rows['subcategoria'].'</td>
                     <td class="text-td">'.date("d-m-Y  h:i:s A",strtotime($rows['fecha_registro'])).'</td>
                     <td class="text-td">
                         <button class="text-td btn btn-success btn-sm rounded-pill" onclick="abrirModalEditarcategoria({
                             id_categoria: \''.$rows['id_categoria'].'\',
                             codigo: \''.addslashes($rows['codigo']).'\',
                             nombre: \''.addslashes($rows['nombre']).'\',
-                            subcategoria: \''.addslashes($rows['subcategoria']).'\'
                         })"><i class=" bi bi-arrow-repeat"></i>
                         <span class="text-icono">
                         Actualizar

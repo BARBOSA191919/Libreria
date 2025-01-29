@@ -29,9 +29,15 @@ if (isset($_POST['modulo_inventario'])) {
         echo json_encode($insInventario->obtenerAutoresControlador());
     }
   
-    if ($_POST['modulo_inventario'] == "obtenerEditoriales") {
+   if ($_POST['modulo_inventario'] == "obtenerEditoriales") {
         echo json_encode($insInventario->obtenerEditorialesControlador());
     }
+
+     if ($_POST['modulo_inventario'] == "obtenerCategoriasInventario") {
+    $insInventario = new inventarioController();
+    echo json_encode($insInventario->obtenerCategoriaInventarioControlador());
+    }
+
 } else {
     session_destroy();
     header("Location: " . APP_URL . "login/");
