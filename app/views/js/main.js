@@ -28,7 +28,6 @@ function toggleSidebar() {
 }
 
 function showContent(sectionId) {
-  console.log("Mostrando sección:", sectionId);
   // Ocultar todas las secciones
   document.querySelectorAll(".content-section").forEach((section) => {
     section.classList.remove("active");
@@ -48,4 +47,6 @@ function showDropdown() {
 
 function hideDropdown() {
   document.getElementById("dropdown-inventario").style.display = "none";
+
 }
+

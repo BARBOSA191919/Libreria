@@ -43,7 +43,11 @@
                         <input class="form-control form-control-lg text-model_input" type="text" id="categoria_nombre" name="categoria_nombre" required>
                     </div>
 
-                
+                    <div class="mb-4">
+                        <label for="categoria_subcategoria" class="form-label fw-semibold text-model">Subcategoría</label>
+                        <input class="form-control form-control-lg text-model_input" type="text" id="categoria_subcategoria" name="categoria_subcategoria" required>
+                    </div>
+
                     <div class="text-end">
                         <button type="submit" class="btn btn-success btn-lg px-4 text-model">Registrar Categoría</button>
                     </div>
@@ -76,6 +80,11 @@
                         <input id="edit_categoria_nombre" type="text" class="form-control form-control-lg text-model_input" name="categoria_nombre" required>
                     </div>
 
+                    <div class="field">
+                        <label for="edit_categoria_subcategoria" class="form-label fw-semibold text-model ">Subcategoría</label>
+                        <input id="edit_categoria_subcategoria" type="text" class="form-control text-model_input" name="categoria_subcategoria" required>
+                    </div>
+
                     <button type="submit" class="btn btn-primary text-model">Actualizar Categoría</button>
                 </form>
             </div>
@@ -90,7 +99,6 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-
 
   <script>
    // Functions for modals remain the same
@@ -111,7 +119,7 @@ function abrirModalEditarcategoria(categoria) {
     document.getElementById("categoria_id").value = categoria.id_categoria;
     document.getElementById("edit_categoria_codigo").value = categoria.codigo;
     document.getElementById("edit_categoria_nombre").value = categoria.nombre;
-   
+    document.getElementById("edit_categoria_subcategoria").value = categoria.subcategoria || '';
     
     modal.show();
 }
