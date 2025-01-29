@@ -58,8 +58,11 @@
                             </div>
 
                             <div class="col-md-6 mb-3">
-                                <label for="libro_editorial" class="form-label fw-semibold text-model">Editorial</label>
-                                <input class="form-control text-model_input" type="text" id="libro_editorial" name="libro_editorial">
+                                <label for="libro_editorial" class="form-label fw-semibold text-model">Editorial *</label>
+                                <select class="form-control text-model_input" type="text" id="libro_editorial" name="libro_editorial">
+                                <option value="">Seleccionar Editorial</option>
+                                </select>
+
                             </div>
                         </div>
 
@@ -146,9 +149,11 @@
                           
 
                             <div class="col-md-6 mb-3">
-                                <label for="edit_libro_editorial" class="form-label text-model">Editorial</label>
-                                <input class="form-control text-model_input" type="text" id="edit_libro_editorial" name="libro_editorial">
-                            </div>
+                                <label for="edit_libro_editorial" class="form-label text-model">Editorial *</label>
+                                <select class="form-control text-model_input" type="text" id="edit_libro_editorial" name="libro_editorial">
+                                <option value="">Seleccionar Editorial</option>
+
+                                </select>
                         </div>
 
                         <div class="row">
@@ -297,6 +302,39 @@ function cargarAutoresInventario() {
     });
 }
 
+function cargarEditorialesInventario() {
+    $.ajax({
+        url: "<?= APP_URL ?>app/ajax/inventarioAjax.php",
+        type: "POST",
+        data: { 
+            modulo_inventario: "obtenerEditoriales"  // Nuevo endpoint para obtener editoriales
+        },
+        beforeSend: function() {
+            $("#libro_editorial, #edit_libro_editorial").html('<option>Cargando editoriales...</option>');
+        },
+        success: function(response) {
+            const editoriales = JSON.parse(response);
+            
+            // Limpiar los select
+            $("#libro_editorial, #edit_libro_editorial").empty();
+            
+            // Añadir la opción por defecto
+            $("#libro_editorial, #edit_libro_editorial").append('<option value="">Seleccionar Editorial</option>');
+            
+            // Llenar el select con las editoriales obtenidas
+            editoriales.forEach(function(editorial) {
+                $("#libro_editorial, #edit_libro_editorial").append(
+                    `<option value="${editorial.idEditorial}">${editorial.nombre}</option>`
+                );
+            });
+        },
+        error: function() {
+            $("#libro_editorial, #edit_libro_editorial").html('<option>Error al cargar las editoriales</option>');
+        }
+    });
+}
+
+
 
 
 // Manejador para el formulario de registro
@@ -435,5 +473,6 @@ function eliminarLibro(id) {
 $(document).ready(function() {
     cargarInventario();
     cargarAutoresInventario();
+    cargarEditorialesInventario();
 });
 </script>

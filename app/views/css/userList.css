@@ -1,0 +1,193 @@
+/* Variables y estilos base */
+:root {
+    --primary-color: #1A5F7A;
+    --secondary-color: #159895;
+    --background-gradient: linear-gradient(135deg, #F6F6F6 0%, #E8F5E9 100%);
+    --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+    --shadow-md: 0 4px 6px rgba(0,0,0,0.1);
+    --shadow-lg: 0 10px 15px rgba(0,0,0,0.1);
+    --border-radius: 12px;
+}
+
+/* Container principal */
+.container {
+    max-width: 1140px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* Estilos del buscador */
+.search-container {
+    margin: 2rem auto;
+    max-width: 400px;
+    padding: 0 1rem;
+}
+
+.search-group {
+    position: relative;
+    background: white;
+    border-radius: 50px;
+    box-shadow: var(--shadow-md);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+}
+
+.search-group:focus-within {
+    box-shadow: var(--shadow-lg);
+    transform: translateY(-2px);
+}
+
+.search-icon {
+    position: absolute;
+    left: 1.2rem;
+    color: var(--primary-color);
+    font-size: 1.1rem;
+}
+
+.search-input {
+    width: 100%;
+    padding: 0.8rem 1rem 0.8rem 3rem;
+    border: 2px solid transparent;
+    border-radius: 50px;
+    font-size: 0.95rem;
+    color: #2C3E50;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+}
+
+.search-button {
+    position: absolute;
+    right: 0.5rem;
+    padding: 0.5rem 1rem;
+    background: var(--primary-color);
+    border: none;
+    border-radius: 50px;
+    color: white;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.search-button:hover {
+    background: var(--secondary-color);
+    transform: translateY(-1px);
+}
+
+/* Estilos de la tabla */
+.table-container {
+    background: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
+    margin: 2rem auto;
+    overflow: hidden;
+    max-width: 1200px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    margin-bottom: 0;
+    font-size: 1.1rem;
+}
+
+.table thead th {
+    background: var(--primary-color);
+    color: white;
+    padding: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.8rem;
+    letter-spacing: 0.5px;
+    border: none;
+}
+
+.table tbody tr {
+    transition: all 0.3s ease;
+}
+
+.table tbody tr:hover {
+    background-color: rgba(21, 152, 149, 0.05);
+}
+
+.table td {
+    padding: 0.9rem;
+    border-bottom: 1px solid #e9ecef;
+    color: #2C3E50;
+    vertical-align: middle;
+}
+
+/* Estilos para los botones de acción */
+.button {
+    padding: 0.4rem 0.8rem;
+    border-radius: 50px;
+    border: none;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 0.8rem;
+    margin: 0 0.2rem;
+}
+
+.button.is-info {
+    background: #3498db;
+    color: white;
+}
+
+.button.is-success {
+    background: #2ecc71;
+    color: white;
+}
+
+.button.is-danger {
+    background: #e74c3c;
+    color: white;
+}
+
+.button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
+    opacity: 0.9;
+}
+
+/* Paginación */
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+    padding: 1rem;
+}
+
+.pagination-link {
+    padding: 0.4rem 0.8rem;
+    border-radius: var(--border-radius);
+    background: white;
+    color: var(--primary-color);
+    text-decoration: none;
+    transition: all 0.3s ease;
+    font-size: 0.9rem;
+}
+
+.pagination-link:hover,
+.pagination-link.is-current {
+    background: var(--primary-color);
+    color: white;
+}
+
+/* Información de registros */
+.records-info {
+    text-align: right;
+    color: #666;
+    font-size: 0.9rem;
+    margin: 1rem 0;
+    padding: 0 1rem;
+}

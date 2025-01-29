@@ -143,7 +143,7 @@
         modal.show();
     }
 
-    function abrirModalEditarProveedor(proveedor) {
+    function abrirModalEditarproveedor(proveedor) {
         document.getElementById('proveedor_id').value = proveedor.id_proveedor;
         document.getElementById('edit_proveedor_codigo').value = proveedor.codigo;
         document.getElementById('edit_proveedor_nombreEmpresa').value = proveedor.nombreEmpresa;
@@ -151,10 +151,23 @@
         document.getElementById('edit_proveedor_direccion').value = proveedor.direccion;
         document.getElementById('edit_proveedor_telefono').value = proveedor.telefono;
         document.getElementById('edit_proveedor_email').value = proveedor.email;
-
-        var modal = new bootstrap.Modal(document.getElementById('modal-editar-proveedor'));
+        const modal = new bootstrap.Modal(document.getElementById('modal-editar-proveedor'));
         modal.show();
     }
+
+    // Agregar funciones para cerrar modales
+function cerrarModalRegistroProveedor() {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('modal-registro-proveedor'));
+    modal.hide();
+    $('#form-registro-proveedor')[0].reset();
+}
+
+function cerrarModalEditarProveedor() {
+    const modal = bootstrap.Modal.getInstance(document.getElementById('modal-editar-proveedor'));
+    modal.hide();
+    $('#form-edicion-proveedor')[0].reset();
+}
+
 
     // Función para cargar la lista de proveedores
     function cargarProveedores() {
@@ -172,6 +185,7 @@
 
     // Manejador para el formulario de registro
         // Manejador para el formulario de registro con SweetAlert2
+// Manejador para el formulario de registro
 $('#form-registro-proveedor').on('submit', function(e) {
     e.preventDefault();
     $.ajax({
@@ -180,30 +194,32 @@ $('#form-registro-proveedor').on('submit', function(e) {
         data: $(this).serialize(),
         success: function(response) {
             const resp = JSON.parse(response);
-            Swal.fire({
-                icon: resp.icono || 'info',
-                title: resp.titulo,
-                text: resp.texto,
-                width: '400px',
-                padding: '2em',
-                customClass: {
-                    title: 'fs-4',          
-                    htmlContainer: 'fs-4',  
-                    confirmButton: 'fs-5',
+            if (resp.tipo === "limpiar") {
+                cerrarModalRegistroProveedor();
+                cargarProveedores(); // Primero cargamos los datos
+                
+                // Después mostramos el mensaje
+                Swal.fire({
+                    icon: resp.icono || 'info',
+                    title: resp.titulo,
+                    text: resp.texto,
+                    width: '400px',
+                    padding: '2em',
+                    customClass: {
+                        title: 'fs-4',          
+                        htmlContainer: 'fs-4',  
+                        confirmButton: 'fs-5'
+                    },
                     timer: 2000,
                     timerProgressBar: true
-                }
-            }).then((result) => {
-                if (resp.tipo === "limpiar") {
-                    cerrarModalRegistroProveedor();
-                    cargarProveedores();
-                }
-            });
+                });
+            }
         }
     });
 });
 
-// Manejador para el formulario de edición con SweetAlert2
+
+// Manejador para el formulario de edición
 $('#form-edicion-proveedor').on('submit', function(e) {
     e.preventDefault();
     const formData = $(this).serialize() + "&modulo_proveedor=actualizar";
@@ -212,29 +228,29 @@ $('#form-edicion-proveedor').on('submit', function(e) {
         url: '<?= APP_URL ?>app/ajax/proveedorAjax.php',
         type: 'POST',
         data: formData,
-        dataType: "json",
         success: function(response) {
-            Swal.fire({
-                icon: response.icono || 'info',
-                title: response.titulo,
-                text: response.texto,
-                width: '400px',
-                padding: '2em',
-                customClass: {
-                    title: 'fs-4',
-                    htmlContainer: 'fs-5',
-                    confirmButton: 'fs-5'
-                }
-            }).then((result) => {
-                if (response.tipo === "recargar") {
-                    cerrarModalEditarProveedor();
-                    cargarProveedores();
-                }
-            });
+            const resp = JSON.parse(response);
+            if (resp.tipo === "recargar") {
+                cerrarModalEditarProveedor();
+                cargarProveedores(); // Primero cargamos los datos
+                
+                // Después mostramos el mensaje
+                Swal.fire({
+                    icon: resp.icono || 'info',
+                    title: resp.titulo,
+                    text: resp.texto,
+                    width: '400px',
+                    padding: '2em',
+                    customClass: {
+                        title: 'fs-4',
+                        htmlContainer: 'fs-5',
+                        confirmButton: 'fs-5'
+                    }
+                });
+            }
         },
         error: function(xhr, status, error) {
             console.error("Error en la petición:", error);
-            console.log("Respuesta del servidor:", xhr.responseText);
             Swal.fire({
                 icon: 'error',
                 title: 'Error',
@@ -243,7 +259,6 @@ $('#form-edicion-proveedor').on('submit', function(e) {
         }
     });
 });
-  
 // Función para eliminar proveedor con SweetAlert2
 function eliminarProveedor(id) {
     Swal.fire({

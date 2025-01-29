@@ -11,7 +11,6 @@
     }else{
         $url=["login"];
     }
-
 ?>
 <!DOCTYPE html>
 <html lang="es">

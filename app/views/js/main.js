@@ -47,4 +47,6 @@ function showDropdown() {
 
 function hideDropdown() {
   document.getElementById("dropdown-inventario").style.display = "none";
+
 }
+

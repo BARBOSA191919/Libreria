@@ -9,6 +9,8 @@
   
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
   <link rel="icon" href="/frontend/public/assets/logo/icon-library.ico">
+
+  <title>Libreria Pinto</title>
 </head>
 
 <body>
@@ -31,28 +33,6 @@
       </span>
       <span class="menu-text">Ventas</span>
     </div>
-
-   <div class="menu-item has-dropdown">
-    <span class="emoji">
-        <i class="bi bi-boxes"></i>
-    </span>
-    <span class="menu-text">Inventario</span>
-    
-    <div class="dropdown-menu" id="dropdown-inventario">
-        <a class="dropdown-item" href="#" onclick="showContent('inventario')">
-            <span class="emoji"><i class="bi bi-list-ul"></i></span>
-            Inventario
-        </a>
-        <a class="dropdown-item" href="#" onclick="showContent('editorial')">
-            <span class="emoji"><i class="bi bi-book"></i></span>
-            Editorial
-        </a>
-        <a class="dropdown-item" href="#" onclick="showContent('autor')">
-            <span class="emoji"><i class="bi bi-person-lines-fill"></i></span>
-            Autor
-        </a>
-    </div>
-</div>
 
     <div class="menu-item" onclick="showContent('categoria-view')">
       <span class="emoji">
@@ -89,9 +69,9 @@
       <span class="menu-text">Proveedores</span>
     </div>
 
-  <!--  <div class="menu-item" onclick="showContent('autor')">
+    <div class="menu-item" onclick="showContent('autor')">
       <span class="emoji">
-        <i class="bi bi-truck"></i>
+      <i class="bi bi-person-check"></i>
       </span>
       <span class="menu-text">Autor</span>
     </div>
@@ -99,12 +79,19 @@
     
     <div class="menu-item" onclick="showContent('editorial')">
       <span class="emoji">
-        <i class="bi bi-truck"></i>
-      </span>
+      <i class="bi bi-book-half"></i>
+          </span>
       <span class="menu-text">Editorial</span>
-    </div> -->
+    </div>
 
-  
+
+    <div class="menu-item" onclick="showContent('configuracion')">
+      <span class="emoji">
+        <i class="bi bi-gear-fill"></i>
+      </span>
+      <span class="menu-text">Configuración</span>
+    </div>
+
 
   </div>
 
@@ -126,7 +113,7 @@
               </div>
           </div>
 
-        <div class="navbar-start">
+           <div class="navbar-start">
             <a class="navbar-item" href="<?php echo APP_URL; ?>dashboard/">
                 Dashboard
             </a>
@@ -144,9 +131,7 @@
                     <a class="navbar-item" href="<?php echo APP_URL; ?>userList/">
                         Lista
                     </a>
-                    <a class="navbar-item" href="<?php echo APP_URL; ?>userSearch/">
-                        Buscar
-                    </a>
+
                 </div>
             </div>
         </div>
@@ -172,7 +157,6 @@
               <li><a class="dropdown-item" href="<?php echo APP_URL."logOut/"; ?>" id="btn_exit">Salir</a></li>
             </ul>
           </div>
-
         </div>
       </nav>
     </header>
@@ -189,7 +173,6 @@
       <p>Bienvenido a la página principal. Aquí podrás ver un resumen de toda tu información.</p>
     </div>
 
-   
     <div id="categoria-view" class="content-section">
         <?php include "./app/views/content/categoria-view.php"; ?>
     </div>
@@ -226,7 +209,17 @@
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
   <script src="<?php echo APP_URL; ?>app/views/js/main.js"></script>
- 
+  <script>
+        function cargarFavicon(url) {
+    const link = document.createElement('link');
+    link.rel = 'icon';
+    link.type = 'image/png';
+    link.href = url;
+    document.head.appendChild(link);
+}
+// Llama a la función con la ruta del favicon
+cargarFavicon('http://localhost/Libreria/app/views/img/allbooks.jpg');
+    </script>
 </body>
 
 </html>

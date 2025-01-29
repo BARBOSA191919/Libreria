@@ -206,12 +206,13 @@
 	    }
 
       /*----------  Función para obtener libros con información del autor  ----------*/
-    public function obtenerLibrosConAutores() {
+// Función para obtener libros con autor y editorial (uso principal)
+public function obtenerLibrosConAutoresYEditoriales() {
     $consulta = "SELECT 
                     i.codigo,
                     i.tituloLibro,
                     a.nombre AS autor, 
-                    i.editorial,
+                    e.nombre AS editorial,
                     i.anioPublicacion,
                     i.genero,
                     i.precioVenta,
@@ -222,11 +223,14 @@
                  INNER JOIN 
                     autor a
                  ON 
-                    i.idAutor = a.idAutor";
+                    i.idAutor = a.idAutor
+                 INNER JOIN 
+                    editorial e
+                 ON 
+                    i.idEditorial = e.idEditorial";
 
     $sql = $this->ejecutarConsulta($consulta);
-    return $sql->fetchAll(PDO::FETCH_ASSOC); // Devuelve los resultados como un array asociativo
+    return $sql->fetchAll(PDO::FETCH_ASSOC);
 }
 
-	    
 }
