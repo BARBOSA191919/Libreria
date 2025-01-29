@@ -22,41 +22,36 @@
     </div>
 
     <!-- Modal de Registro -->
-   <div id="modal-registro_categoria" class="modal fade" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered ">
-            <div class="modal-content shadow">
-                <div class="modal-header bg-light">
-                    <h5 class="modal-title fw-bold text-model_title" id="modalRegistroLabel">Registrar Categoría</h5>
-                    <button type="button" class="btn-close" aria-label="Close" onclick="cerrarModalRegistrocategoria()"></button>
-                </div>
-                <div class="modal-body p-4">
-                    <form id="form-registro_categoria" method="POST">
-                        <input type="hidden" name="modulo_categoria" value="registrar">
+    <div id="modal-registro_categoria" class="modal fade" tabindex="-1" aria-labelledby="modalRegistroLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered ">
+        <div class="modal-content shadow">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title fw-bold text-model_title" id="modalRegistroLabel">Registrar Categoría</h5>
+                <button type="button" class="btn-close" aria-label="Close" onclick="cerrarModalRegistrocategoria()"></button>
+            </div>
+            <div class="modal-body p-4">
+                <form id="form-registro_categoria" method="POST">
+                    <input type="hidden" name="modulo_categoria" value="registrar">
 
-                        <div class="mb-4">
-                            <label for="categoria_codigo" class="form-label fw-semibold text-model">Código</label>
-                            <input class="form-control form-control-lg text-model_input" type="text" id="categoria_codigo" name="categoria_codigo" required>
-                        </div>
+                    <div class="mb-4">
+                        <label for="categoria_codigo" class="form-label fw-semibold text-model">Código</label>
+                        <input class="form-control form-control-lg text-model_input" type="text" id="categoria_codigo" name="categoria_codigo" required>
+                    </div>
 
-                        <div class="mb-4">
-                            <label for="categoria_nombre" class="form-label fw-semibold text-model">Nombre</label>
-                            <input class="form-control form-control-lg text-model_input" type="text" id="categoria_nombre" name="categoria_nombre" required>
-                        </div>
+                    <div class="mb-4">
+                        <label for="categoria_nombre" class="form-label fw-semibold text-model">Nombre</label>
+                        <input class="form-control form-control-lg text-model_input" type="text" id="categoria_nombre" name="categoria_nombre" required>
+                    </div>
 
-                        <div class="mb-4">
-                            <label for="categoria_subcategoria" class="form-label fw-semibold text-model">Subcategorías (separadas por comas)</label>
-                            <input class="form-control form-control-lg text-model_input" type="text" id="categoria_subcategoria" name="categoria_subcategoria[]" required>
-                            <small class="form-text text-muted">Ejemplo: Subcategoria1, Subcategoria2, Subcategoria3</small>
-                        </div>
-
-                        <div class="text-end">
-                            <button type="submit" class="btn btn-success btn-lg px-4 text-model">Registrar Categoría</button>
-                        </div>
-                    </form>
-                </div>
+                
+                    <div class="text-end">
+                        <button type="submit" class="btn btn-success btn-lg px-4 text-model">Registrar Categoría</button>
+                    </div>
+                </form>
             </div>
         </div>
     </div>
+</div>
 
     <!-- Modal de Actualización -->
    <div id="modal-editar_categoria" class="modal fade" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
@@ -81,11 +76,6 @@
                         <input id="edit_categoria_nombre" type="text" class="form-control form-control-lg text-model_input" name="categoria_nombre" required>
                     </div>
 
-                    <div class="field">
-                        <label for="edit_categoria_subcategoria" class="form-label fw-semibold text-model ">Subcategoría</label>
-                        <input id="edit_categoria_subcategoria" type="text" class="form-control text-model_input" name="categoria_subcategoria" required>
-                    </div>
-
                     <button type="submit" class="btn btn-primary text-model">Actualizar Categoría</button>
                 </form>
             </div>
@@ -100,6 +90,7 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
 
   <script>
    // Functions for modals remain the same
@@ -120,7 +111,7 @@ function abrirModalEditarcategoria(categoria) {
     document.getElementById("categoria_id").value = categoria.id_categoria;
     document.getElementById("edit_categoria_codigo").value = categoria.codigo;
     document.getElementById("edit_categoria_nombre").value = categoria.nombre;
-    document.getElementById("edit_categoria_subcategoria").value = categoria.subcategoria || '';
+   
     
     modal.show();
 }
@@ -150,26 +141,10 @@ function cargarCategorias() {
 // Updated registration form handler with SweetAlert2
 $("#form-registro_categoria").on("submit", function(e) {
     e.preventDefault();
-    
-    // Procesar subcategorías
-    const subcategoriasInput = $("#categoria_subcategoria").val();
-    const subcategorias = subcategoriasInput.split(',').map(sub => sub.trim()).filter(sub => sub !== '');
-    
-    // Crear un nuevo FormData para manejar múltiples subcategorías
-    const formData = new FormData(this);
-    
-    // Reemplazar el campo de subcategorías con un array
-    formData.delete('categoria_subcategoria[]');
-    subcategorias.forEach(subcategoria => {
-        formData.append('categoria_subcategoria[]', subcategoria);
-    });
-
     $.ajax({
         url: "<?= APP_URL ?>app/ajax/categoriaAjax.php",
         type: "POST",
-        data: formData,
-        processData: false,
-        contentType: false,
+        data: $(this).serialize(),
         success: function(response) {
             const resp = JSON.parse(response);
             Swal.fire({
@@ -198,26 +173,12 @@ $("#form-registro_categoria").on("submit", function(e) {
 // Updated edit form handler with SweetAlert2
 $("#form-edicion_categoria").on("submit", function(e) {
     e.preventDefault();
+    const formData = $(this).serialize() + "&modulo_categoria=actualizar";
     
-    // Procesar subcategorías
-    const subcategoriasInput = $("#edit_categoria_subcategoria").val();
-    const subcategorias = subcategoriasInput.split(',').map(sub => sub.trim()).filter(sub => sub !== '');
-    
-    // Crear un nuevo FormData para manejar múltiples subcategorías
-    const formData = new FormData(this);
-    
-    // Reemplazar el campo de subcategorías con un array
-    formData.delete('categoria_subcategoria[]');
-    subcategorias.forEach(subcategoria => {
-        formData.append('categoria_subcategoria[]', subcategoria);
-    });
-
     $.ajax({
         url: "<?= APP_URL ?>app/ajax/categoriaAjax.php",
         type: "POST",
         data: formData,
-        processData: false,
-        contentType: false,
         dataType: "json",
         success: function(response) {
             Swal.fire({

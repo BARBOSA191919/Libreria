@@ -52,27 +52,31 @@
             Autor
         </a>
     </div>
-</div>
+  </div>
 
-    <div class="menu-item" onclick="showContent('categoria-view')">
-      <span class="emoji">
+  <div class="menu-item has-dropdown">
+    <span class="emoji">
         <i class="bi bi-grid"></i>
-      </span>
-      <span class="menu-text">Categoria</span>
+    </span>
+    <span class="menu-text">Categoria</span>
+    
+    <div class="dropdown-menu" id="dropdown-inventario">
+        <a class="dropdown-item" href="#" onclick="showContent('categoria-view')">
+            <span class="emoji"><i class="bi bi-list-ul"></i></span>
+            Categoria
+        </a>
+        <a class="dropdown-item" href="#" onclick="showContent('subcategoria-view')">
+            <span class="emoji"><i class="bi bi-book"></i></span>
+            Subcategoría
+        </a>
     </div>
+  </div>
 
     <div class="menu-item" onclick="showContent('mensajes')">
       <span class="emoji">
         <i class="bi bi-file-earmark-bar-graph"></i>
       </span>
       <span class="menu-text">Reportes</span>
-    </div>
-
-    <div class="menu-item" onclick="showContent('inventario')">
-      <span class="emoji">
-        <i class="bi bi-boxes"></i>
-      </span>
-      <span class="menu-text">Inventario</span>
     </div>
 
     <div class="menu-item" onclick="showContent('cliente')">
@@ -216,6 +220,9 @@
         <?php include "./app/views/content/inventario-view.php"; ?>
     </div>
 
+    <div id="subcategoria-view" class="content-section">
+        <?php include "./app/views/content/subcategoria-view.php"; ?>
+    </div>
 
     <div id="inventario-view" class="content-section">
         <!-- Contenido del inventario -->

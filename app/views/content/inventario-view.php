@@ -70,8 +70,11 @@
                             </div>
 
                             <div class="col-md-4 mb-3">
-                                <label for="libro_genero" class="form-label fw-semibold text-model">Género</label>
-                                <input class="form-control text-model_input" type="text" id="libro_genero" name="libro_genero">
+                                  <label for="libro_genero" class="form-label fw-semibold text-model">Categoría *</label>
+                                  <select class="form-control text-model_input" id="libro_genero" name="libro_genero" required>
+                                      <option value="">Seleccionar Categoría</option>
+                                      <!-- AQUI SE VAN A SELECCIONAR LAS CATEGORÍAS -->
+                                  </select>
                             </div>
 
                             <div class="col-md-4 mb-3">
@@ -158,8 +161,11 @@
                             </div>
 
                             <div class="col-md-4 mb-3">
-                                <label for="edit_libro_genero" class="form-label text-model">Género</label>
-                                <input class="form-control text-model_input" type="text" id="edit_libro_genero" name="libro_genero">
+                                <label for="edit_libro_genero" class="form-label fw-semibold text-model">Categoría *</label>
+                                <select class="form-control text-model_input" id="edit_libro_genero" name="libro_genero" required>
+                                    <option value="">Seleccionar Categoría</option>
+                                    <!-- AQUI SE VAN A SELECCIONAR LAS CATEGORÍAS -->
+                                </select>
                             </div>
 
                             <div class="col-md-4 mb-3">
@@ -297,7 +303,38 @@ function cargarAutoresInventario() {
     });
 }
 
-
+// Función para cargar las categorías
+function cargarCategoriasInventario() {
+    $.ajax({
+        url: "<?= APP_URL ?>app/ajax/inventarioAjax.php",
+        type: "POST",
+        data: { 
+            modulo_inventario: "obtenerCategoriasInventario"  // Nuevo endpoint para obtener categorías
+        },
+        beforeSend: function() {
+            $("#libro_genero, #edit_libro_genero").html('<option>Cargando categorías...</option>');
+        },
+        success: function(response) {
+            const categorias = JSON.parse(response);
+            
+            // Limpiar los select
+            $("#libro_genero, #edit_libro_genero").empty();
+            
+            // Añadir la opción por defecto
+            $("#libro_genero, #edit_libro_genero").append('<option value="">Seleccionar Categoría</option>');
+            
+            // Llenar el select con las categorías obtenidas
+            categorias.forEach(function(categoria) {
+                $("#libro_genero, #edit_libro_genero").append(
+                    `<option value="${categoria.id_categoria}">${categoria.nombre}</option>`
+                );
+            });
+        },
+        error: function() {
+            $("#libro_genero, #edit_libro_genero").html('<option>Error al cargar las categorías</option>');
+        }
+    });
+}
 
 // Manejador para el formulario de registro
 $("#form-registro_inventario").on("submit", function(e) {
@@ -435,5 +472,6 @@ function eliminarLibro(id) {
 $(document).ready(function() {
     cargarInventario();
     cargarAutoresInventario();
+    cargarCategoriasInventario();
 });
 </script>

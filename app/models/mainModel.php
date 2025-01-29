@@ -228,5 +228,26 @@
     return $sql->fetchAll(PDO::FETCH_ASSOC); // Devuelve los resultados como un array asociativo
 }
 
+
+ /*----------  Función para obtener  con información  ----------*/
+    public function obtenerCategoriasConSubcategorias() {
+    $consulta = "SELECT 
+                    c.id_categoria,
+                    c.nombre AS categoria, 
+                    s.id_subcategoria, 
+                    s.nombre AS subcategoria
+                 FROM 
+                    categoria c
+                 LEFT JOIN 
+                    subcategoria s
+                 ON 
+                    c.id_categoria = s.id_categoria";
+
+    $sql = $this->ejecutarConsulta($consulta);
+    return $sql->fetchAll(PDO::FETCH_ASSOC); // Devuelve los resultados como un array asociativo
+}
+
+
+
 	    
 }
