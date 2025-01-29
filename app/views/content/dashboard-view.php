@@ -190,7 +190,6 @@
         <?php include "./app/views/content/autor-view.php"; ?>
     </div>
 
-        
     <div id="editorial" class="content-section">
         <?php include "./app/views/content/editorial-view.php"; ?>
     </div>
@@ -219,7 +218,9 @@
 }
 // Llama a la función con la ruta del favicon
 cargarFavicon('http://localhost/Libreria/app/views/img/allbooks.jpg');
-    </script>
+
+</script>
+
 </body>
 
 </html>

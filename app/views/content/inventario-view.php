@@ -206,7 +206,6 @@
 
 <link rel="stylesheet" href="<?php echo APP_URL; ?>app/views/css/inventario.css">
 
-
 <script>
 // Funciones para los modales
 function abrirModalRegistroInventario() {
